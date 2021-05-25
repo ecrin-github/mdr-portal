@@ -1,0 +1,63 @@
+<app-search-panel (search)="onSearch($event)"></app-search-panel>
+
+<div style="margin-top: 10px;">
+  <p *ngIf="total === undefined && !loading">
+    <ngb-alert [dismissible]="false" [type]="'primary'">
+      <span [translate]="'SEARCH-PAGE.INITIAL'">Please start to search.</span>
+    </ngb-alert>
+  </p>
+  <ng-container *ngIf="!loading; else loadingBlock">
+    <p *ngIf="total > 0 && !loading">
+      <ngb-alert [dismissible]="false" [type]="'success'">
+        <strong [translate]="'SEARCH-PAGE.RESULTS'">Results: </strong> {{startFrom}} - {{onPage}} <span [translate]="">of</span> {{total}}.
+      </ngb-alert>
+    </p>
+    <p *ngIf="total === 0 && !loading">
+      <ngb-alert [dismissible]="false" [type]="'primary'">
+        <span [translate]="'SEARCH-PAGE.NO-RESULTS'"></span>
+      </ngb-alert>
+    </p>
+    <app-filters-list></app-filters-list>
+    <ng-container *ngIf="pageSlice && pageSlice !== undefined">
+      <ng-container *ngFor="let study of pageSlice">
+        <app-study-expanding
+          [studyId]="study.id"
+          [studyTitle]="study.display_title"
+          [studyDescription]="study.brief_description"
+          [studyStatus]="study.study_status"
+          [studyType]="study.study_type"
+          [provenance]="study.provenance_string"
+          [dataSharingStatement]="study.data_sharing_statement"
+          [dataObjects]="study.linked_data_objects"
+        ></app-study-expanding>
+        <!--<app-study-card
+          [studyId]="study.id"
+          [studyTitle]="study.display_title"
+          [studyDescription]="study.brief_description"
+          [provenance]="study.provenance_string"
+        ></app-study-card>-->
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="total > 0 && !loading">
+      <mat-paginator [length]="total"
+                     [pageSize]="pageSize"
+                     [pageIndex]="pageIndex"
+                     [pageSizeOptions]="pageSizeOptions"
+                     (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </ng-container>
+    <br />
+  </ng-container>
+  <ng-template #loadingBlock>
+    <p *ngIf="loading">
+      <ngb-alert [dismissible]="false" [type]="'primary'">
+        <span [translate]="'SEARCH-PAGE.LOADING'">Please wait...</span>
+      </ngb-alert>
+    </p>
+    <div class="row justify-content-center">
+      <mat-spinner [color]="'primary'" class="justify-content-center"></mat-spinner>
+    </div>
+  </ng-template>
+</div>
+

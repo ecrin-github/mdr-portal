@@ -1,0 +1,48 @@
+<h5 class="font-weight-bold mb-5">{{groupName}}</h5>
+<ng-container *ngFor="let do_filter_group of subgroups">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{do_filter_group.translate | translate: {Default: do_filter_group.subgroup_name} }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div style="float: right;" *ngIf="do_filter_group.subgroup_name === 'Type'">
+      <a [routerLink]="['/data-object-types']" target="_blank">
+        {{'TOOLTIPS.HELP' | translate: {Default: 'Help'} }}
+      </a>
+    </div>
+    <br *ngIf="do_filter_group.subgroup_name === 'Type'" />
+
+    <mat-divider></mat-divider> <br />
+
+    <ng-container *ngFor="let data_object_filter_params of do_filter_group.values">
+      <mat-checkbox id="{{do_filter_group.checkbox_name + '_' + data_object_filter_params.id}}"
+                    name="{{data_object_filter_params.value}}"
+                    [(ngModel)]="data_object_filter_params.isSelected"
+                    [value]="data_object_filter_params.id"
+                    (change)="onDataObjectFilter($event, data_object_filter_params.value, data_object_filter_params.id,
+                    data_object_filter_params.translate, do_filter_group.fieldName, do_filter_group.isNested,
+                    do_filter_group.path, do_filter_group.type, do_filter_group.subgroup_name)">
+        {{data_object_filter_params.translate | translate: {Default: data_object_filter_params.name} }}
+      </mat-checkbox>
+      <br />
+    </ng-container>
+    <mat-action-row>
+      <button mat-button color="primary"
+              (click)="selectAll(do_filter_group.id, do_filter_group.subgroup_name)"
+              style="padding-right: 15px !important; padding-left: 10px !important;"
+      >
+        {{'BUTTONS.SELECT-ALL' | translate: {Default: 'Select all'} }}
+      </button>
+      <button mat-button color="warn"
+              (click)="deselectAll(do_filter_group.id, do_filter_group.subgroup_name)"
+              style="padding-right: 15px !important; padding-left: 10px !important;"
+      >
+        {{'BUTTONS.DESELECT-ALL' | translate: {Default: 'Deselect all'} }}
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+  <br />
+</ng-container>
+<mat-divider></mat-divider>
+<br />

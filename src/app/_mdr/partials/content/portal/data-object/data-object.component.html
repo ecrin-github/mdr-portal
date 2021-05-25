@@ -1,0 +1,56 @@
+<div class="row mt-4 mb-4">
+  <div class="col-xl-3">
+    <p class="text-center"><strong>{{dataObjectType}}</strong></p>
+  </div>
+  <div class="col-xl-5">
+    <p align="justify">
+      <ng-container *ngIf="dataObjectTitle.length > 100">
+        {{(showMore) ? dataObjectTitle : dataObjectTitle | slice:0:100}} <span *ngIf="!showMore">...</span>
+        <a href="javascript:;" *ngIf="!showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
+        <a href="javascript:;" *ngIf="showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
+      </ng-container>
+      <ng-container *ngIf="dataObjectTitle.length <= 100">
+        {{dataObjectTitle}}
+      </ng-container>
+    </p>
+    <p class="mt-2 mb-2" *ngIf="dataObjectAccessUrl !== null && dataObjectAccessUrl !== undefined">
+      <strong>
+        {{'SEARCH-PAGE.STUDY.DATA-OBJECT.ACCESS-URL' | translate: {Default: 'Access URL: '} }}
+      </strong>
+      <a href="{{dataObjectAccessUrl}}" target="_blank">{{dataObjectAccessUrl}}</a>
+    </p>
+    <p class="mt-2 mb-2" *ngIf="dataObjectUrl !== null && dataObjectUrl !== undefined">
+      <strong>URL: </strong><a href="{{dataObjectUrl}}" target="_blank">{{dataObjectUrl}}</a>
+    </p>
+    <p class="mt-2 mb-2" *ngIf="citationUrl !== null && citationUrl !== undefined">
+      <strong>
+        {{'SEARCH-PAGE.STUDY.DATA-OBJECT.CITATION-URL' | translate: {Default: 'Citation URL: '} }}
+      </strong><a href="{{citationUrl}}" target="_blank">{{citationUrl}}</a>
+    </p>
+    <p class="mt-2 mb-2" *ngIf="provenance !== null && provenance !== undefined">
+      <strong>
+        {{'SEARCH-PAGE.STUDY.DATA-OBJECT.PROVENANCE' | translate: {Default: 'Provenance: '} }}
+      </strong>
+      {{provenance}}
+    </p>
+  </div>
+  <div class="col-xl-2" *ngIf="dataObjectYear !== null && dataObjectYear !== undefined">
+    <p class="text-center">{{dataObjectYear}}</p>
+  </div>
+  <div class="col-xl-2" *ngIf="dataObjectYear === null || dataObjectYear === undefined">
+    <p class="text-center">None</p>
+  </div>
+  <div class="col-xl-2 text-center">
+    <mat-icon *ngIf="openAccess.indexOf(dataObjectAccessType) !== -1" style="color: #44c767;" ngbTooltip="{{dataObjectAccessType}}" placement="auto">fiber_manual_record</mat-icon>
+    <mat-icon *ngIf="restrictedAccess.indexOf(dataObjectAccessType) !== -1" style="color: #ffc266;" ngbTooltip="{{dataObjectAccessType}}" placement="auto">fiber_manual_record</mat-icon>
+    <mat-icon *ngIf="noAccess.indexOf(dataObjectAccessType) !== -1" style="color: #f15b6c;" ngbTooltip="{{dataObjectAccessType}}" placement="auto">fiber_manual_record</mat-icon>
+    <mat-icon *ngIf="unknownAccess.indexOf(dataObjectAccessType) !== -1" style="color: #f2ab1e;" ngbTooltip="{{dataObjectAccessType}}" placement="auto">help_outline</mat-icon>
+    <div class="col-xl-2" *ngIf="dataObjectAccessType === null || dataObjectAccessType === undefined">
+      <p class="text-center">None</p>
+    </div>
+  </div>
+  <!--<div class="col-xl-1 text-center">
+    <mat-checkbox [checked]="isSelected"></mat-checkbox>
+  </div>-->
+</div>
+<hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />

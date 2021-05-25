@@ -1,0 +1,111 @@
+<!--begin::Quick Panel-->
+<div
+  id="kt_quick_panel"
+  class="offcanvas pt-5 pb-10"
+  [ngClass]="extrasFiltersPanelDirectionCSSClass"
+>
+  <!--begin::Header-->
+  <div
+    class="offcanvas-header offcanvas-header-navs d-flex align-items-center justify-content-between mb-5"
+  >
+    <ul
+      class="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-primary flex-grow-1 px-10"
+      role="tablist"
+    >
+      <li class="nav-item">
+        <a
+          class="nav-link cursor-pointer"
+          data-toggle="tab"
+          [ngClass]="getActiveCSSClasses('studies_filters')"
+          (click)="setActiveTabId('studies_filters')"
+          >Studies</a
+        >
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link cursor-pointer"
+          data-toggle="tab"
+          [ngClass]="getActiveCSSClasses('objects_filters')"
+          (click)="setActiveTabId('objects_filters')"
+          >Data objects</a
+        >
+      </li>
+
+    </ul>
+    <div class="offcanvas-close mt-n1 pr-5">
+      <a
+        href="#"
+        class="btn btn-xs btn-icon btn-light btn-hover-primary"
+        id="kt_quick_panel_close"
+      >
+        <i class="ki ki-close icon-xs text-muted"></i>
+      </a>
+    </div>
+  </div>
+  <!--end::Header-->
+
+  <!--begin::Content-->
+  <div class="offcanvas-content px-10">
+    <div class="tab-content">
+      <!--begin::Tabpane-->
+      <div
+        class="tab-pane fade pt-3 pr-5 mr-n5"
+        id="studies_filters"
+        [ngClass]="getActiveCSSClasses('studies_filters')"
+        role="tabpanel"
+      >
+        <!--begin::Section-->
+        <div
+          [perfectScrollbar]="{ wheelPropagation: false }"
+          class="scroll mb-15"
+          [ngStyle]="{ height: '800px', position: 'relative' }"
+        >
+
+          <ng-container *ngFor="let studyFilter of studyFilters">
+            <app-study-filters
+              [groupName]="studyFilter.translate | translate: {Default: studyFilter.group_name}"
+              [subgroups]="studyFilter.subgroups"
+            ></app-study-filters>
+          </ng-container>
+
+          <div style="height: 350px; width: 100%;"></div>
+
+        </div>
+        <!--end::Section-->
+
+      </div>
+      <!--end::Tabpane-->
+
+      <!--begin::Tabpane-->
+      <div
+        class="tab-pane fade pt-2 pr-5 mr-n5"
+        id="objects_filters"
+        [ngClass]="getActiveCSSClasses('objects_filters')"
+        role="tabpanel"
+      >
+
+        <div
+          [perfectScrollbar]="{ wheelPropagation: false }"
+          class="scroll mb-15"
+          [ngStyle]="{ height: '800px', position: 'relative' }"
+        >
+
+          <ng-container *ngFor="let objectFilter of objectFilers">
+            <app-object-filters
+              [groupName]="objectFilter.translate | translate: {Default: objectFilter.group_name}"
+              [subgroups]="objectFilter.subgroups"
+            ></app-object-filters>
+          </ng-container>
+
+          <div style="height: 350px; width: 100%;"></div>
+
+        </div>
+
+      </div>
+      <!--end::Tabpane-->
+    </div>
+  </div>
+  <!--end::Content-->
+</div>
+<!--end::Quick Panel-->

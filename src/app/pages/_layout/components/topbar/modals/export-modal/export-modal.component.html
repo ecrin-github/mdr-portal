@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{'MODALS.EXPORT-AS' | translate: {Default: 'Export as'} }}
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col text-center">
+      <button
+        class="btn btn-primary"
+        (click)="generateJson()"
+      >
+        <i class="far fa-file-code"></i> JSON
+      </button>
+    </div>
+    <div class="col text-center">
+      <button
+        class="btn btn-primary"
+        (click)="generatePdf()"
+      >
+        <i class="far fa-file-pdf"></i> PDF
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">
+    {{'MODALS.CLOSE' | translate: {Default: 'Close'} }}
+  </button>
+</div>

@@ -1,0 +1,43 @@
+<h5 class="font-weight-bold mb-5">{{groupName}}</h5>
+<ng-container *ngFor="let filter_group of subgroups">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ filter_group.translate | translate: {Default: filter_group.subgroup_name} }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-divider></mat-divider> <br />
+
+    <ng-container *ngFor="let filter_params of filter_group.values">
+      <mat-checkbox id="{{filter_group.checkbox_name + '_' + filter_params.id}}"
+                    name="{{filter_group.value}}"
+                    [(ngModel)]="filter_params.isSelected"
+                    [value]="filter_params.id"
+                    (change)="onStudyFilter($event, filter_params.value, filter_params.id, filter_params.translate,
+                    filter_group.fieldName, filter_group.isNested,
+                    filter_group.path, filter_group.type, filter_group.subgroup_name)">
+        {{filter_params.translate | translate: {Default: filter_params.name} }}
+      </mat-checkbox>
+      <br />
+    </ng-container>
+    <mat-action-row>
+      <button mat-button color="primary"
+              (click)="selectAll(filter_group.id, filter_group.subgroup_name)"
+              style="padding-right: 15px !important; padding-left: 10px !important;"
+      >
+        {{'BUTTONS.SELECT-ALL' | translate: {Default: 'Select all'} }}
+      </button>
+      <button mat-button color="warn"
+              (click)="deselectAll(filter_group.id, filter_group.subgroup_name)"
+              style="padding-right: 15px !important; padding-left: 10px !important;"
+      >
+        {{'BUTTONS.DESELECT-ALL' | translate: {Default: 'Deselect all'} }}
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+  <br />
+</ng-container>
+<mat-divider></mat-divider>
+<br />
+

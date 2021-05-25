@@ -1,0 +1,19 @@
+<div *ngIf="filtersList.length > 0" >
+  <div class="row">
+    <div class="col-lg-12">
+      <a href="#" (click)="clearAll()" style="float: right;">{{'BUTTONS.CLEAR-ALL' | translate: {Default: 'Clear all filters'} }}</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <p>
+        <ngb-alert [dismissible]="false" [type]="'light'" ngbTooltip="{{'TOOLTIPS.ACTIVE-FILTERS-PANEL' | translate: {Default: 'Active filters panel'} }}" placement="auto">
+          <mat-chip-list>
+            <mat-chip *ngFor="let filter of filtersList" style="font-weight: normal; font-size: x-small;">{{filter.name}}</mat-chip>
+          </mat-chip-list>
+        </ngb-alert>
+      </p>
+    </div>
+  </div>
+</div>
+

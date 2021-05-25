@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{'MODALS.SAVE' | translate: {Default: 'Save'} }}
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col">
+      <input
+        type="text"
+        #sessionName
+        name="sessionName"
+        class="form-control"
+        placeholder="{{'MODALS.NAME' | translate: {Default: 'Name...'} }}"
+        [(ngModel)]="defaultSessionName"
+      />
+      <span style="color: #EE2D41 !important;">{{errorMessage}}</span>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col text-center">
+      <strong>{{'MODALS.OR' | translate: {Default: 'OR'} }}</strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <button
+        class="btn btn-primary"
+        (click)="downloadSession('json')"
+      >
+        <i class="far fa-file-code"></i> {{'MODALS.DOWNLOAD' | translate: {Default: 'Download as JSON'} }}
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="saveSession()">
+    {{'MODALS.SAVE' | translate: {Default: 'Save'} }}
+  </button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">
+    {{'MODALS.CLOSE' | translate: {Default: 'Close'} }}
+  </button>
+</div>

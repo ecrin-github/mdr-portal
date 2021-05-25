@@ -1,0 +1,90 @@
+<div class="row mb-2">
+  <div class="col-lg-12 col-xxl-12">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <ng-container *ngIf="studyTitle.length >= 75">
+            <span style="font-size: 1.1em;">{{studyTitle | slice: 0: 75}} ...</span>
+          </ng-container>
+          <ng-container *ngIf="studyTitle.length < 75">
+            <span style="font-size: 1.1em;">{{studyTitle}}</span>
+          </ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-divider></mat-divider>
+      <p class="mt-3 mb-3" align="justify">
+        <strong>{{'SEARCH-PAGE.STUDY.DESCRIPTION' | translate: {Default: 'Study description'} }}</strong><br />
+        <ng-container *ngIf="studyDescription.length > 150">
+          {{(showMore) ? studyDescription : studyDescription | slice:0:150}} <span *ngIf="!showMore"> ...</span>
+          <a href="javascript:;" *ngIf="!showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
+          <a href="javascript:;" *ngIf="showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
+        </ng-container>
+        <ng-container *ngIf="studyDescription.length <= 150">
+          {{studyDescription}}
+        </ng-container>
+      </p>
+      <div class="row">
+        <div class="col">
+          <p *ngIf="studyType !== null && studyType !== undefined">
+            <strong>
+              {{'SEARCH-PAGE.STUDY.STUDY-TYPE' | translate: {Default: 'Study type: '} }}
+            </strong>{{studyType}}
+          </p>
+        </div>
+        <div class="col">
+          <p *ngIf="studyStatus !== null && studyStatus !== undefined">
+            <strong>
+              {{'SEARCH-PAGE.STUDY.STUDY-STATUS' | translate: {Default: 'Study status: '} }}
+            </strong>{{studyStatus}}
+          </p>
+        </div>
+      </div>
+      <p *ngIf="dataSharingStatement !== null && dataSharingStatement !== undefined">
+        <strong>
+          {{'SEARCH-PAGE.STUDY.DATA-SHARING' | translate: {Default: 'Data sharing statement'} }}
+        </strong><br />
+        <ng-container *ngIf="dataSharingStatement.length > 150">
+          {{(showMoreDataSharingStatement) ? dataSharingStatement : dataSharingStatement | slice:0:150}} <span *ngIf="!showMoreDataSharingStatement"> ...</span>
+          <a href="javascript:;" *ngIf="!showMoreDataSharingStatement" (click)="showMoreToggleDataSharingStatement()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
+          <a href="javascript:;" *ngIf="showMoreDataSharingStatement" (click)="showMoreToggleDataSharingStatement()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
+        </ng-container>
+        <ng-container *ngIf="dataSharingStatement.length <= 150">
+          {{dataSharingStatement}}
+        </ng-container>
+      </p>
+      <p *ngIf="provenance !== null && provenance !== undefined">
+        <strong>
+          {{'SEARCH-PAGE.STUDY.PROVENANCE' | translate: {Default: 'Provenance: '} }}
+        </strong>{{provenance}}
+      </p>
+      <hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
+      <ng-container *ngIf="dataObjects">
+        <ng-container *ngFor="let dataObject of dataObjects">
+          <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
+            <app-data-object
+              [dataObjectTitle]="dataObject.display_title"
+              [dataObjectId]="dataObject.id"
+              [dataObjectUrl]="dataObject.object_url"
+              [dataObjectAccessUrl]="(dataObject.access_details !== null && dataObject.access_details !== undefined) ? dataObject.access_details.url : null"
+              [dataObjectAccessType]="dataObject.access_type"
+              [dataObjectType]="dataObject.object_type"
+              [dataObjectYear]="dataObject.publication_year"
+              [provenance]="dataObject.provenance_string"
+              [objectInstances]="dataObject.object_instances"
+            ></app-data-object>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <mat-action-row>
+        <a [routerLink]="['/study', studyId]"
+           target="_blank"
+           class="btn btn-primary mr-5"
+           style="font-size: 1.05em;"
+        >
+          {{'SEARCH-PAGE.STUDY-DETAILS' | translate: {Default: 'Show study details'} }}
+        </a>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </div>
+</div>
+

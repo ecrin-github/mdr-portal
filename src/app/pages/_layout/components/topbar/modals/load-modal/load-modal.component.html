@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{'MODALS.LOAD' | translate: {Default: 'Load'} }}
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row mb-2">
+    <ng-container *ngIf="sessionsList !== null && sessionsList !== undefined">
+      <ng-container *ngIf="sessionsList.length > 0">
+        <div class="col">
+          <h4>
+            {{'MODALS.SELECT' | translate: {Default: 'Select from the list: '} }}
+          </h4>
+          <mat-selection-list #sessionList [multiple]="false" (selectionChange)="onSelectionChange($event, sessionsList)">
+            <mat-list-option *ngFor="let session of sessionsList" [value]="session">
+              <span>{{session.name}}</span>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="sessionsList.length < 1 || sessionsList === null || sessionsList === undefined">
+      <div class="col text-center">
+        <h4>
+          {{'MODALS.NO-SESSION' | translate: {Default: 'No saved sessions'} }}
+        </h4>
+      </div>
+    </ng-container>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col text-center">
+      <strong>
+        {{'MODALS.OR' | translate: {Default: 'OR'} }}
+      </strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <button
+        class="btn btn-primary"
+        (click)="uploadSessionFile.click()"
+      >
+        <input
+          #uploadSessionFile
+          id="uploadSessionFile"
+          type="file"
+          hidden
+          (change)="uploadSession($event.target.files)"
+        />
+        <i class="fas fa-upload"></i> {{'MODALS.UPLOAD' | translate: {Default: 'Upload from your device'} }}
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">
+    {{'MODALS.CLOSE' | translate: {Default: 'Close'} }}
+  </button>
+</div>

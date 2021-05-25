@@ -1,0 +1,160 @@
+<div class="row">
+  <div class="col-lg-12 col-xxl-12">
+    <div class="card card-custom card-stretch" style="height: 100% !important;">
+      <div class="card-body">
+        <form #searchForm='ngForm' (ngSubmit)="onSearch(searchForm)">
+          <div class="row" style="margin-top: 15px !important;">
+            <div class="col-xl-3">
+              <div class="form-group">
+                <select name="selectMode" class="form-control"
+                        style="margin-left: 3px !important; border-color: #d9d9d9 !important;"
+                        ngbTooltip="{{'SEARCH-PANEL.SELECT-MODE' | translate}}" placement="auto"
+                        #selectMode
+                        [(ngModel)]="selectedOption"
+                        (change)="onChangeSelectMode(selectMode.value)"
+                >
+                  <option value="study_characteristics" [translate]="'SEARCH-PANEL.STUDY-CHARACTERISTICS.TITLE'">
+                    {{'SEARCH-PANEL.STUDY-CHARACTERISTICS.TITLE' | translate}}
+                  </option>
+                  <option value="specific_study" [translate]="'SEARCH-PANEL.SPECIFIC-STUDY.TITLE'">
+                    {{'SEARCH-PANEL.SPECIFIC-STUDY.TITLE' | translate}}
+                  </option>
+                  <option value="via_published_paper">
+                    {{'SEARCH-PANEL.VIA-PUBLISHED-PAPER.TITLE' | translate}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <!-- Study characteristic search form -->
+            <ng-container *ngIf="selectedOption === 'study_characteristics'">
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <input type="text" class="form-control"
+                         name="titleContains" #titleContains
+                         ngModel
+                         placeholder="{{'SEARCH-PANEL.STUDY-CHARACTERISTICS.TITLE-CONTAINS' | translate}}"
+                         style="border-color: #d9d9d9 !important;"
+                  />
+                </div>
+              </div>
+
+              <div class="col-xl-2">
+                <div class="form-group">
+                  <select name="logicOperator" class="form-control"
+                          #logicOperator
+                          [(ngModel)]="logicOperatorDefault"
+                          ngbTooltip="{{'SEARCH-PANEL.STUDY-CHARACTERISTICS.LOGICAL-OPERATOR' | translate}}" placement="auto"
+                          style="border-color: #d9d9d9 !important;"
+                  >
+                    <option value="and" [translate]="'SEARCH-PANEL.STUDY-CHARACTERISTICS.AND'">
+                      {{'SEARCH-PANEL.STUDY-CHARACTERISTICS.AND' | translate}}
+                    </option>
+                    <option value="or" [translate]="'SEARCH-PANEL.STUDY-CHARACTERISTICS.OR'">
+                      {{'SEARCH-PANEL.STUDY-CHARACTERISTICS.OR' | translate}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="topicIncludes"
+                         #topicIncludes
+                         ngModel
+                         placeholder="{{'SEARCH-PANEL.STUDY-CHARACTERISTICS.TOPIC-INCLUDES' | translate}}"
+                         style="border-color: #d9d9d9 !important;"
+                  />
+                </div>
+              </div>
+            </ng-container>
+
+
+            <!-- Specific study search form -->
+            <ng-container *ngIf="selectedOption === 'specific_study'">
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <select name="specificStudySelect" class="form-control" style="margin-left: 3px !important; border-color: #d9d9d9 !important;"
+                          #specificStudySelect
+                          [(ngModel)]="specificStudySelectDefault"
+                          ngbTooltip="{{'SEARCH-PANEL.SPECIFIC-STUDY.STUDY-ID-TYPE' | translate}}" placement="auto"
+                  >
+                    <option value="11">Trial Registry ID</option>
+                    <option value="13">Funder's ID</option>
+                    <option value="14">Sponsor's ID</option>
+                    <option value="39">NIH CTRP ID</option>
+                    <option value="42">NHLBI ID</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-xl-5">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="specificStudyValue"
+                         #specificStudyValue
+                         ngModel
+                         placeholder="{{'SEARCH-PANEL.SPECIFIC-STUDY.SPECIFIC-STUDY-PARAMETER' | translate}}"
+                         style="border-color: #d9d9d9 !important;"
+                  />
+                </div>
+              </div>
+            </ng-container>
+
+
+
+            <!-- Via published paper search form -->
+            <ng-container *ngIf="selectedOption === 'via_published_paper'">
+              <div class="col-xl-3">
+                <div class="form-group">
+                  <select name="viaPublishedPaperSelect" class="form-control" style="margin-left: 3px !important; border-color: #d9d9d9 !important;"
+                          #viaPublishedPaperSelect
+                          [(ngModel)]="viaPublishedPaperSelectDefault"
+                          ngbTooltip="{{'SEARCH-PANEL.VIA-PUBLISHED-PAPER.SEARCH-PAPER-BY' | translate}}" placement="auto"
+                  >
+                    <option value="doi">DOI</option>
+                    <option value="title">
+                      {{'SEARCH-PANEL.VIA-PUBLISHED-PAPER.SEARCH-BY-TITLE' | translate}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-xl-5">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="viaPublishedPaperValue"
+                         #viaPublishedPaperValue
+                         ngModel
+                         placeholder="{{'SEARCH-PANEL.VIA-PUBLISHED-PAPER.INTERESTED-PAPER-PARAMETER' | translate}}"
+                         style="border-color: #d9d9d9 !important;"
+                  />
+                </div>
+              </div>
+            </ng-container>
+
+
+            <div class="row" style="margin-left: 5px !important;">
+              <div class="topbar-item" ngbTooltip="{{'TOOLTIPS.FILTERS' | translate}}">
+                <div class="btn btn-icon" id="kt_quick_panel_toggle">
+                  <i class="flaticon2-console" style="color: #8c8c8c !important;"></i>
+                </div>
+              </div>
+
+              <div>
+                <button mat-mini-fab color="primary" type="submit" style="margin-left: 5px !important;">
+                  <i class="flaticon2-magnifier-tool" style="color: #fff !important;"></i>
+                </button>
+              </div>
+
+              <a href="http://ecrin-mdr.online/index.php/Portal_User_Guide"
+                ngbTooltip="{{'TOOLTIPS.HELP-PAGE' | translate}}"
+                class="fa fa-question-circle"
+                style="position: absolute; top: 8px;
+                right: 16px; font-size: 18px; color: #315492;"></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
