@@ -3,8 +3,8 @@ export const environment = {
   appVersion: 'v. 0.5.1',
 
   // HOSTNAME
-  hostname: 'http://localhost:8000/',
-  // hostname: 'http://51.210.99.18:8001/',
+  // hostname: 'http://localhost:8000/',
+  hostname: 'http://51.210.99.18:8001/',
 
   // ElasticSearch
   elasticSearchStudyCharacteristicsUrl: 'search/study-characteristics',
