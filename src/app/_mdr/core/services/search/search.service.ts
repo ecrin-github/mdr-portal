@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {QueryBuilderService} from '../elasticsearch/query-builder.service';
 import {QueryService} from '../elasticsearch/query.service';
 import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
+import {ByStudyCharacteristicsRequestInterface} from '../../interfaces/requests/by-study-characteristics-request.interface';
+import {SpecificStudyRequestInterface} from '../../interfaces/requests/specific-study-request.interface';
+import {ViaPublishedPaperRequestInterface} from '../../interfaces/requests/via-published-paper-request.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -13,15 +16,55 @@ export class SearchService {
   ) {
   }
 
-  pagination(searchType: string, searchBody: RawQueryInterface) {
+  pagination(searchType: string, searchBody: any) {
 
-    if (searchType === 'study_characteristics' || searchType === 'specific_study') {
+    if (searchType === 'study_characteristics') {
 
-      return this.queryService.getRawQueryStudies(searchBody);
+      const searchParams: ByStudyCharacteristicsRequestInterface = {
+        page: searchBody.page,
+        size: searchBody.size,
+        topicsInclude: searchBody.topicsInclude,
+        logicalOperator: searchBody.logicalOperator,
+        titleContains: searchBody.titleContains
+      };
+      const queryBody: RawQueryInterface = {
+        page: searchBody.page,
+        size: searchBody.size,
+        elasticQuery: this.esQueryBuilder.buildByStudyCharacteristicsQuery(searchParams)
+      };
+      return this.queryService.getRawQueryStudies(queryBody);
+
+    } else if (searchType === 'specific_study') {
+
+      const searchParams: SpecificStudyRequestInterface = {
+        page: searchBody.page,
+        size: searchBody.size,
+        searchType: searchBody.searchType,
+        searchValue: searchBody.searchValue,
+      };
+      const queryBody: RawQueryInterface = {
+        page: searchBody.page,
+        size: searchBody.size,
+        elasticQuery: this.esQueryBuilder.buildSpecificStudyQuery(searchParams)
+      };
+
+      return this.queryService.getRawQueryStudies(queryBody);
 
     } else if (searchType === 'via_published_paper') {
 
-      return this.queryService.getRawQueryObjects(searchBody);
+      const searchParams: ViaPublishedPaperRequestInterface = {
+        page: searchBody.page,
+        size: searchBody.size,
+        searchType: searchBody.searchType,
+        searchValue: searchBody.searchValue,
+      };
+      const queryBody: RawQueryInterface = {
+        page: searchBody.page,
+        size: searchBody.size,
+        elasticQuery: this.esQueryBuilder.buildViaPublishedPaperQuery(searchParams)
+      };
+
+      return this.queryService.getRawQueryObjects(queryBody);
 
     } else {
       return null;

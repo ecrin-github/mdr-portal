@@ -9,11 +9,6 @@ import {PageEvent} from '@angular/material/paginator';
 import {Observable, Subscription} from 'rxjs';
 import {FiltersListComponent} from './filters-list/filters-list.component';
 import {QueryResponseInterface} from '../../../core/interfaces/responses/api-response.interface';
-import {RawQueryInterface} from '../../../core/interfaces/requests/raw-query.interface';
-import {QueryBuilderService} from '../../../core/services/elasticsearch/query-builder.service';
-import {ByStudyCharacteristicsRequestInterface} from '../../../core/interfaces/requests/by-study-characteristics-request.interface';
-import {SpecificStudyRequestInterface} from '../../../core/interfaces/requests/specific-study-request.interface';
-import {ViaPublishedPaperRequestInterface} from '../../../core/interfaces/requests/via-published-paper-request.interface';
 import {Study} from '../../../core/interfaces/entities/study.interface';
 
 
@@ -38,7 +33,7 @@ export class MainPageContentComponent implements OnInit {
   public pageSlice: Array<Study> = [];
 
   public searchType: string;
-  public searchBody: RawQueryInterface;
+  public searchBody: any;
 
   clearEventSubscription: Subscription;
   isFilteredEventSubscription: Subscription;
@@ -54,7 +49,6 @@ export class MainPageContentComponent implements OnInit {
     private subscriptionEvents: SubscriptionEvents,
     private searchService: SearchService,
     private filtersListComponent: FiltersListComponent,
-    private queryBuilderService: QueryBuilderService,
   ) {
     ref.detach();
     this.clearEventSubscription = this.subscriptionEvents.getClearEventSubject().subscribe(() => {
@@ -96,7 +90,6 @@ export class MainPageContentComponent implements OnInit {
     if (searchResults !== null) {
       searchResults.subscribe(
         (data: QueryResponseInterface) => {
-          console.log(data);
           this.pageSlice = data.data;
           this.total = data.total;
           this.onPage = this.searchService.onPageChecker(this.total, this.pageIndex, this.pageSize);
@@ -142,11 +135,6 @@ export class MainPageContentComponent implements OnInit {
     this.onClearBeforeSearch();
 
     this.searchType = $event[0]['model'];
-    this.searchBody = {
-      elasticQuery: {},
-      page: this.pageIndex,
-      size: this.pageSize,
-    };
 
     this.statesService.setIsCleared(false);
     this.loading = true;
@@ -154,7 +142,7 @@ export class MainPageContentComponent implements OnInit {
     if (!this.statesService.getIsCleared()) {
       if (this.searchType === 'study_characteristics') {
 
-        const studyCharacteristicsParams: ByStudyCharacteristicsRequestInterface = {
+        this.searchBody = {
           page: this.pageIndex,
           size: this.pageSize,
           titleContains: $event[1]['viewModel'],
@@ -162,34 +150,20 @@ export class MainPageContentComponent implements OnInit {
           topicsInclude: $event[3]['viewModel']
         };
 
-        this.searchBody = {
-          elasticQuery: this.queryBuilderService.buildByStudyCharacteristicsQuery(studyCharacteristicsParams),
-          page: this.pageIndex,
-          size: this.pageSize,
-        };
-        console.log(JSON.stringify(this.searchBody.elasticQuery));
       } else if (this.searchType === 'specific_study') {
 
-        const specificStudyParams: SpecificStudyRequestInterface = {
-          searchType: parseInt($event[1]['model'], 10),
-          searchValue: $event[2]['viewModel']
-        };
-
         this.searchBody = {
-          elasticQuery: this.queryBuilderService.buildSpecificStudyQuery(specificStudyParams),
+          searchType: parseInt($event[1]['model'], 10),
+          searchValue: $event[2]['viewModel'],
           page: this.pageIndex,
           size: this.pageSize,
         };
 
       } else if (this.searchType === 'via_published_paper') {
 
-        const viaPublishedPaperParams: ViaPublishedPaperRequestInterface = {
-          searchType: $event[1]['model'],
-          searchValue: $event[2]['viewModel']
-        };
-
         this.searchBody = {
-          elasticQuery: this.queryBuilderService.buildViaPublishedPaperQuery(viaPublishedPaperParams),
+          searchType: $event[1]['model'],
+          searchValue: $event[2]['viewModel'],
           page: this.pageIndex,
           size: this.pageSize,
         };
@@ -252,6 +226,9 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
 
+      this.searchBody.page = this.pageIndex;
+      this.searchBody.size = this.pageSize;
+      
       this.showSearchResults(this.searchService.pagination(this.searchType,
         this.searchBody));
 
