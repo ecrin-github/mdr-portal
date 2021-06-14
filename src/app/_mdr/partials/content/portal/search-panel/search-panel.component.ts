@@ -96,20 +96,6 @@ export class SearchPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.titleContains !== undefined) {
-      this.titleContains.nativeElement.value = '';
-    }
-
-    if (this.topicIncludes !== undefined) {
-      this.topicIncludes.nativeElement.value = '';
-    }
-
-    if (this.specificStudyValue !== undefined) {
-      this.specificStudyValue.nativeElement.value = '';
-    }
-
-    if (this.viaPublishedPaperValue !== undefined) {
-      this.viaPublishedPaperValue.nativeElement.value = '';
-    }
+    this.onClearSearchString();
   }
 }

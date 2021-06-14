@@ -1,5 +1,7 @@
+import {environment} from '../../../environments/environment.prod';
+
 export const DefaultLayoutConfig = {
-  demo: 'mdr-portal-layout-v.0.5.1',
+  demo: 'mdr-portal-layout-' + environment.appVersion,
   js: {
     breakpoints: {
       sm: 576,

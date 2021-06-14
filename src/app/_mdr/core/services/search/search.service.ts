@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {QueryBuilderService} from '../elasticsearch/query-builder.service';
-import {ElasticsearchService} from '../elasticsearch/elasticsearch.service';
+import {QueryService} from '../elasticsearch/query.service';
+import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -8,27 +9,19 @@ export class SearchService {
 
   constructor(
     private esQueryBuilder: QueryBuilderService,
-    private elasticsearchService: ElasticsearchService,
+    private queryService: QueryService,
   ) {
   }
 
-  pagination(searchType: string, searchBody: object, page: number, pageSize: number) {
+  pagination(searchType: string, searchBody: RawQueryInterface) {
 
-    searchBody['filters'] =  this.esQueryBuilder.buildElasticFiltersQuery();
-    searchBody['page_size'] = pageSize;
-    searchBody['page'] = page;
+    if (searchType === 'study_characteristics' || searchType === 'specific_study') {
 
-    if (searchType === 'study_characteristics') {
-
-      return this.elasticsearchService.getElasticStudyCharacteristics(searchBody);
-
-    } else if (searchType === 'specific_study') {
-
-      return this.elasticsearchService.getElasticSpecificStudy(searchBody);
+      return this.queryService.getRawQueryStudies(searchBody);
 
     } else if (searchType === 'via_published_paper') {
 
-      return this.elasticsearchService.getElasticViaPublishedPaper(searchBody);
+      return this.queryService.getRawQueryObjects(searchBody);
 
     } else {
       return null;

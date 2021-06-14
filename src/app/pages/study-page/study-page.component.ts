@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Study} from '../../_mdr/core/interfaces/dto/study.interface';
-import {ElasticsearchService} from '../../_mdr/core/services/elasticsearch/elasticsearch.service';
+import {Study} from '../../_mdr/core/interfaces/entities/study.interface';
+import {ApiService} from '../../_mdr/core/services/api/api.service';
 import {StatesService} from '../../_mdr/core/services/state/states.service';
 
 
@@ -14,12 +14,12 @@ export class StudyPageComponent implements OnInit {
 
   public studyId: number;
 
-  public study: Study | any;
+  public study: Study;
 
   constructor(
     private route: Router,
     private activeRoute: ActivatedRoute,
-    private elasticsearchService: ElasticsearchService,
+    private apiService: ApiService,
     private statesService: StatesService,
     private ref: ChangeDetectorRef,
   ) {
@@ -29,9 +29,9 @@ export class StudyPageComponent implements OnInit {
         this.studyId = +params['id'];
       }
     );
-    this.elasticsearchService.getElasticSelectedStudy(this.studyId).subscribe(data => {
-        this.study = data;
-        this.statesService.setStudy(data);
+    this.apiService.getByStudyId({studyId: this.studyId}).subscribe(data => {
+        this.study = data.data[0];
+        this.statesService.setStudy(data.data[0]);
       },
       error => {
         this.route.navigate(['error/not-found']);

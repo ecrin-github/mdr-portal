@@ -1,18 +1,13 @@
-import { Study } from './../dto/study.interface';
+import { Study } from '../entities/study.interface';
 
 
-export interface ElasticResponseInterface {
+export interface QueryResponseInterface {
   total: number;
+  page?: number;
+  size?: number;
   data: Array<Study> | [];
 }
 
-export interface RestApiResponseInterface {
-  total: number;
-  current_page: number;
-  size: number;
-  data: Array<Study> | [];
-}
-
-export interface SelectedStudyApiInterface {
+export interface SelectedStudyResponseInterface {
   data: Array<Study> | [];
 }

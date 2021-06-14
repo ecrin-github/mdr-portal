@@ -6,6 +6,7 @@ import {FileSaverService} from 'ngx-filesaver';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SubscriptionEvents} from '../../../../../../_mdr/core/states/subscription-events';
 import {TranslateService} from '@ngx-translate/core';
+import {RawQueryInterface} from '../../../../../../_mdr/core/interfaces/requests/raw-query.interface';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class SaveModalComponent implements OnInit {
   public errorMessage: string;
 
   public searchType: string;
-  public searchBody: object;
+  public searchBody: RawQueryInterface;
 
   public sessionData: SessionData;
   public sessionDataObject: SessionRecord;
@@ -45,8 +46,8 @@ export class SaveModalComponent implements OnInit {
 
   buildStateSessionObject(sessionName: string) {
     this.sessionData = {
-      search_type: this.searchType,
-      search_body: this.searchBody,
+      searchType: this.searchType,
+      searchBody: this.searchBody,
       filters: this.statesService.getFiltersList()
     };
     return this.sessionDataObject = {

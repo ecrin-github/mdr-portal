@@ -5,6 +5,7 @@ import {StatesService} from '../../../../../../_mdr/core/services/state/states.s
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subscription} from 'rxjs';
+import {SessionRecord} from '../../../../../../_mdr/core/interfaces/states/session.interface';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class LoadModalComponent implements OnInit {
 
   @ViewChild('sessionList') sessionListElement: any;
 
-  public sessionsList: Array<any>;
+  public sessionsList: Array<SessionRecord>;
 
   sessionUpdatingListEvent: Subscription;
 

@@ -16,6 +16,7 @@ export class HeaderMobileComponent implements OnInit, AfterViewInit {
   headerMobileAttributes = {};
   version: string;
   status: string;
+
   constructor(private layout: LayoutService) {
     this.version = environment.appVersion;
     this.status = `Beta version (${this.version})`;

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {DataObject} from '../../../../core/interfaces/entities/object.interface';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class StudyExpandingComponent implements OnInit {
   @Input() studyStatus: string;
   @Input() studyType: string;
   @Input() studyDescription: string;
-  @Input() dataObjects: Array<any>;
+  @Input() dataObjects: Array<DataObject>;
 
   public showMore: boolean;
   public showMoreDataSharingStatement: boolean;

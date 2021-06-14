@@ -1,8 +1,9 @@
-import { Study } from './../../interfaces/dto/study.interface';
-import { SessionRecord } from './../../interfaces/states/session.interface';
+import { Study } from '../../interfaces/entities/study.interface';
+import {SearchEvent, SessionData, SessionRecord} from '../../interfaces/states/session.interface';
 import {Injectable} from '@angular/core';
 import {States} from '../../states/states';
 import {DefaultStates} from '../../states/default.states';
+import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -30,7 +31,7 @@ export class StatesService {
     return this.states.initialSearchParamsEvent.getValue();
   }
 
-  setSearchEvent(searchEventData: { searchType: string, searchBody: object } ) {
+  setSearchEvent(searchEventData: { searchType: string, searchBody: RawQueryInterface } ) {
     this.states.searchEvent.next(searchEventData);
   }
 
@@ -46,7 +47,7 @@ export class StatesService {
     this.states.initialSearchParamsEvent.next(this.defaultStates.defaultSearchParamsEvent);
   }
 
-  setSessionData(value: object) {
+  setSessionData(value: SessionData) {
     this.states.sessionData.next(value);
   }
 

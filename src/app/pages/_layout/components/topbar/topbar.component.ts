@@ -13,6 +13,7 @@ import {ExportModalComponent} from './modals/export-modal/export-modal.component
 import {SaveModalComponent} from './modals/save-modal/save-modal.component';
 import {LoadModalComponent} from './modals/load-modal/load-modal.component';
 import {SingleStudyExportModalComponent} from './modals/single-study-export-modal/single-study-export-modal.component';
+import {RawQueryInterface} from '../../../../_mdr/core/interfaces/requests/raw-query.interface';
 
 
 @Component({
@@ -50,7 +51,11 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     this.statesService.setIsCleared(true);
 
     const searchType = '';
-    const searchBody = {};
+    const searchBody: RawQueryInterface = {
+      page: 0,
+      size: 10,
+      elasticQuery: {}
+    };
 
     this.statesService.setSearchEvent({searchType, searchBody});
 

@@ -12,7 +12,7 @@
         <strong [translate]="'SEARCH-PAGE.RESULTS'">Results: </strong> {{startFrom}} - {{onPage}} <span [translate]="">of</span> {{total}}.
       </ngb-alert>
     </p>
-    <p *ngIf="total === 0 && !loading">
+    <p *ngIf="total <= 0 && !loading">
       <ngb-alert [dismissible]="false" [type]="'primary'">
         <span [translate]="'SEARCH-PAGE.NO-RESULTS'"></span>
       </ngb-alert>
@@ -22,19 +22,19 @@
       <ng-container *ngFor="let study of pageSlice">
         <app-study-expanding
           [studyId]="study.id"
-          [studyTitle]="study.display_title"
-          [studyDescription]="study.brief_description"
-          [studyStatus]="study.study_status"
-          [studyType]="study.study_type"
-          [provenance]="study.provenance_string"
-          [dataSharingStatement]="study.data_sharing_statement"
-          [dataObjects]="study.linked_data_objects"
+          [studyTitle]="study.displayTitle"
+          [studyDescription]="study.briefDescription"
+          [studyStatus]="study.studyStatus"
+          [studyType]="study.studyType"
+          [provenance]="study.provenanceString"
+          [dataSharingStatement]="study.dataSharingStatement"
+          [dataObjects]="study.linkedDataObjects"
         ></app-study-expanding>
         <!--<app-study-card
           [studyId]="study.id"
-          [studyTitle]="study.display_title"
-          [studyDescription]="study.brief_description"
-          [provenance]="study.provenance_string"
+          [studyTitle]="study.displayTitle"
+          [studyDescription]="study.briefDescription"
+          [provenance]="study.provenanceString"
         ></app-study-card>-->
       </ng-container>
     </ng-container>

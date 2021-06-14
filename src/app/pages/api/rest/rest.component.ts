@@ -3,35 +3,41 @@ import {environment} from '../../../../environments/environment.prod';
 import {ApiService} from '../../../_mdr/core/services/api/api.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import {RawQueryInterface} from '../../../_mdr/core/interfaces/requests/raw-query.interface';
+import {Study, StudyRecordInterface} from '../../../_mdr/core/interfaces/entities/study.interface';
+import {ByStudyIdRequestInterface} from '../../../_mdr/core/interfaces/requests/by-study-id-request.interface';
+import {ByStudyCharacteristicsRequestInterface} from '../../../_mdr/core/interfaces/requests/by-study-characteristics-request.interface';
+import {SpecificStudyRequestInterface} from '../../../_mdr/core/interfaces/requests/specific-study-request.interface';
+import {ViaPublishedPaperRequestInterface} from '../../../_mdr/core/interfaces/requests/via-published-paper-request.interface';
 
 
 const specificStudyQuery = `{
-      "search_type": "...",
-      "search_value": "...",
+      "searchType": "...",
+      "searchValue": "...",
       "page": 0,
-      "page_size": 100
+      "size": 100
   }
 `;
 
 const studyCharacteristicsQuery = `{
-      "title_contains": "...",
-      "logical_operator": "and",
-      "topics_include": "...",
+      "titleContains": "...",
+      "logicalOperator": "and",
+      "topicsInclude": "...",
       "page": 0,
-      "page_size": 100
+      "size": 100
   }
 `;
 
 const viaPublishedPaperQuery = `{
-      "search_type": "...",
-      "search_value": "...",
+      "searchType": "...",
+      "searchValue": "...",
       "page": 0,
-      "page_size": 100
+      "size": 100
   }
 `;
 
 const selectedStudyQuery = `{
-      "study_id": 3000001
+      "studyId": 3000001
   }
 `;
 
@@ -57,7 +63,6 @@ export class RestComponent implements OnInit {
   public length: number;
 
   public searchType: string;
-  public searchQuery: object;
 
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 
@@ -81,15 +86,15 @@ export class RestComponent implements OnInit {
     }, 1);
   }
 
-  onShowData(data: Array<any>) {
+  onShowData(data: Array<Study>) {
     for (const study of data) {
-      let studyRecord: any;
+      let studyRecord: StudyRecordInterface;
       studyRecord = {
-        id: study['id'],
+        id: study.id,
         // tslint:disable-next-line:max-line-length
-        display_title: (study['display_title'] !== null && study['display_title'] !== undefined) ? study['display_title'] : 'None',
-        study_type: (study['study_type'] !== null && study['study_type'] !== undefined) ? study['study_type'] : 'None',
-        study_status: (study['study_status'] !== null && study['study_status'] !== undefined) ? study['study_status'] : 'None'
+        displayTitle: (study.displayTitle !== null && study.displayTitle !== undefined) ? study.displayTitle : 'None',
+        studyType: (study.studyType !== null && study.studyType !== undefined) ? study.studyType : 'None',
+        studyStatus: (study.studyStatus !== null && study.studyStatus !== undefined) ? study.studyStatus : 'None'
       };
       this.results.push(studyRecord);
     }
@@ -137,16 +142,16 @@ export class RestComponent implements OnInit {
 
     if (this.selectedOption === 'study-characteristics') {
       this.query = studyCharacteristicsQuery;
-      this.apiUrl = environment.hostname + environment.elasticSearchStudyCharacteristicsApiUrl;
+      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.studyCharacteristicsUrl;
     } else if (this.selectedOption === 'specific-study') {
       this.query = specificStudyQuery;
-      this.apiUrl = environment.hostname + environment.elasticSearchSpecificStudyApiUrl;
+      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.specificStudyUrl;
     } else if (this.selectedOption === 'via-published-paper') {
       this.query = viaPublishedPaperQuery;
-      this.apiUrl = environment.hostname + environment.elasticSearchViaPublishedPaperApiUrl;
+      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.viaPublishedPaperUrl;
     } else if (this.selectedOption === 'by-study-id') {
       this.query = selectedStudyQuery;
-      this.apiUrl = environment.hostname + environment.elasticSearchSelectedStudyApiUrl;
+      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.studyIdUrl;
     } else {
       this.error = true;
       this.message = 'No search option has been selected';
@@ -160,33 +165,35 @@ export class RestComponent implements OnInit {
     try{
 
       this.searchType = this.searchTypeElement.nativeElement.value;
-      this.searchQuery = JSON.parse(this.searchQueryElement.nativeElement.value);
+
 
       if (this.searchType === 'study-characteristics') {
 
-        if (!('logical_operator' in this.searchQuery)) {
+        const searchQuery: ByStudyCharacteristicsRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
+
+        if (!('logicalOperator' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "logical_operator" in the search query.';
+          this.message = 'Invalid key "logicalOperator" in the search query.';
         }
 
-        if (!('page' in this.searchQuery)) {
+        if (!('page' in searchQuery)) {
           this.error = true;
           this.message = 'Invalid key "page" in the search query.';
         }
 
-        if (!('page_size' in this.searchQuery)) {
+        if (!('size' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "page_size" in the search query.';
+          this.message = 'Invalid key "size" in the search query.';
         }
 
-        if (!('title_contains' in this.searchQuery)) {
+        if (!('titleContains' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "title_contains" in the search query.';
+          this.message = 'Invalid key "titleContains" in the search query.';
         }
 
-        if (!('topics_include' in this.searchQuery)) {
+        if (!('topicsInclude' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "topics_include" in the search query.';
+          this.message = 'Invalid key "topicsInclude" in the search query.';
         }
 
         if (!this.error) {
@@ -194,10 +201,10 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getStudyCharacteristicsApi(this.searchQuery).subscribe(data => {
+          this.apiService.getByStudyCharacteristics(searchQuery).subscribe(data => {
 
-            if (data['data'].length > 0) {
-              this.onShowData(data['data']);
+            if (data.total > 0) {
+              this.onShowData(data.data);
             } else {
               this.noResults();
             }
@@ -208,24 +215,26 @@ export class RestComponent implements OnInit {
 
       } else if (this.searchType === 'specific-study') {
 
-        if (!('search_type' in this.searchQuery)) {
+        const searchQuery: SpecificStudyRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
+
+        if (!('searchType' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "search_type" in the search query.';
+          this.message = 'Invalid key "searchType" in the search query.';
         }
 
-        if (!('search_value' in this.searchQuery)) {
+        if (!('searchValue' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "search_value" in the search query.';
+          this.message = 'Invalid key "searchValue" in the search query.';
         }
 
-        if (!('page' in this.searchQuery)) {
+        if (!('page' in searchQuery)) {
           this.error = true;
           this.message = 'Invalid key "page" in the search query.';
         }
 
-        if (!('page_size' in this.searchQuery)) {
+        if (!('size' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "page_size" in the search query.';
+          this.message = 'Invalid key "size" in the search query.';
         }
 
         if (!this.error) {
@@ -233,10 +242,10 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getSpecificStudyApi(this.searchQuery).subscribe(data => {
+          this.apiService.getSpecificStudy(searchQuery).subscribe(data => {
 
-            if (data['data'].length > 0) {
-              this.onShowData(data['data']);
+            if (data.total > 0) {
+              this.onShowData(data.data);
             } else {
               this.noResults();
             }
@@ -247,24 +256,26 @@ export class RestComponent implements OnInit {
 
       } else if (this.searchType === 'via-published-paper') {
 
-        if (!('search_type' in this.searchQuery)) {
+        const searchQuery: ViaPublishedPaperRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
+
+        if (!('searchType' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "search_type" in the search query.';
+          this.message = 'Invalid key "searchType" in the search query.';
         }
 
-        if (!('search_value' in this.searchQuery)) {
+        if (!('searchValue' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "search_value" in the search query.';
+          this.message = 'Invalid key "searchValue" in the search query.';
         }
 
-        if (!('page' in this.searchQuery)) {
+        if (!('page' in searchQuery)) {
           this.error = true;
           this.message = 'Invalid key "page" in the search query.';
         }
 
-        if (!('page_size' in this.searchQuery)) {
+        if (!('size' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "page_size" in the search query.';
+          this.message = 'Invalid key "size" in the search query.';
         }
 
         if (!this.error) {
@@ -272,10 +283,10 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getViaPublishedPaperApi(this.searchQuery).subscribe(data => {
+          this.apiService.getViaPublishedPaper(searchQuery).subscribe(data => {
 
-            if (data['data'].length > 0) {
-              this.onShowData(data['data']);
+            if (data.total > 0) {
+              this.onShowData(data.data);
             } else {
               this.noResults();
             }
@@ -285,10 +296,11 @@ export class RestComponent implements OnInit {
         }
 
       } else if (this.searchType === 'by-study-id') {
+        const searchQuery: ByStudyIdRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
 
-        if (!('study_id' in this.searchQuery)) {
+        if (!('studyId' in searchQuery)) {
           this.error = true;
-          this.message = 'Invalid key "study_id" in the search query.';
+          this.message = 'Invalid key "studyId" in the search query.';
         }
 
         if (!this.error) {
@@ -296,10 +308,10 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getSelectedStudyApi(this.searchQuery).subscribe(data => {
+          this.apiService.getByStudyId(searchQuery).subscribe(data => {
 
-            if (data['data'].length > 0) {
-              this.onShowData(data['data']);
+            if (data.data.length > 0) {
+              this.onShowData(data.data);
             } else {
               this.noResults();
             }
@@ -328,7 +340,7 @@ export class RestComponent implements OnInit {
     this.notFound = false;
     this.length = 0;
     this.results = [];
-    this.apiUrl = environment.hostname + environment.elasticSearchStudyCharacteristicsApiUrl;
+    this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.studyCharacteristicsUrl;
     this.query = studyCharacteristicsQuery;
   }
 

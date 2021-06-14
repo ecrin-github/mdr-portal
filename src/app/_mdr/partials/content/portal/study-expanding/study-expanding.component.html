@@ -62,15 +62,15 @@
         <ng-container *ngFor="let dataObject of dataObjects">
           <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
             <app-data-object
-              [dataObjectTitle]="dataObject.display_title"
+              [dataObjectTitle]="dataObject.displayTitle"
               [dataObjectId]="dataObject.id"
-              [dataObjectUrl]="dataObject.object_url"
-              [dataObjectAccessUrl]="(dataObject.access_details !== null && dataObject.access_details !== undefined) ? dataObject.access_details.url : null"
-              [dataObjectAccessType]="dataObject.access_type"
-              [dataObjectType]="dataObject.object_type"
-              [dataObjectYear]="dataObject.publication_year"
-              [provenance]="dataObject.provenance_string"
-              [objectInstances]="dataObject.object_instances"
+              [dataObjectUrl]="dataObject.objectUrl"
+              [dataObjectAccessUrl]="(dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) ? dataObject.accessDetails.url : null"
+              [dataObjectAccessType]="dataObject.accessType"
+              [dataObjectType]="dataObject.objectType"
+              [dataObjectYear]="dataObject.publicationYear"
+              [provenance]="dataObject.provenanceString"
+              [objectInstances]="dataObject.objectInstances"
             ></app-data-object>
           </ng-container>
         </ng-container>

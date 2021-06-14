@@ -1,28 +1,24 @@
 export const environment = {
   production: true,
-  appVersion: 'v. 0.5.1',
+  appVersion: 'v.0.6.2',
 
   // HOSTNAME
-  // hostname: 'http://localhost:8000/',
-  hostname: 'http://51.210.99.18:8001/',
+  hostname: 'https://localhost:5001/',
+  // hostname: 'http://51.210.99.18:8001/',
 
-  // ElasticSearch
-  elasticSearchStudyCharacteristicsUrl: 'search/study-characteristics',
-  elasticSearchSpecificStudyUrl: 'search/specific-study',
-  elasticSearchViaPublishedPaperUrl: 'search/via-published-paper',
-  elasticSearchAllStudyCharacteristicsUrl: 'search/all-study-characteristics',
-  elasticSearchAllSpecificStudyUrl: 'search/all-specific-study',
-  elasticSearchAllViaPublishedPaperUrl: 'search/all-via-published-paper',
-  elasticSearchSelectedStudyUrl: 'search/selected-study',
+  // Back-end configs
+  apiBaseUrl: 'api/',
+  apiVersion: 'v1',
+  rawQueryBaseUrl: 'raw-query-api/',
+  rawQueryVersion: 'v1',
 
-  // Rest API
-  elasticSearchStudyCharacteristicsApiUrl: 'rest-api/v1/study-characteristics',
-  elasticSearchSpecificStudyApiUrl: 'rest-api/v1/specific-study',
-  elasticSearchViaPublishedPaperApiUrl: 'rest-api/v1/via-published-paper',
-  elasticSearchSelectedStudyApiUrl: 'rest-api/v1/selected-study',
+  // API Query URLs
+  specificStudyUrl: '/specific-study',
+  studyCharacteristicsUrl: '/study-characteristics',
+  viaPublishedPaperUrl: '/via-published-paper',
+  studyIdUrl: '/study-id',
 
-  // ES query based APIs
-  elasticQueryBasedStudyUrl: 'es-query-based/v1/studies',
-  elasticQueryBasedObjectUrl: 'es-query-based/v1/objects',
-
+  // Search Raw Query URLs
+  rawQueryStudyUrl: '/study',
+  rawQueryObjectUrl: '/object',
 };

@@ -8,6 +8,13 @@ import {SearchService} from '../../../core/services/search/search.service';
 import {PageEvent} from '@angular/material/paginator';
 import {Observable, Subscription} from 'rxjs';
 import {FiltersListComponent} from './filters-list/filters-list.component';
+import {QueryResponseInterface} from '../../../core/interfaces/responses/api-response.interface';
+import {RawQueryInterface} from '../../../core/interfaces/requests/raw-query.interface';
+import {QueryBuilderService} from '../../../core/services/elasticsearch/query-builder.service';
+import {ByStudyCharacteristicsRequestInterface} from '../../../core/interfaces/requests/by-study-characteristics-request.interface';
+import {SpecificStudyRequestInterface} from '../../../core/interfaces/requests/specific-study-request.interface';
+import {ViaPublishedPaperRequestInterface} from '../../../core/interfaces/requests/via-published-paper-request.interface';
+import {Study} from '../../../core/interfaces/entities/study.interface';
 
 
 @Component({
@@ -28,10 +35,10 @@ export class MainPageContentComponent implements OnInit {
   public pageSize: number;
   public pageIndex: number;
   public pageSizeOptions = [10, 25, 50, 100];
-  public pageSlice: Array<any> = [];
+  public pageSlice: Array<Study> = [];
 
   public searchType: string;
-  public searchBody: object;
+  public searchBody: RawQueryInterface;
 
   clearEventSubscription: Subscription;
   isFilteredEventSubscription: Subscription;
@@ -46,7 +53,8 @@ export class MainPageContentComponent implements OnInit {
     private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
     private searchService: SearchService,
-    private filtersListComponent: FiltersListComponent
+    private filtersListComponent: FiltersListComponent,
+    private queryBuilderService: QueryBuilderService,
   ) {
     ref.detach();
     this.clearEventSubscription = this.subscriptionEvents.getClearEventSubject().subscribe(() => {
@@ -87,9 +95,10 @@ export class MainPageContentComponent implements OnInit {
     this.loading = true;
     if (searchResults !== null) {
       searchResults.subscribe(
-        (data: Array<any>) => {
-          this.pageSlice = data['data'];
-          this.total = data['total'];
+        (data: QueryResponseInterface) => {
+          console.log(data);
+          this.pageSlice = data.data;
+          this.total = data.total;
           this.onPage = this.searchService.onPageChecker(this.total, this.pageIndex, this.pageSize);
           this.startFrom = this.searchService.startFromChecker(this.onPage, this.pageSize);
           this.loading = false;
@@ -106,11 +115,11 @@ export class MainPageContentComponent implements OnInit {
 
     this.statesService.setIsCleared(false);
 
-    this.searchType = searchStateData['data']['search_type'];
-    this.searchBody = searchStateData['data']['search_body'];
+    this.searchType = searchStateData.searchType;
+    this.searchBody = searchStateData.searchBody;
 
-    this.pageSize = searchStateData['data']['search_body']['page_size'];
-    this.pageIndex = searchStateData['data']['search_body']['page'];
+    this.pageSize = searchStateData.searchBody.size;
+    this.pageIndex = searchStateData.searchBody.page;
 
     if (this.statesService.getFiltersList().length > 0) {
       this.statesService.setIsFiltered(true);
@@ -122,9 +131,7 @@ export class MainPageContentComponent implements OnInit {
 
     this.showSearchResults(this.searchService.pagination(
       this.searchType,
-      this.searchBody,
-      this.pageIndex,
-      this.pageSize
+      this.searchBody
     ));
 
   }
@@ -135,33 +142,56 @@ export class MainPageContentComponent implements OnInit {
     this.onClearBeforeSearch();
 
     this.searchType = $event[0]['model'];
-    this.searchBody = {};
+    this.searchBody = {
+      elasticQuery: {},
+      page: this.pageIndex,
+      size: this.pageSize,
+    };
 
     this.statesService.setIsCleared(false);
     this.loading = true;
 
     if (!this.statesService.getIsCleared()) {
       if (this.searchType === 'study_characteristics') {
-        this.searchBody = {
-          title_contains: $event[1]['viewModel'],
-          logical_operator: $event[2]['model'],
-          topics_include: $event[3]['viewModel']
+
+        const studyCharacteristicsParams: ByStudyCharacteristicsRequestInterface = {
+          page: this.pageIndex,
+          size: this.pageSize,
+          titleContains: $event[1]['viewModel'],
+          logicalOperator: $event[2]['model'],
+          topicsInclude: $event[3]['viewModel']
         };
 
+        this.searchBody = {
+          elasticQuery: this.queryBuilderService.buildByStudyCharacteristicsQuery(studyCharacteristicsParams),
+          page: this.pageIndex,
+          size: this.pageSize,
+        };
+        console.log(JSON.stringify(this.searchBody.elasticQuery));
       } else if (this.searchType === 'specific_study') {
 
-        const searchType = parseInt($event[1]['model'], 10);
+        const specificStudyParams: SpecificStudyRequestInterface = {
+          searchType: parseInt($event[1]['model'], 10),
+          searchValue: $event[2]['viewModel']
+        };
 
         this.searchBody = {
-          search_type: searchType,
-          search_value: $event[2]['viewModel']
+          elasticQuery: this.queryBuilderService.buildSpecificStudyQuery(specificStudyParams),
+          page: this.pageIndex,
+          size: this.pageSize,
         };
 
       } else if (this.searchType === 'via_published_paper') {
 
+        const viaPublishedPaperParams: ViaPublishedPaperRequestInterface = {
+          searchType: $event[1]['model'],
+          searchValue: $event[2]['viewModel']
+        };
+
         this.searchBody = {
-          search_type: $event[1]['model'],
-          search_value: $event[2]['viewModel']
+          elasticQuery: this.queryBuilderService.buildViaPublishedPaperQuery(viaPublishedPaperParams),
+          page: this.pageIndex,
+          size: this.pageSize,
         };
       }
 
@@ -169,9 +199,7 @@ export class MainPageContentComponent implements OnInit {
 
       this.showSearchResults(this.searchService.pagination(
         this.searchType,
-        this.searchBody,
-        this.pageIndex,
-        this.pageSize
+        this.searchBody
       ));
 
     } else {
@@ -195,7 +223,7 @@ export class MainPageContentComponent implements OnInit {
       });
     }
 
-    if (this.searchBody === {}) {
+    if (this.searchBody === null || this.searchBody === undefined) {
       let message = '';
       let close = '';
 
@@ -217,7 +245,6 @@ export class MainPageContentComponent implements OnInit {
     }
   }
 
-
   getFilteredData(){
 
     this.pageIndex = 0;
@@ -226,11 +253,10 @@ export class MainPageContentComponent implements OnInit {
     if (!this.statesService.getIsCleared()) {
 
       this.showSearchResults(this.searchService.pagination(this.searchType,
-        this.searchBody, this.pageIndex, this.pageSize));
+        this.searchBody));
 
     }
   }
-
 
   onClearFiltersListener(){
 
@@ -240,7 +266,7 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
       this.showSearchResults(this.searchService.pagination(this.searchType,
-        this.searchBody, this.pageIndex, this.pageSize));
+        this.searchBody));
     }
   }
 
@@ -270,7 +296,6 @@ export class MainPageContentComponent implements OnInit {
 
   }
 
-
   onPageChange(event: PageEvent){
 
     this.pageIndex = event.pageIndex;
@@ -278,12 +303,14 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
 
+      this.searchBody.page = this.pageIndex;
+      this.searchBody.size = this.pageSize;
+
       this.showSearchResults(this.searchService.pagination(this.searchType,
-        this.searchBody, this.pageIndex, this.pageSize));
+        this.searchBody));
 
     }
   }
-
 
   ngOnInit(): void {
     this.setInitialSearchParams();

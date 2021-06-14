@@ -3,12 +3,12 @@
     <div class="card card-custom card-stretch" style="height: 100% !important;">
       <ng-container *ngIf="study">
         <div class="card-body">
-          <h1 class="mb-5">{{study.display_title}}</h1>
+          <h1 class="mb-5">{{study.displayTitle}}</h1>
           <span
-            *ngIf="study.provenance_string !== null && study.provenance_string !== undefined"
+            *ngIf="study.provenanceString !== null && study.provenanceString !== undefined"
             style="color: #8c8c8c; font-size: 1em;"
           >
-            {{study.provenance_string}}
+            {{study.provenanceString}}
           </span>
 
           <mat-divider class="mt-5"></mat-divider>
@@ -17,11 +17,11 @@
             <div class="col-xl-12">
               <h3>{{'STUDY-PAGE.STUDY-DESCRIPTION' | translate: {Default: 'Study description'} }}</h3>
               <p align="justify">
-                <ng-container *ngIf="study.brief_description !== null && study.brief_description !== undefined">
-                  {{study.brief_description}}
+                <ng-container *ngIf="study.briefDescription !== null && study.briefDescription !== undefined">
+                  {{study.briefDescription}}
                 </ng-container>
 
-                <ng-container *ngIf="study.brief_description === null || study.brief_description === undefined">
+                <ng-container *ngIf="study.briefDescription === null || study.briefDescription === undefined">
                   None
                 </ng-container>
               </p>
@@ -34,11 +34,11 @@
             <div class="col-xl-12">
               <h3>Data sharing statement</h3>
               <p align="justify">
-                <ng-container *ngIf="study.data_sharing_statement !== null && study.data_sharing_statement !== undefined">
-                  {{study.data_sharing_statement}}
+                <ng-container *ngIf="study.dataSharingStatement !== null && study.dataSharingStatement !== undefined">
+                  {{study.dataSharingStatement}}
                 </ng-container>
 
-                <ng-container *ngIf="study.data_sharing_statement === null || study.data_sharing_statement === undefined">
+                <ng-container *ngIf="study.dataSharingStatement === null || study.dataSharingStatement === undefined">
                   None
                 </ng-container>
               </p>
@@ -52,11 +52,11 @@
               <h3>{{'STUDY-PAGE.STUDY-TYPE' | translate: {Default: 'Study type'} }}</h3>
               <p>
                 <ng-container
-                  *ngIf="study.study_type !== null && study.study_type !== undefined && study.study_type !== ''">
-                  {{study.study_type}}
+                  *ngIf="study.studyType !== null && study.studyType !== undefined && study.studyType !== ''">
+                  {{study.studyType}}
                 </ng-container>
                 <ng-container
-                  *ngIf="study.study_type === null || study.study_type === undefined || study.study_type === ''">
+                  *ngIf="study.studyType === null || study.studyType === undefined || study.studyType === ''">
                   None
                 </ng-container>
               </p>
@@ -65,11 +65,11 @@
               <h3>{{'STUDY-PAGE.STUDY-STATUS' | translate: {Default: 'Study status'} }}</h3>
               <p>
                 <ng-container
-                  *ngIf="study.study_status !== null && study.study_status !== undefined && study.study_status !== ''">
-                  {{study.study_status}}
+                  *ngIf="study.studyStatus !== null && study.studyStatus !== undefined && study.studyStatus !== ''">
+                  {{study.studyStatus}}
                 </ng-container>
                 <ng-container
-                  *ngIf="study.study_status === null || study.study_status === undefined || study.study_status === ''">
+                  *ngIf="study.studyStatus === null || study.studyStatus === undefined || study.studyStatus === ''">
                   None
                 </ng-container>
               </p>
@@ -79,13 +79,13 @@
           <mat-divider></mat-divider>
 
           <div class="row mt-5 mb-3">
-            <ng-container *ngIf="study.study_features !== null || study.study_features !== undefined">
-              <ng-container *ngFor="let feature of study.study_features">
+            <ng-container *ngIf="study.studyFeatures !== null || study.studyFeatures !== undefined">
+              <ng-container *ngFor="let feature of study.studyFeatures">
                 <div class="col-xl-6">
                   <h3
-                    *ngIf="feature.feature_type !== null && feature.feature_type !== undefined">{{feature.feature_type}}</h3>
+                    *ngIf="feature.featureType !== null && feature.featureType !== undefined">{{feature.featureType}}</h3>
                   <p
-                    *ngIf="feature.feature_value !== null && feature.feature_value !== undefined">{{feature.feature_value}}</p>
+                    *ngIf="feature.featureValue !== null && feature.featureValue !== undefined">{{feature.featureValue}}</p>
                 </div>
               </ng-container>
               <!--<ng-container *ngIf="study.study_features.length > 0">
@@ -100,17 +100,17 @@
             <div class="col-xl-12">
               <h3>{{'STUDY-PAGE.STUDY-IDENTIFIERS.TITLE' | translate: {Default: 'Study identifier(s)'} }}</h3>
 
-              <ng-container *ngIf="study.study_identifiers !== null && study.study_identifiers !== undefined">
-                <ng-container *ngIf="study.study_identifiers.length > 0">
-                  <mat-expansion-panel *ngFor="let studyIdentifier of study.study_identifiers" class="mt-3 mb-3">
+              <ng-container *ngIf="study.studyIdentifiers !== null && study.studyIdentifiers !== undefined">
+                <ng-container *ngIf="study.studyIdentifiers.length > 0">
+                  <mat-expansion-panel *ngFor="let studyIdentifier of study.studyIdentifiers" class="mt-3 mb-3">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
                         <ng-container
-                          *ngIf="studyIdentifier.identifier_value !== null && studyIdentifier.identifier_value !== undefined">
-                          {{studyIdentifier.identifier_value}}
+                          *ngIf="studyIdentifier.identifierValue !== null && studyIdentifier.identifierValue !== undefined">
+                          {{studyIdentifier.identifierValue}}
                         </ng-container>
                         <ng-container
-                          *ngIf="studyIdentifier.identifier_value === null || studyIdentifier.identifier_value === undefined">
+                          *ngIf="studyIdentifier.identifierValue === null || studyIdentifier.identifierValue === undefined">
                           None
                         </ng-container>
                       </mat-panel-title>
@@ -120,39 +120,39 @@
 
                     <div class="row mt-5">
                       <div class="col-xl-4 mb-5"
-                           *ngIf="studyIdentifier.identifier_type !== null && studyIdentifier.identifier_type !== undefined">
+                           *ngIf="studyIdentifier.identifierType !== null && studyIdentifier.identifierType !== undefined">
                         <strong
                           style="font-size: 1.15em;">{{'STUDY-PAGE.STUDY-IDENTIFIERS.TYPE' | translate: {Default: 'Identifier type:'} }}</strong><br/>
-                        <span>{{studyIdentifier.identifier_type}}</span>
+                        <span>{{studyIdentifier.identifierType}}</span>
                       </div>
                       <br/>
                       <div class="col-xl-4 mb-5"
-                           *ngIf="studyIdentifier.identifier_value !== null && studyIdentifier.identifier_value !== undefined">
+                           *ngIf="studyIdentifier.identifierType !== null && studyIdentifier.identifierType !== undefined">
                         <strong
                           style="font-size: 1.15em;">{{'STUDY-PAGE.STUDY-IDENTIFIERS.VALUE' | translate: {Default: 'Identifier value:'} }}</strong><br/>
-                        <span>{{studyIdentifier.identifier_value}}</span>
+                        <span>{{studyIdentifier.identifierType}}</span>
                       </div>
                       <br/>
                       <div class="col-xl-4 mb-5"
-                           *ngIf="studyIdentifier.identifier_date !== null && studyIdentifier.identifier_date !== undefined">
+                           *ngIf="studyIdentifier.identifierDate !== null && studyIdentifier.identifierDate !== undefined">
                         <strong
                           style="font-size: 1.15em;">{{'STUDY-PAGE.STUDY-IDENTIFIERS.DATE' | translate: {Default: 'Identifier date:'} }}</strong><br/>
-                        <span>{{studyIdentifier.identifier_date}}</span>
+                        <span>{{studyIdentifier.identifierDate}}</span>
                       </div>
                       <br/>
                       <div class="col-xl-4 mb-5"
-                           *ngIf="studyIdentifier.identifier_org !== null && studyIdentifier.identifier_org !== undefined">
+                           *ngIf="studyIdentifier.identifierOrg !== null && studyIdentifier.identifierOrg !== undefined">
                         <strong
                           style="font-size: 1.15em;">{{'STUDY-PAGE.STUDY-IDENTIFIERS.ORGANIZATION' | translate: {Default: 'Identifier organization:'} }}</strong><br/>
-                        <span>{{studyIdentifier.identifier_org}}</span>
+                        <span>{{studyIdentifier.identifierOrg}}</span>
                       </div>
                       <br/>
                       <div class="col-xl-4 mb-5"
-                           *ngIf="studyIdentifier.identifier_link !== null && studyIdentifier.identifier_link !== undefined">
+                           *ngIf="studyIdentifier.identifierLink !== null && studyIdentifier.identifierLink !== undefined">
                         <strong
                           style="font-size: 1.15em;">{{'STUDY-PAGE.STUDY-IDENTIFIERS.LINK' | translate: {Default: 'Identifier link:'} }}</strong><br/>
-                        <a href="{{studyIdentifier.identifier_link}}"
-                           target="_blank">{{studyIdentifier.identifier_link}}</a>
+                        <a href="{{studyIdentifier.identifierLink}}"
+                           target="_blank">{{studyIdentifier.identifierLink}}</a>
                       </div>
                       <br/>
                     </div>
@@ -171,19 +171,19 @@
 
               <hr style="margin-top: 10px !important; margin-bottom: 10px !important;"/>
 
-              <ng-container *ngIf="study.linked_data_objects">
-                <ng-container *ngFor="let dataObject of study.linked_data_objects">
+              <ng-container *ngIf="study.linkedDataObjects">
+                <ng-container *ngFor="let dataObject of study.linkedDataObjects">
                   <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
                     <app-data-object
-                      [dataObjectTitle]="dataObject.display_title"
+                      [dataObjectTitle]="dataObject.displayTitle"
                       [dataObjectId]="dataObject.id"
-                      [dataObjectUrl]="dataObject.object_url"
-                      [dataObjectAccessUrl]="(dataObject.access_details !== null && dataObject.access_details !== undefined) ? dataObject.access_details.url : null"
-                      [dataObjectAccessType]="dataObject.access_type"
-                      [dataObjectType]="dataObject.object_type"
-                      [dataObjectYear]="dataObject.publication_year"
-                      [provenance]="dataObject.provenance_string"
-                      [objectInstances]="dataObject.object_instances"
+                      [dataObjectUrl]="dataObject.objectUrl"
+                      [dataObjectAccessUrl]="(dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) ? dataObject.accessDetails.url : null"
+                      [dataObjectAccessType]="dataObject.accessType"
+                      [dataObjectType]="dataObject.objectType"
+                      [dataObjectYear]="dataObject.publicationYear"
+                      [provenance]="dataObject.provenanceString"
+                      [objectInstances]="dataObject.objectInstances"
                     ></app-data-object>
                   </ng-container>
                 </ng-container>
