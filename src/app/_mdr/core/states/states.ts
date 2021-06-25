@@ -1,8 +1,10 @@
 import {BehaviorSubject} from 'rxjs';
 import {DefaultStates} from './default.states';
 import {Injectable} from '@angular/core';
-import {SearchEvent, SearchParams, SessionData, SessionRecord} from '../interfaces/states/session.interface';
+import {SessionDataInterface, SessionRecordInterface} from '../interfaces/states/session.interface';
 import {Study} from '../interfaces/entities/study.interface';
+import {FilterSampleInterface} from '../interfaces/filters/filter-sample.interface';
+import {SearchParamsInterface} from '../interfaces/search-params/search-params.interface';
 
 @Injectable({providedIn: 'root'})
 export class States {
@@ -18,22 +20,19 @@ export class States {
   public isFiltered: BehaviorSubject<boolean> =
       new BehaviorSubject<boolean>(this.defaultStates.defaultIsFiltered);
 
-  public searchEvent: BehaviorSubject<SearchEvent> =
-      new BehaviorSubject<SearchEvent>(this.defaultStates.defaultSearchEvent);
+  public searchParams: BehaviorSubject<SearchParamsInterface> =
+      new BehaviorSubject<SearchParamsInterface>(this.defaultStates.defaultSearchParams);
 
-  public initialSearchParamsEvent: BehaviorSubject<SearchParams> =
-      new BehaviorSubject<SearchParams>(this.defaultStates.defaultSearchParamsEvent);
+  public filtersList: BehaviorSubject<Array<FilterSampleInterface>> =
+      new BehaviorSubject<Array<FilterSampleInterface>>(this.defaultStates.defaultFiltersList);
 
-  public filtersList: BehaviorSubject<Array<any>> =
-      new BehaviorSubject<Array<any>>(this.defaultStates.defaultFiltersList);
+  public singleStudy: BehaviorSubject<Study> =
+      new BehaviorSubject<Study>(this.defaultStates.defaultSingleStudy);
 
-  public singleStudyData: BehaviorSubject<Study> =
-      new BehaviorSubject<Study>(this.defaultStates.defaultSingleStudyData);
+  public activeSession: BehaviorSubject<SessionDataInterface> =
+      new BehaviorSubject<SessionDataInterface>(this.defaultStates.defaultActiveSession);
 
-  public sessionData: BehaviorSubject<SessionData> =
-      new BehaviorSubject<SessionData>(this.defaultStates.defaultSessionData);
-
-  public sessionsList: BehaviorSubject<Array<SessionRecord>> =
-      new BehaviorSubject<Array<SessionRecord>>(this.defaultStates.defaultSessionsListValue);
+  public sessionsList: BehaviorSubject<Array<SessionRecordInterface>> =
+      new BehaviorSubject<Array<SessionRecordInterface>>(this.defaultStates.defaultSessionsList);
 
 }

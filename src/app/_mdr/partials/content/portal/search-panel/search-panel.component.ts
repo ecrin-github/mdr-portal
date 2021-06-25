@@ -27,7 +27,7 @@ export class SearchPanelComponent implements OnInit {
   sessionUploadEvent: Subscription;
 
   constructor(
-    private statesFunctions: StatesService,
+    private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
     private ref: ChangeDetectorRef,
   ) {
@@ -46,25 +46,23 @@ export class SearchPanelComponent implements OnInit {
   }
 
   onSessionUpload() {
-    const formData = this.statesFunctions.getSessionData();
-    const searchType = formData['data']['search_type'];
-    const searchBody = formData['data']['search_body'];
+    const formData = this.statesService.getActiveSession();
 
-    if (searchType === 'study_characteristics') {
+    if (formData.searchType === 'study_characteristics') {
       if (this.titleContains !== undefined) {
-        this.titleContains.nativeElement.value = searchBody['title_contains'];
+        this.titleContains.nativeElement.value = formData.searchBody['titleContains'];
       }
 
       if (this.topicIncludes !== undefined) {
-        this.topicIncludes.nativeElement.value = searchBody['topics_include'];
+        this.topicIncludes.nativeElement.value = formData.searchBody['topicsInclude'];
       }
-    } else if (searchType === 'specific_study') {
+    } else if (formData.searchType === 'specific_study') {
       if (this.specificStudyValue !== undefined) {
-        this.specificStudyValue.nativeElement.value = searchBody['value'];
+        this.specificStudyValue.nativeElement.value = formData.searchBody['searchValue'];
       }
-    } else if (searchType === 'via_published_paper') {
+    } else if (formData.searchType === 'via_published_paper') {
       if (this.viaPublishedPaperValue !== undefined) {
-        this.viaPublishedPaperValue.nativeElement.value = searchBody['value'];
+        this.viaPublishedPaperValue.nativeElement.value = formData.searchBody['searchValue'];
       }
     }
   }

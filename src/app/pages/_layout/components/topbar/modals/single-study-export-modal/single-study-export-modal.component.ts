@@ -3,8 +3,7 @@ import {PdfService} from '../../../../../../_mdr/core/services/portal/pdf.servic
 import {StatesService} from '../../../../../../_mdr/core/services/state/states.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FileSaverService} from 'ngx-filesaver';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {TranslateService} from '@ngx-translate/core';
+import {SnackbarService} from '../../../../../../_mdr/core/services/snackbar/snackbar.service';
 
 
 @Component({
@@ -18,22 +17,18 @@ export class SingleStudyExportModalComponent implements OnInit {
     private statesService: StatesService,
     private fileSaver: FileSaverService,
     public activeModal: NgbActiveModal,
-    public snackBar: MatSnackBar,
-    public translate: TranslateService,
+    private snackbarService: SnackbarService,
   ) {
   }
 
   generateJson() {
 
-    let message = '';
-    let close = '';
-
-    if (this.statesService.getStudy()) {
+    if (this.statesService.getSingleStudy()) {
 
       let filename: string;
       filename = 'Study.json';
 
-      const studyData = this.statesService.getStudy();
+      const studyData = this.statesService.getSingleStudy();
 
       const fileType = this.fileSaver.genType(filename);
       const blob = new Blob([JSON.stringify(studyData)], {type: fileType});
@@ -42,38 +37,17 @@ export class SingleStudyExportModalComponent implements OnInit {
       this.closeModal();
 
     } else {
-      this.translate.get('MODALS.MESSAGES.NO-STUDY').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
-
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.NO-STUDY', 'SNACKBAR.CLOSE');
     }
   }
 
   generatePdf(){
 
-    let message = '';
-    let close = '';
-
-    if (this.statesService.getStudy()) {
-      this.pdfService.singleStudyPDFGenerator(this.statesService.getStudy());
+    if (this.statesService.getSingleStudy()) {
+      this.pdfService.singleStudyPDFGenerator(this.statesService.getSingleStudy());
       this.closeModal();
     } else {
-      this.translate.get('MODALS.MESSAGES.NO-STUDY').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
-
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.NO-STUDY', 'SNACKBAR.CLOSE');
     }
   }
 

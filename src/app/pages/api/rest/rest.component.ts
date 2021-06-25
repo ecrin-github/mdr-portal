@@ -3,7 +3,6 @@ import {environment} from '../../../../environments/environment.prod';
 import {ApiService} from '../../../_mdr/core/services/api/api.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {RawQueryInterface} from '../../../_mdr/core/interfaces/requests/raw-query.interface';
 import {Study, StudyRecordInterface} from '../../../_mdr/core/interfaces/entities/study.interface';
 import {ByStudyIdRequestInterface} from '../../../_mdr/core/interfaces/requests/by-study-id-request.interface';
 import {ByStudyCharacteristicsRequestInterface} from '../../../_mdr/core/interfaces/requests/by-study-characteristics-request.interface';

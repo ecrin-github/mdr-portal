@@ -1,7 +1,11 @@
-import {StudyFiltersSubGroups, StudyFiltersGroups} from '../interfaces/filters/study-filters.interface';
+import {
+  StudyFiltersSubgroupsInterface,
+  StudyFiltersGroupsInterface,
+  StudyFiltersParamsInterface
+} from '../interfaces/filters/study-filters.interface';
 
 
-const studyTypes: Array<any> = [
+const studyTypes: Array<StudyFiltersParamsInterface> = [
   {
     id: 11,
     value: 'Interventional',
@@ -161,7 +165,7 @@ const studyStatuses: Array<any> = [
   }
 ];
 
-const genderEligibility: Array<any> = [
+const genderEligibility: Array<StudyFiltersParamsInterface> = [
   {
     id: 900,
     value: 'All',
@@ -199,11 +203,11 @@ const genderEligibility: Array<any> = [
   }
 ];
 
-const StudyFiltersGeneral: StudyFiltersSubGroups[] = [
+const StudyFiltersGeneral: Array<StudyFiltersSubgroupsInterface> = [
   {
     id: 1,
-    subgroup_name: 'Type',
-    checkbox_name: 'study_type',
+    subgroupName: 'Type',
+    checkboxName: 'study_type',
     isSelected: true,
     translate: 'FILTERS.STUDIES.TYPES.TITLE',
     fieldName: 'study_type',
@@ -214,8 +218,8 @@ const StudyFiltersGeneral: StudyFiltersSubGroups[] = [
   },
   {
     id: 2,
-    subgroup_name: 'Status',
-    checkbox_name: 'study_status',
+    subgroupName: 'Status',
+    checkboxName: 'study_status',
     isSelected: true,
     translate: 'FILTERS.STUDIES.STATUSES.TITLE',
     fieldName: 'study_status',
@@ -226,8 +230,8 @@ const StudyFiltersGeneral: StudyFiltersSubGroups[] = [
   },
   {
     id: 3,
-    subgroup_name: 'Gender eligibility',
-    checkbox_name: 'gender_elig',
+    subgroupName: 'Gender eligibility',
+    checkboxName: 'gender_elig',
     isSelected: true,
     translate: 'FILTERS.STUDIES.GENDER.TITLE',
     fieldName: 'study_gender_elig',
@@ -239,7 +243,7 @@ const StudyFiltersGeneral: StudyFiltersSubGroups[] = [
 ];
 
 
-const studyPhase: Array<any> = [
+const studyPhase: Array<StudyFiltersParamsInterface> = [
   {
     id: 100,
     name: 'Not applicable',
@@ -305,7 +309,7 @@ const studyPhase: Array<any> = [
   }
 ];
 
-const interventionalModel: Array<any> = [
+const interventionalModel: Array<StudyFiltersParamsInterface> = [
   {
     id: 300,
     name: 'Single group assignment',
@@ -350,7 +354,7 @@ const interventionalModel: Array<any> = [
   }
 ];
 
-const allocationType: Array<any> = [
+const allocationType: Array<StudyFiltersParamsInterface> = [
   {
     id: 200,
     name: 'Not applicable',
@@ -381,7 +385,7 @@ const allocationType: Array<any> = [
   }
 ];
 
-const primaryPurpose: Array<any> = [
+const primaryPurpose: Array<StudyFiltersParamsInterface> = [
   {
     id: 400,
     name: 'Treatment',
@@ -461,7 +465,7 @@ const primaryPurpose: Array<any> = [
   }
 ];
 
-const masking: Array<any> = [
+const masking: Array<StudyFiltersParamsInterface> = [
   {
     id: 500,
     name: 'None (Open Label)',
@@ -520,11 +524,11 @@ const masking: Array<any> = [
   }
 ];
 
-const StudyFiltersInterventional: StudyFiltersSubGroups[] = [
+const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
   {
     id: 1,
-    subgroup_name: 'Phase',
-    checkbox_name: 'phase',
+    subgroupName: 'Phase',
+    checkboxName: 'phase',
     isSelected: true,
     values: studyPhase,
     translate: 'FILTERS.STUDIES.PHASES.TITLE',
@@ -535,8 +539,8 @@ const StudyFiltersInterventional: StudyFiltersSubGroups[] = [
   },
   {
     id: 2,
-    subgroup_name: 'Intervention model',
-    checkbox_name: 'intervention_model',
+    subgroupName: 'Intervention model',
+    checkboxName: 'intervention_model',
     isSelected: true,
     translate: 'FILTERS.STUDIES.INTERVENTIONAL-MODELS.TITLE',
     values: interventionalModel,
@@ -547,8 +551,8 @@ const StudyFiltersInterventional: StudyFiltersSubGroups[] = [
   },
   {
     id: 3,
-    subgroup_name: 'Allocation type',
-    checkbox_name: 'allocation_type',
+    subgroupName: 'Allocation type',
+    checkboxName: 'allocation_type',
     isSelected: true,
     translate: 'FILTERS.STUDIES.ALLOCATION-TYPES.TITLE',
     values: allocationType,
@@ -559,8 +563,8 @@ const StudyFiltersInterventional: StudyFiltersSubGroups[] = [
   },
   {
     id: 4,
-    subgroup_name: 'Primary purpose',
-    checkbox_name: 'primary_purpose',
+    subgroupName: 'Primary purpose',
+    checkboxName: 'primary_purpose',
     isSelected: true,
     translate: 'FILTERS.STUDIES.PRIMARY-PURPOSES.TITLE',
     values: primaryPurpose,
@@ -571,8 +575,8 @@ const StudyFiltersInterventional: StudyFiltersSubGroups[] = [
   },
   {
     id: 5,
-    subgroup_name: 'Masking',
-    checkbox_name: 'masking',
+    subgroupName: 'Masking',
+    checkboxName: 'masking',
     isSelected: true,
     translate: 'FILTERS.STUDIES.MASKING.TITLE',
     values: masking,
@@ -584,7 +588,7 @@ const StudyFiltersInterventional: StudyFiltersSubGroups[] = [
 ];
 
 
-const observationalModel: Array<any> = [
+const observationalModel: Array<StudyFiltersParamsInterface> = [
   {
     id: 600,
     name: 'Cohort',
@@ -657,7 +661,7 @@ const observationalModel: Array<any> = [
   }
 ];
 
-const timePerspective: Array<any> = [
+const timePerspective: Array<StudyFiltersParamsInterface> = [
   {
     id: 700,
     name: 'Retrospective',
@@ -709,7 +713,7 @@ const timePerspective: Array<any> = [
   }
 ];
 
-const biospecimensRetained: Array<any> = [
+const biospecimensRetained: Array<StudyFiltersParamsInterface> = [
   {
     id: 800,
     name: 'None retained',
@@ -740,11 +744,11 @@ const biospecimensRetained: Array<any> = [
   }
 ];
 
-const StudyFiltersObservational: StudyFiltersSubGroups[] = [
+const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
   {
     id: 1,
-    subgroup_name: 'Observational model',
-    checkbox_name: 'observational_model',
+    subgroupName: 'Observational model',
+    checkboxName: 'observational_model',
     isSelected: true,
     translate: 'FILTERS.STUDIES.OBSERVATIONAL-MODELS.TITLE',
     values: observationalModel,
@@ -755,8 +759,8 @@ const StudyFiltersObservational: StudyFiltersSubGroups[] = [
   },
   {
     id: 2,
-    subgroup_name: 'Time perspective',
-    checkbox_name: 'time_perspective',
+    subgroupName: 'Time perspective',
+    checkboxName: 'time_perspective',
     isSelected: true,
     translate: 'FILTERS.STUDIES.TIME-PERSPECTIVE.TITLE',
     values: timePerspective,
@@ -767,8 +771,8 @@ const StudyFiltersObservational: StudyFiltersSubGroups[] = [
   },
   {
     id: 3,
-    subgroup_name: 'Biospecimens retained',
-    checkbox_name: 'biospecimens_retained',
+    subgroupName: 'Biospecimens retained',
+    checkboxName: 'biospecimens_retained',
     isSelected: true,
     translate: 'FILTERS.STUDIES.BIOSPECIMENS-RETAINED.TITLE',
     values: biospecimensRetained,
@@ -780,22 +784,22 @@ const StudyFiltersObservational: StudyFiltersSubGroups[] = [
 ];
 
 
-export const StudyFilters: StudyFiltersGroups[] = [
+export const StudyFilters: Array<StudyFiltersGroupsInterface> = [
   {
     id: 1,
-    group_name: 'General studies filter',
+    groupName: 'General studies filter',
     translate: 'FILTERS.STUDIES.GROUPS-TITLES.GENERAL-STUDIES',
     subgroups: StudyFiltersGeneral,
   },
   {
     id: 2,
-    group_name: 'Interventional studies filter',
+    groupName: 'Interventional studies filter',
     translate: 'FILTERS.STUDIES.GROUPS-TITLES.INTERVENTIONAL-STUDIES',
     subgroups: StudyFiltersInterventional,
   },
   {
     id: 3,
-    group_name: 'Observational studies filters',
+    groupName: 'Observational studies filters',
     translate: 'FILTERS.STUDIES.GROUPS-TITLES.OBSERVATIONAL-STUDIES',
     subgroups: StudyFiltersObservational,
   }

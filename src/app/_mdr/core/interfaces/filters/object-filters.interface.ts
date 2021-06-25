@@ -1,4 +1,4 @@
-export interface DataObjectFiltersParams {
+export interface DataObjectFiltersParamsInterface {
   id: number;
   value: string;
   name: string;
@@ -6,22 +6,22 @@ export interface DataObjectFiltersParams {
   translate: string;
 }
 
-export interface DataObjectFiltersSubGroups {
+export interface DataObjectFiltersSubgroupsInterface {
   id: number;
-  subgroup_name: string;
-  checkbox_name: string;
+  subgroupName: string;
+  checkboxName: string;
   isSelected: boolean;
   translate: string;
   fieldName: string;
   isNested: boolean;
   type: string;
   path: string;
-  values: DataObjectFiltersParams[];
+  values: Array<DataObjectFiltersParamsInterface>;
 }
 
-export interface DataObjectFiltersGroups {
+export interface DataObjectFiltersGroupsInterface {
   id: number;
-  group_name: string;
+  groupName: string;
   translate: string;
-  subgroups: DataObjectFiltersSubGroups[];
+  subgroups: Array<DataObjectFiltersSubgroupsInterface>;
 }

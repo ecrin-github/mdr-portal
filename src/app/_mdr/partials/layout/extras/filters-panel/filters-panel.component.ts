@@ -6,6 +6,7 @@ import { States } from '../../../../core/states/states';
 import {Subscription} from 'rxjs';
 import {StatesService} from '../../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
+import {FilterSampleInterface} from '../../../../core/interfaces/filters/filter-sample.interface';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class FiltersPanelComponent implements OnInit {
   studyFilters = StudyFilters;
   objectFilers = DataObjectFilters;
 
-  filtersList: Array<any>;
+  filtersList: Array<FilterSampleInterface>;
 
   uploadingSessionEvent: Subscription;
 
@@ -52,8 +53,8 @@ export class FiltersPanelComponent implements OnInit {
 
       for (const filterVal of filtersList) {
         this.studyFilters.forEach((filter) => {
-          filter['subgroups'].forEach((subgroup) => {
-            subgroup['values'].forEach((param) => {
+          filter.subgroups.forEach((subgroup) => {
+            subgroup.values.forEach((param) => {
               if (param.name === filterVal.name) {
                 param.isSelected = false;
               }
@@ -62,8 +63,8 @@ export class FiltersPanelComponent implements OnInit {
         });
 
         this.objectFilers.forEach((filter) => {
-          filter['subgroups'].forEach((subgroup) => {
-            subgroup['values'].forEach((param) => {
+          filter.subgroups.forEach((subgroup) => {
+            subgroup.values.forEach((param) => {
               if (param.name === filterVal.name) {
                 param.isSelected = false;
               }
@@ -73,16 +74,16 @@ export class FiltersPanelComponent implements OnInit {
       }
     } else {
       this.studyFilters.forEach((filter) => {
-        filter['subgroups'].forEach((subgroup) => {
-          subgroup['values'].forEach((param) => {
+        filter.subgroups.forEach((subgroup) => {
+          subgroup.values.forEach((param) => {
             param.isSelected = true;
           });
         });
       });
 
       this.objectFilers.forEach((filter) => {
-        filter['subgroups'].forEach((subgroup) => {
-          subgroup['values'].forEach((param) => {
+        filter.subgroups.forEach((subgroup) => {
+          subgroup.values.forEach((param) => {
             param.isSelected = true;
           });
         });

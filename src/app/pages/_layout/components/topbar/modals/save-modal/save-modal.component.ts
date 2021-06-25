@@ -1,12 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {SessionData, SessionRecord} from '../../../../../../_mdr/core/interfaces/states/session.interface';
+import {SessionDataInterface, SessionRecordInterface} from '../../../../../../_mdr/core/interfaces/states/session.interface';
 import {StatesService} from '../../../../../../_mdr/core/services/state/states.service';
 import {FileSaverService} from 'ngx-filesaver';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {SubscriptionEvents} from '../../../../../../_mdr/core/states/subscription-events';
-import {TranslateService} from '@ngx-translate/core';
 import {RawQueryInterface} from '../../../../../../_mdr/core/interfaces/requests/raw-query.interface';
+import {SnackbarService} from '../../../../../../_mdr/core/services/snackbar/snackbar.service';
 
 
 @Component({
@@ -23,17 +22,16 @@ export class SaveModalComponent implements OnInit {
   public searchType: string;
   public searchBody: RawQueryInterface;
 
-  public sessionData: SessionData;
-  public sessionDataObject: SessionRecord;
+  public sessionData: SessionDataInterface;
+  public sessionDataObject: SessionRecordInterface;
 
   constructor(
     private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
     private fileSaver: FileSaverService,
     public activeModal: NgbActiveModal,
-    public snackBar: MatSnackBar,
     private ref: ChangeDetectorRef,
-    public translate: TranslateService,
+    private snackbarService: SnackbarService,
   ) {
     ref.detach();
 
@@ -45,21 +43,28 @@ export class SaveModalComponent implements OnInit {
   }
 
   buildStateSessionObject(sessionName: string) {
+    let id = 1;
+    const sessionsList = this.statesService.getSessionsList();
+    if (sessionsList.length > 0) {
+      const lastElement = sessionsList[sessionsList.length - 1];
+      id = lastElement.id + 1;
+    }
+    const currentSearchParams = this.statesService.getSearchParams();
+    this.searchType = currentSearchParams.searchType;
+    this.searchBody = currentSearchParams.searchBody;
     this.sessionData = {
       searchType: this.searchType,
       searchBody: this.searchBody,
       filters: this.statesService.getFiltersList()
     };
     return this.sessionDataObject = {
+      id,
       name: sessionName,
       data: this.sessionData
     };
   }
 
   saveSession() {
-
-    let message = '';
-    let close = '';
 
     if (!this.statesService.getIsCleared()) {
 
@@ -69,16 +74,11 @@ export class SaveModalComponent implements OnInit {
           this.errorMessage = 'Please fill this field up.';
         } else {
 
-          this.statesService.addSessionsList(this.buildStateSessionObject(sessionName));
+          this.statesService.appendToSessionsList(this.buildStateSessionObject(sessionName));
 
           this.subscriptionEvents.sendSessionListUpdateEvent();
 
-          message = 'Session has been saved';
-          close = 'Close';
-
-          this.snackBar.open(message, close, {
-            duration: 5000
-          });
+          this.snackbarService.snackbarMessage('Session has been saved', 'Close');
 
           this.closeModal();
         }
@@ -86,24 +86,12 @@ export class SaveModalComponent implements OnInit {
         this.errorMessage = 'Field is undefined.';
       }
     } else {
-      this.translate.get('MODALS.MESSAGES.EMPTY-SESSION').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
-
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.EMPTY-SESSION', 'SNACKBAR.CLOSE');
     }
 
   }
 
   downloadSession(format: string) {
-
-    let message = '';
-    let close = '';
 
     if (!this.statesService.getIsCleared()) {
 
@@ -114,30 +102,12 @@ export class SaveModalComponent implements OnInit {
       const blob = new Blob([JSON.stringify(this.buildStateSessionObject(filename))], {type: fileType});
       this.fileSaver.save(blob, filename);
 
-      this.translate.get('MODALS.MESSAGES.DOWNLOADED').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
-
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.DOWNLOADED', 'SNACKBAR.CLOSE');
 
       this.closeModal();
 
     } else {
-      this.translate.get('MODALS.MESSAGES.EMPTY-SESSION').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
-
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.EMPTY-SESSION', 'SNACKBAR.CLOSE');
     }
   }
 
@@ -146,8 +116,8 @@ export class SaveModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchType = this.statesService.getSearchEvent().searchType;
-    this.searchBody = this.statesService.getSearchEvent().searchBody;
+    this.searchType = this.statesService.getSearchParams().searchType;
+    this.searchBody = this.statesService.getSearchParams().searchBody;
     this.errorMessage = '';
     if (this.sessionName !== undefined) {
       this.sessionName.nativeElement.value = '';

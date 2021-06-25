@@ -64,7 +64,7 @@
 
           <ng-container *ngFor="let studyFilter of studyFilters">
             <app-study-filters
-              [groupName]="studyFilter.translate | translate: {Default: studyFilter.group_name}"
+              [groupName]="studyFilter.translate | translate: {Default: studyFilter.groupName}"
               [subgroups]="studyFilter.subgroups"
             ></app-study-filters>
           </ng-container>
@@ -93,7 +93,7 @@
 
           <ng-container *ngFor="let objectFilter of objectFilers">
             <app-object-filters
-              [groupName]="objectFilter.translate | translate: {Default: objectFilter.group_name}"
+              [groupName]="objectFilter.translate | translate: {Default: objectFilter.groupName}"
               [subgroups]="objectFilter.subgroups"
             ></app-object-filters>
           </ng-container>

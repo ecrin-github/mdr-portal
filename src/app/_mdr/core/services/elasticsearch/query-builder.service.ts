@@ -4,12 +4,13 @@ import {SpecificStudyRequestInterface} from '../../interfaces/requests/specific-
 import {ByStudyCharacteristicsRequestInterface} from '../../interfaces/requests/by-study-characteristics-request.interface';
 import {ViaPublishedPaperRequestInterface} from '../../interfaces/requests/via-published-paper-request.interface';
 import {IDENTIFIER_TYPES} from '../../types/identifiers-types';
+import {FilterSampleInterface} from '../../interfaces/filters/filter-sample.interface';
 
 
 @Injectable({providedIn: 'root'})
 export class QueryBuilderService {
 
-  filtersList: Array<any>;
+  filtersList: Array<FilterSampleInterface>;
 
   constructor(
     private states: States
@@ -21,27 +22,27 @@ export class QueryBuilderService {
     return IDENTIFIER_TYPES.find(x => x.id === id).name;
   }
 
-  buildStudyFilters(){
+  buildStudyFilters(): Array<any> {
     this.filtersList = this.states.filtersList.getValue();
     const studyFilters = [];
 
     for (const filter of this.filtersList) {
-      if (filter['isNested'] === false && filter['type'] === 'study') {
+      if (filter.isNested === false && filter.type === 'study') {
         const filterOption = {
           term: {}
         };
-        filterOption.term[filter['fieldName']] = filter['value'];
+        filterOption.term[filter.fieldName] = filter.value;
         studyFilters.push(filterOption);
-      } else if (filter['isNested'] === true && filter['type'] === 'study') {
-        const fieldName = filter['fieldName'];
+      } else if (filter.isNested === true && filter.type === 'study') {
+        const fieldName = filter.fieldName;
         const filterOption = {
           nested: {
-            path: filter['path'],
+            path: filter.path,
             query: {}
           }
         };
         const termFilter = {};
-        termFilter[fieldName] = filter['value'];
+        termFilter[fieldName] = filter.value;
         filterOption.nested.query['term'] = termFilter;
         studyFilters.push(filterOption);
       }
@@ -49,27 +50,27 @@ export class QueryBuilderService {
     return studyFilters;
   }
 
-  buildObjectFilters() {
+  buildObjectFilters(): Array<any> {
     this.filtersList = this.states.filtersList.getValue();
     const objectFilters = [];
 
     for (const filter of this.filtersList) {
-      if (filter['isNested'] === false && filter['type'] === 'data-object'){
+      if (filter.isNested === false && filter.type === 'data-object'){
         const filterOption = {
           term: {}
         };
-        filterOption.term[filter['fieldName']] = filter['value'];
+        filterOption.term[filter.fieldName] = filter.value;
         objectFilters.push(filterOption);
-      } else if (filter['isNested'] === true && filter['type'] === 'data-object') {
-        const fieldName = filter['fieldName'];
+      } else if (filter.isNested === true && filter.type === 'data-object') {
+        const fieldName = filter.fieldName;
         const filterOption = {
           nested: {
-            path: filter['path'],
+            path: filter.path,
             query: {}
           }
         };
         const termFilter = {};
-        termFilter[fieldName] = filter['value'];
+        termFilter[fieldName] = filter.value;
         filterOption.nested.query['term'] = termFilter;
         objectFilters.push(filterOption);
       }

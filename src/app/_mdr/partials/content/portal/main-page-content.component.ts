@@ -1,15 +1,14 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {TranslateService} from '@ngx-translate/core';
 import {StatesService} from '../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../core/states/subscription-events';
 import {SearchService} from '../../../core/services/search/search.service';
 import {PageEvent} from '@angular/material/paginator';
 import {Observable, Subscription} from 'rxjs';
 import {FiltersListComponent} from './filters-list/filters-list.component';
-import {QueryResponseInterface} from '../../../core/interfaces/responses/api-response.interface';
+import {ResponseInterface} from '../../../core/interfaces/responses/server-response.interface';
 import {Study} from '../../../core/interfaces/entities/study.interface';
+import {SnackbarService} from '../../../core/services/snackbar/snackbar.service';
 
 
 @Component({
@@ -33,7 +32,7 @@ export class MainPageContentComponent implements OnInit {
   public pageSlice: Array<Study> = [];
 
   public searchType: string;
-  public searchBody: any;
+  public searchBody: object;
 
   clearEventSubscription: Subscription;
   isFilteredEventSubscription: Subscription;
@@ -42,8 +41,7 @@ export class MainPageContentComponent implements OnInit {
 
   constructor(
     private route: Router,
-    public snackBar: MatSnackBar,
-    public translate: TranslateService,
+    private snackbarService: SnackbarService,
     private ref: ChangeDetectorRef,
     private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
@@ -89,7 +87,7 @@ export class MainPageContentComponent implements OnInit {
     this.loading = true;
     if (searchResults !== null) {
       searchResults.subscribe(
-        (data: QueryResponseInterface) => {
+        (data: ResponseInterface) => {
           this.pageSlice = data.data;
           this.total = data.total;
           this.onPage = this.searchService.onPageChecker(this.total, this.pageIndex, this.pageSize);
@@ -104,15 +102,15 @@ export class MainPageContentComponent implements OnInit {
   }
 
   onUploadingSession() {
-    const searchStateData = this.statesService.getSessionData();
+    const searchStateData = this.statesService.getActiveSession();
 
     this.statesService.setIsCleared(false);
 
     this.searchType = searchStateData.searchType;
     this.searchBody = searchStateData.searchBody;
 
-    this.pageSize = searchStateData.searchBody.size;
-    this.pageIndex = searchStateData.searchBody.page;
+    this.pageSize = searchStateData.searchBody['size'];
+    this.pageIndex = searchStateData.searchBody['page'];
 
     if (this.statesService.getFiltersList().length > 0) {
       this.statesService.setIsFiltered(true);
@@ -120,12 +118,12 @@ export class MainPageContentComponent implements OnInit {
       this.statesService.setIsFiltered(false);
     }
 
-    this.statesService.setSearchEvent({searchType: this.searchType, searchBody: this.searchBody});
+    this.statesService.setSearchParams({searchType: this.searchType, searchBody: this.searchBody});
 
-    this.showSearchResults(this.searchService.pagination(
-      this.searchType,
-      this.searchBody
-    ));
+    this.showSearchResults(this.searchService.pagination({
+      searchType: this.searchType,
+      searchBody: this.searchBody
+    }));
 
   }
 
@@ -169,53 +167,33 @@ export class MainPageContentComponent implements OnInit {
         };
       }
 
-      this.statesService.setSearchEvent({searchType: this.searchType, searchBody: this.searchBody});
+      this.statesService.setSearchParams({searchType: this.searchType, searchBody: this.searchBody});
 
-      this.showSearchResults(this.searchService.pagination(
-        this.searchType,
-        this.searchBody
-      ));
+      this.showSearchResults(this.searchService.pagination({
+        searchType: this.searchType,
+        searchBody: this.searchBody
+      }));
 
     } else {
-      let message = '';
-      let close = '';
 
       this.onClearBeforeSearch();
       this.pageIndex = 0;
       this.pageSize = 10;
 
-      this.translate.get('SNACKBAR.SEARCH.ERROR-MESSAGE').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
+      this.snackbarService.snackbarTranslateMessage('SNACKBAR.SEARCH.ERROR-MESSAGE',
+          'SNACKBAR.CLOSE');
 
-      // @ts-ignore
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
     }
 
     if (this.searchBody === null || this.searchBody === undefined) {
-      let message = '';
-      let close = '';
 
       this.onClearBeforeSearch();
       this.pageIndex = 0;
       this.pageSize = 10;
 
-      this.translate.get('SNACKBAR.SEARCH.ERROR-MESSAGE').subscribe((translation: string) => {
-        message = translation;
-      });
-      this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-        close = translation;
-      });
+      this.snackbarService.snackbarTranslateMessage('SNACKBAR.SEARCH.ERROR-MESSAGE',
+          'SNACKBAR.CLOSE');
 
-      // @ts-ignore
-      this.snackBar.open(message, close, {
-        duration: 5000
-      });
     }
   }
 
@@ -226,11 +204,13 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
 
-      this.searchBody.page = this.pageIndex;
-      this.searchBody.size = this.pageSize;
-      
-      this.showSearchResults(this.searchService.pagination(this.searchType,
-        this.searchBody));
+      this.searchBody['page'] = this.pageIndex;
+      this.searchBody['size'] = this.pageSize;
+
+      this.showSearchResults(this.searchService.pagination({
+        searchType: this.searchType,
+        searchBody: this.searchBody
+      }));
 
     }
   }
@@ -242,22 +222,23 @@ export class MainPageContentComponent implements OnInit {
     this.pageSize = 10;
 
     if (!this.statesService.getIsCleared()) {
-      this.showSearchResults(this.searchService.pagination(this.searchType,
-        this.searchBody));
+      this.showSearchResults(this.searchService.pagination({
+        searchType: this.searchType,
+        searchBody: this.searchBody
+      }));
     }
   }
 
 
   setInitialSearchParams() {
-    const initialSearchParams = this.statesService.getInitialSearchParams();
-    this.pageIndex = initialSearchParams.pageIndex;
-    this.pageSize = initialSearchParams.pageSize;
-    this.loading = initialSearchParams.loading;
-    this.fetchedData = initialSearchParams.dataSources;
-    this.pageSlice = initialSearchParams.dataSources;
-    this.total = initialSearchParams.total;
-    this.searchType = initialSearchParams.searchType;
-    this.searchBody = initialSearchParams.searchBody;
+    this.pageIndex = 0;
+    this.pageSize = 10;
+    this.loading = false;
+    this.fetchedData = [];
+    this.pageSlice = [];
+    this.total = undefined;
+    this.searchType = null;
+    this.searchBody = null;
   }
 
 
@@ -280,11 +261,13 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
 
-      this.searchBody.page = this.pageIndex;
-      this.searchBody.size = this.pageSize;
+      this.searchBody['page'] = this.pageIndex;
+      this.searchBody['size'] = this.pageSize;
 
-      this.showSearchResults(this.searchService.pagination(this.searchType,
-        this.searchBody));
+      this.showSearchResults(this.searchService.pagination({
+        searchType: this.searchType,
+        searchBody: this.searchBody
+      }));
 
     }
   }

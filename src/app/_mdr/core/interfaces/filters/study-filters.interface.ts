@@ -1,4 +1,4 @@
-export interface StudyFiltersParams {
+export interface StudyFiltersParamsInterface {
   id: number;
   value: string;
   name: string;
@@ -6,22 +6,22 @@ export interface StudyFiltersParams {
   translate: string;
 }
 
-export interface StudyFiltersSubGroups {
+export interface StudyFiltersSubgroupsInterface {
   id: number;
-  subgroup_name: string;
-  checkbox_name: string;
+  subgroupName: string;
+  checkboxName: string;
   isSelected: boolean;
   translate: string;
   fieldName: string;
   isNested: boolean;
   type: string;
   path: string;
-  values: StudyFiltersParams[];
+  values: Array<StudyFiltersParamsInterface>;
 }
 
-export interface StudyFiltersGroups {
+export interface StudyFiltersGroupsInterface {
   id: number;
-  group_name: string;
+  groupName: string;
   translate: string;
-  subgroups: StudyFiltersSubGroups[];
+  subgroups: Array<StudyFiltersSubgroupsInterface>;
 }

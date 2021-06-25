@@ -1,41 +1,41 @@
 <h5 class="font-weight-bold mb-5">{{groupName}}</h5>
-<ng-container *ngFor="let do_filter_group of subgroups">
+<ng-container *ngFor="let doFilterGroup of subgroups">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{do_filter_group.translate | translate: {Default: do_filter_group.subgroup_name} }}
+        {{doFilterGroup.translate | translate: {Default: doFilterGroup.subgroupName} }}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <div style="float: right;" *ngIf="do_filter_group.subgroup_name === 'Type'">
+    <div style="float: right;" *ngIf="doFilterGroup.subgroupName === 'Type'">
       <a [routerLink]="['/data-object-types']" target="_blank">
         {{'TOOLTIPS.HELP' | translate: {Default: 'Help'} }}
       </a>
     </div>
-    <br *ngIf="do_filter_group.subgroup_name === 'Type'" />
+    <br *ngIf="doFilterGroup.subgroupName === 'Type'" />
 
     <mat-divider></mat-divider> <br />
 
-    <ng-container *ngFor="let data_object_filter_params of do_filter_group.values">
-      <mat-checkbox id="{{do_filter_group.checkbox_name + '_' + data_object_filter_params.id}}"
-                    name="{{data_object_filter_params.value}}"
-                    [(ngModel)]="data_object_filter_params.isSelected"
-                    [value]="data_object_filter_params.id"
-                    (change)="onDataObjectFilter($event, data_object_filter_params.value, data_object_filter_params.id,
-                    data_object_filter_params.translate, do_filter_group.fieldName, do_filter_group.isNested,
-                    do_filter_group.path, do_filter_group.type, do_filter_group.subgroup_name)">
-        {{data_object_filter_params.translate | translate: {Default: data_object_filter_params.name} }}
+    <ng-container *ngFor="let dataObjectFilterParams of doFilterGroup.values">
+      <mat-checkbox id="{{doFilterGroup.checkboxName + '_' + dataObjectFilterParams.id}}"
+                    name="{{dataObjectFilterParams.value}}"
+                    [(ngModel)]="dataObjectFilterParams.isSelected"
+                    [value]="dataObjectFilterParams.id"
+                    (change)="onDataObjectFilter($event, dataObjectFilterParams.value, dataObjectFilterParams.id,
+                    dataObjectFilterParams.translate, doFilterGroup.fieldName, doFilterGroup.isNested,
+                    doFilterGroup.path, doFilterGroup.type, doFilterGroup.subgroupName)">
+        {{dataObjectFilterParams.translate | translate: {Default: dataObjectFilterParams.name} }}
       </mat-checkbox>
       <br />
     </ng-container>
     <mat-action-row>
       <button mat-button color="primary"
-              (click)="selectAll(do_filter_group.id, do_filter_group.subgroup_name)"
+              (click)="selectAll(doFilterGroup.id, doFilterGroup.subgroupName)"
               style="padding-right: 15px !important; padding-left: 10px !important;"
       >
         {{'BUTTONS.SELECT-ALL' | translate: {Default: 'Select all'} }}
       </button>
       <button mat-button color="warn"
-              (click)="deselectAll(do_filter_group.id, do_filter_group.subgroup_name)"
+              (click)="deselectAll(doFilterGroup.id, doFilterGroup.subgroupName)"
               style="padding-right: 15px !important; padding-left: 10px !important;"
       >
         {{'BUTTONS.DESELECT-ALL' | translate: {Default: 'Deselect all'} }}

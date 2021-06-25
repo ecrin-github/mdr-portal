@@ -42,12 +42,12 @@ export class DataObjectComponent implements OnInit {
       if (this.objectInstances !== null && this.objectInstances !== undefined) {
         if (this.objectInstances.length > 1) {
           for (const objInstance of this.objectInstances){
-            if (objInstance.access_details !== null && objInstance.access_details !== undefined
-              && objInstance.resource_details !== null && objInstance.resource_details !== undefined) {
-              if (objInstance.resource_details.type_name === 'Web text with download' &&
-                objInstance.access_details.direct_access === true) {
+            if (objInstance.accessDetails !== null && objInstance.accessDetails !== undefined
+              && objInstance.resourceDetails !== null && objInstance.resourceDetails !== undefined) {
+              if (objInstance.resourceDetails.typeName === 'Web text with download' &&
+                objInstance.accessDetails.directAccess === true) {
 
-                this.citationUrl = objInstance.access_details.url;
+                this.citationUrl = objInstance.accessDetails.url;
 
               } else {
 
@@ -60,5 +60,4 @@ export class DataObjectComponent implements OnInit {
       }
     }
   }
-
 }

@@ -5,8 +5,6 @@ import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-to
 import { KTUtil } from '../../../../../assets/js/components/util';
 import {StatesService} from '../../../../_mdr/core/services/state/states.service';
 import {SubscriptionEvents} from '../../../../_mdr/core/states/subscription-events';
-import {TranslateService} from '@ngx-translate/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ExportModalComponent} from './modals/export-modal/export-modal.component';
@@ -14,6 +12,7 @@ import {SaveModalComponent} from './modals/save-modal/save-modal.component';
 import {LoadModalComponent} from './modals/load-modal/load-modal.component';
 import {SingleStudyExportModalComponent} from './modals/single-study-export-modal/single-study-export-modal.component';
 import {RawQueryInterface} from '../../../../_mdr/core/interfaces/requests/raw-query.interface';
+import {SnackbarService} from '../../../../_mdr/core/services/snackbar/snackbar.service';
 
 
 @Component({
@@ -30,11 +29,10 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
     private layout: LayoutService,
-    public translate: TranslateService,
-    public snackBar: MatSnackBar,
     public router: Router,
     private modal: NgbModal,
     private ref: ChangeDetectorRef,
+    private snackbarService: SnackbarService,
   ) {
     ref.detach();
 
@@ -57,24 +55,12 @@ export class TopbarComponent implements OnInit, AfterViewInit {
       elasticQuery: {}
     };
 
-    this.statesService.setSearchEvent({searchType, searchBody});
+    this.statesService.setSearchParams({searchType, searchBody});
 
     this.subscriptionEvents.sendClearEvent();
 
-    let message = '';
-    let close = '';
+    this.snackbarService.snackbarTranslateMessage('SNACKBAR.CLEAR.MESSAGE', 'SNACKBAR.CLOSE');
 
-    this.translate.get('SNACKBAR.CLEAR.MESSAGE').subscribe((translation: string) => {
-      message = translation;
-    });
-
-    this.translate.get('SNACKBAR.CLOSE').subscribe((translation: string) => {
-      close = translation;
-    });
-
-    this.snackBar.open(message, close, {
-      duration: 5000
-    });
   }
 
 

@@ -14,7 +14,7 @@
           <h4>
             {{'MODALS.SELECT' | translate: {Default: 'Select from the list: '} }}
           </h4>
-          <mat-selection-list #sessionList [multiple]="false" (selectionChange)="onSelectionChange($event, sessionsList)">
+          <mat-selection-list #sessionList [multiple]="false" (selectionChange)="onSelectionChange($event)">
             <mat-list-option *ngFor="let session of sessionsList" [value]="session">
               <span>{{session.name}}</span>
             </mat-list-option>

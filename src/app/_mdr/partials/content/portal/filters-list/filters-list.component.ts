@@ -4,6 +4,9 @@ import {StudyFilters} from '../../../../core/filters/study.filters';
 import {DataObjectFilters} from '../../../../core/filters/object.filters';
 import {StatesService} from '../../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
+import {FilterSampleInterface} from '../../../../core/interfaces/filters/filter-sample.interface';
+import {StudyFiltersGroupsInterface} from '../../../../core/interfaces/filters/study-filters.interface';
+import {DataObjectFiltersGroupsInterface} from '../../../../core/interfaces/filters/object-filters.interface';
 
 
 @Component({
@@ -12,9 +15,9 @@ import {SubscriptionEvents} from '../../../../core/states/subscription-events';
 })
 @Injectable({providedIn: 'root'})
 export class FiltersListComponent implements OnInit {
-  filtersList: Array<any>;
-  studyFilters: Array<any> = StudyFilters;
-  dataObjectFilters: Array<any> = DataObjectFilters;
+  filtersList: Array<FilterSampleInterface>;
+  studyFilters: Array<StudyFiltersGroupsInterface> = StudyFilters;
+  dataObjectFilters: Array<DataObjectFiltersGroupsInterface> = DataObjectFilters;
 
   constructor(
     private states: States,
@@ -28,16 +31,16 @@ export class FiltersListComponent implements OnInit {
     this.statesService.clearFilters();
 
     this.studyFilters.forEach((filter) => {
-      filter['subgroups'].forEach((subgroup: any) => {
-        subgroup['values'].forEach((param: any) => {
+      filter.subgroups.forEach((subgroup: any) => {
+        subgroup.values.forEach((param: any) => {
           param.isSelected = true;
         });
       });
     });
 
     this.dataObjectFilters.forEach((filter) => {
-      filter['subgroups'].forEach((subgroup: any) => {
-        subgroup['values'].forEach((param: any) => {
+      filter.subgroups.forEach((subgroup: any) => {
+        subgroup.values.forEach((param: any) => {
           param.isSelected = true;
         });
       });

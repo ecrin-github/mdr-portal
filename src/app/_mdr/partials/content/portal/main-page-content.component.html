@@ -12,7 +12,7 @@
         <strong [translate]="'SEARCH-PAGE.RESULTS'">Results: </strong> {{startFrom}} - {{onPage}} <span [translate]="">of</span> {{total}}.
       </ngb-alert>
     </p>
-    <p *ngIf="total <= 0 && !loading">
+    <p *ngIf="(total <= 0 || total === null) && !loading">
       <ngb-alert [dismissible]="false" [type]="'primary'">
         <span [translate]="'SEARCH-PAGE.NO-RESULTS'"></span>
       </ngb-alert>

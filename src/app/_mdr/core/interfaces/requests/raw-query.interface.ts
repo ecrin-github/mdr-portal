@@ -1,5 +1,5 @@
-export interface RawQueryInterface {
-    page?: number;
-    size?: number;
+import {BaseRequestInterface} from './base-request.interface';
+
+export interface RawQueryInterface extends BaseRequestInterface {
     elasticQuery: object;
 }

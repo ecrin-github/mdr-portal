@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SearchResponseInterface } from '../../interfaces/responses/search-response.interface';
+import { ResponseInterface } from '../../interfaces/responses/server-response.interface';
 import { environment } from '../../../../../environments/environment.prod';
 import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
 
@@ -19,11 +19,11 @@ export class QueryService {
   }
 
   getRawQueryStudies(searchParams: RawQueryInterface){
-    return this.http.post<SearchResponseInterface>(this.queryBasedStudyUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.queryBasedStudyUrl, searchParams);
   }
 
   getRawQueryObjects(searchParams: RawQueryInterface){
-    return this.http.post<SearchResponseInterface>(this.queryBasedObjectUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.queryBasedObjectUrl, searchParams);
   }
 
 }

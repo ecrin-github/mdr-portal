@@ -1,7 +1,11 @@
-import {DataObjectFiltersSubGroups, DataObjectFiltersGroups} from '../interfaces/filters/object-filters.interface';
+import {
+  DataObjectFiltersGroupsInterface,
+  DataObjectFiltersParamsInterface,
+  DataObjectFiltersSubgroupsInterface
+} from '../interfaces/filters/object-filters.interface';
 
 
-const dataObjectTypes: Array<any> = [
+const dataObjectTypes: Array<DataObjectFiltersParamsInterface> = [
   {
     id: 13,
     value: 'Trial registry entry',
@@ -151,7 +155,7 @@ const dataObjectTypes: Array<any> = [
   }
 ];
 
-const dataObjectAccessType: Array<any> = [
+const dataObjectAccessType: Array<DataObjectFiltersParamsInterface> = [
   {
     id: 12,
     value: 'Public on-screen access',
@@ -239,11 +243,11 @@ const dataObjectAccessType: Array<any> = [
 ];
 
 
-const DataObjectFiltersGeneral: DataObjectFiltersSubGroups[] = [
+const DataObjectFiltersGeneral: Array<DataObjectFiltersSubgroupsInterface> = [
   {
     id: 1,
-    subgroup_name: 'Type',
-    checkbox_name: 'object_type',
+    subgroupName: 'Type',
+    checkboxName: 'object_type',
     isSelected: true,
     translate: 'FILTERS.DATA-OBJECT.TYPES.TITLE',
     values: dataObjectTypes,
@@ -254,8 +258,8 @@ const DataObjectFiltersGeneral: DataObjectFiltersSubGroups[] = [
   },
   {
     id: 2,
-    subgroup_name: 'Access type',
-    checkbox_name: 'access_type',
+    subgroupName: 'Access type',
+    checkboxName: 'access_type',
     isSelected: true,
     translate: 'FILTERS.DATA-OBJECT.ACCESS-TYPES.TITLE',
     values: dataObjectAccessType,
@@ -267,10 +271,10 @@ const DataObjectFiltersGeneral: DataObjectFiltersSubGroups[] = [
 ];
 
 
-export const DataObjectFilters: DataObjectFiltersGroups[] = [
+export const DataObjectFilters: Array<DataObjectFiltersGroupsInterface> = [
   {
     id: 1,
-    group_name: 'General data objects filters',
+    groupName: 'General data objects filters',
     translate: 'FILTERS.DATA-OBJECT.GROUPS-TITLES.GENERAL-DATA-OBJECTS-FILTERS',
     subgroups: DataObjectFiltersGeneral,
   }

@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {States} from '../../../../../core/states/states';
 import {SubscriptionEvents} from '../../../../../core/states/subscription-events';
+import {FilterSampleInterface} from '../../../../../core/interfaces/filters/filter-sample.interface';
+import {SnackbarService} from '../../../../../core/services/snackbar/snackbar.service';
 
 
 @Component({
@@ -14,13 +15,13 @@ export class StudyFiltersComponent implements OnInit {
   @Input() groupName: string;
   @Input() subgroups: any;
 
-  public filtersList: Array<any>;
+  public filtersList: Array<FilterSampleInterface>;
 
   constructor(
-    public snackBar: MatSnackBar,
-    public translate: TranslateService,
-    public states: States,
-    public subscriptionEvents: SubscriptionEvents,
+    private snackbarService: SnackbarService,
+    private translate: TranslateService,
+    private states: States,
+    private subscriptionEvents: SubscriptionEvents,
   ) {}
 
   onStudyFilter(event, parameter: string, paramId: number, translateParam: string, fieldName: string,
@@ -44,9 +45,7 @@ export class StudyFiltersComponent implements OnInit {
         }
       );
 
-      this.snackBar.open(message + translateFilter, close, {
-        duration: 5500,
-      });
+      this.snackbarService.snackbarMessage(message + translateFilter, close);
 
       this.filtersList.push({
         isNested,
@@ -79,9 +78,7 @@ export class StudyFiltersComponent implements OnInit {
         }
       );
 
-      this.snackBar.open(message + translateFilter, close, {
-        duration: 5500,
-      });
+      this.snackbarService.snackbarMessage(message + translateFilter, close);
 
       const index = this.filtersList.findIndex(x => x.value === parameter && x.subgroupName === subgroupName);
       if (index > -1) {
@@ -124,15 +121,6 @@ export class StudyFiltersComponent implements OnInit {
     this.subgroups[index]['values'].forEach(element => {
       element.isSelected = true;
 
-      let translateFilter = '';
-
-      this.translate.get([
-        element.translate
-      ]).subscribe((translation) => {
-          translateFilter = translation[element.translate];
-        }
-      );
-
       const indx = this.filtersList.findIndex(x => x.subgroupName === subgroupName);
       if (indx > -1) {
         this.filtersList.splice(indx, 1);
@@ -148,9 +136,7 @@ export class StudyFiltersComponent implements OnInit {
     this.states.filtersList.next(this.filtersList);
     this.subscriptionEvents.sendFilterEvent();
 
-    this.snackBar.open(message + groupTranslateName, close, {
-      duration: 5500,
-    });
+    this.snackbarService.snackbarMessage(message + groupTranslateName, close);
 
   }
 
@@ -214,9 +200,8 @@ export class StudyFiltersComponent implements OnInit {
     this.states.filtersList.next(this.filtersList);
     this.subscriptionEvents.sendFilterEvent();
 
-    this.snackBar.open(message + groupTranslateName, close, {
-      duration: 5500,
-    });
+    this.snackbarService.snackbarMessage(message + groupTranslateName, close);
+
   }
 
   ngOnInit(): void {

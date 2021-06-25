@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { QueryResponseInterface, SelectedStudyResponseInterface } from '../../interfaces/responses/api-response.interface';
+import { ResponseInterface, SingleStudyResponseInterface } from '../../interfaces/responses/server-response.interface';
 import { environment } from '../../../../../environments/environment.prod';
 import {SpecificStudyRequestInterface} from '../../interfaces/requests/specific-study-request.interface';
 import {ByStudyCharacteristicsRequestInterface} from '../../interfaces/requests/by-study-characteristics-request.interface';
@@ -29,27 +29,27 @@ export class ApiService {
   }
 
   getSpecificStudy(searchParams: SpecificStudyRequestInterface){
-    return this.http.post<QueryResponseInterface>(this.specificStudyApiUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.specificStudyApiUrl, searchParams);
   }
 
   getByStudyCharacteristics(searchParams: ByStudyCharacteristicsRequestInterface){
-    return this.http.post<QueryResponseInterface>(this.studyCharacteristicsApiUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.studyCharacteristicsApiUrl, searchParams);
   }
 
   getViaPublishedPaper(searchParams: ViaPublishedPaperRequestInterface){
-    return this.http.post<QueryResponseInterface>(this.viaPublishedPaperApiUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.viaPublishedPaperApiUrl, searchParams);
   }
 
   getByStudyId(searchParams: ByStudyIdRequestInterface){
-    return this.http.post<SelectedStudyResponseInterface>(this.selectedStudyApiUrl, searchParams);
+    return this.http.post<SingleStudyResponseInterface>(this.selectedStudyApiUrl, searchParams);
   }
 
   getRawQueryStudies(searchParams: RawQueryInterface){
-    return this.http.post<QueryResponseInterface>(this.queryBasedStudyUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.queryBasedStudyUrl, searchParams);
   }
 
   getRawQueryObjects(searchParams: RawQueryInterface){
-    return this.http.post<QueryResponseInterface>(this.queryBasedObjectUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.queryBasedObjectUrl, searchParams);
   }
 
 }
