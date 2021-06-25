@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ResponseInterface, SingleStudyResponseInterface } from '../../interfaces/responses/server-response.interface';
+import { ResponseInterface } from '../../interfaces/responses/server-response.interface';
 import { environment } from '../../../../../environments/environment.prod';
 import {SpecificStudyRequestInterface} from '../../interfaces/requests/specific-study-request.interface';
 import {ByStudyCharacteristicsRequestInterface} from '../../interfaces/requests/by-study-characteristics-request.interface';
 import {ViaPublishedPaperRequestInterface} from '../../interfaces/requests/via-published-paper-request.interface';
 import {ByStudyIdRequestInterface} from '../../interfaces/requests/by-study-id-request.interface';
 import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
+import {Study} from '../../interfaces/entities/study.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -41,7 +42,7 @@ export class ApiService {
   }
 
   getByStudyId(searchParams: ByStudyIdRequestInterface){
-    return this.http.post<SingleStudyResponseInterface>(this.selectedStudyApiUrl, searchParams);
+    return this.http.post<Array<Study>>(this.selectedStudyApiUrl, searchParams);
   }
 
   getRawQueryStudies(searchParams: RawQueryInterface){

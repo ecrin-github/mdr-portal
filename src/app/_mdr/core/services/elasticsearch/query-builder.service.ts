@@ -27,13 +27,13 @@ export class QueryBuilderService {
     const studyFilters = [];
 
     for (const filter of this.filtersList) {
-      if (filter.isNested === false && filter.type === 'study') {
+      if (!filter.isNested && filter.type === 'study') {
         const filterOption = {
           term: {}
         };
         filterOption.term[filter.fieldName] = filter.value;
         studyFilters.push(filterOption);
-      } else if (filter.isNested === true && filter.type === 'study') {
+      } else if (filter.isNested && filter.type === 'study') {
         const fieldName = filter.fieldName;
         const filterOption = {
           nested: {
@@ -55,13 +55,13 @@ export class QueryBuilderService {
     const objectFilters = [];
 
     for (const filter of this.filtersList) {
-      if (filter.isNested === false && filter.type === 'data-object'){
+      if (!filter.isNested && filter.type === 'data-object'){
         const filterOption = {
           term: {}
         };
         filterOption.term[filter.fieldName] = filter.value;
         objectFilters.push(filterOption);
-      } else if (filter.isNested === true && filter.type === 'data-object') {
+      } else if (filter.isNested && filter.type === 'data-object') {
         const fieldName = filter.fieldName;
         const filterOption = {
           nested: {

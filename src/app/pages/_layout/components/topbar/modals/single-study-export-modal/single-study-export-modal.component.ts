@@ -25,10 +25,9 @@ export class SingleStudyExportModalComponent implements OnInit {
 
     if (this.statesService.getSingleStudy()) {
 
-      let filename: string;
-      filename = 'Study.json';
-
       const studyData = this.statesService.getSingleStudy();
+
+      const filename = studyData.displayTitle + '.json';
 
       const fileType = this.fileSaver.genType(filename);
       const blob = new Blob([JSON.stringify(studyData)], {type: fileType});

@@ -13,32 +13,29 @@
         {{dataObjectTitle}}
       </ng-container>
     </p>
-    <p class="mt-2 mb-2" *ngIf="dataObjectAccessUrl !== null && dataObjectAccessUrl !== undefined">
+    <p class="mt-2 mb-2" *ngIf="!!dataObjectAccessUrl">
       <strong>
         {{'SEARCH-PAGE.STUDY.DATA-OBJECT.ACCESS-URL' | translate: {Default: 'Access URL: '} }}
       </strong>
       <a href="{{dataObjectAccessUrl}}" target="_blank">{{dataObjectAccessUrl}}</a>
     </p>
-    <p class="mt-2 mb-2" *ngIf="dataObjectUrl !== null && dataObjectUrl !== undefined">
+    <p class="mt-2 mb-2" *ngIf="!!dataObjectUrl">
       <strong>URL: </strong><a href="{{dataObjectUrl}}" target="_blank">{{dataObjectUrl}}</a>
     </p>
-    <p class="mt-2 mb-2" *ngIf="citationUrl !== null && citationUrl !== undefined">
+    <p class="mt-2 mb-2" *ngIf="!!citationUrl">
       <strong>
         {{'SEARCH-PAGE.STUDY.DATA-OBJECT.CITATION-URL' | translate: {Default: 'Citation URL: '} }}
       </strong><a href="{{citationUrl}}" target="_blank">{{citationUrl}}</a>
     </p>
-    <p class="mt-2 mb-2" *ngIf="provenance !== null && provenance !== undefined">
+    <p class="mt-2 mb-2" *ngIf="!!provenance">
       <strong>
         {{'SEARCH-PAGE.STUDY.DATA-OBJECT.PROVENANCE' | translate: {Default: 'Provenance: '} }}
       </strong>
       {{provenance}}
     </p>
   </div>
-  <div class="col-xl-2" *ngIf="dataObjectYear !== null && dataObjectYear !== undefined">
+  <div class="col-xl-2" *ngIf="!!dataObjectYear; else noneTemplate">
     <p class="text-center">{{dataObjectYear}}</p>
-  </div>
-  <div class="col-xl-2" *ngIf="dataObjectYear === null || dataObjectYear === undefined">
-    <p class="text-center">None</p>
   </div>
   <div class="col-xl-2 text-center">
     <mat-icon *ngIf="openAccess.indexOf(dataObjectAccessType) !== -1" style="color: #44c767;" ngbTooltip="{{dataObjectAccessType}}" placement="auto">fiber_manual_record</mat-icon>
@@ -54,3 +51,9 @@
   </div>-->
 </div>
 <hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
+
+<ng-template #noneTemplate>
+  <div class="col-xl-2">
+    <p class="text-center">None</p>
+  </div>
+</ng-template>

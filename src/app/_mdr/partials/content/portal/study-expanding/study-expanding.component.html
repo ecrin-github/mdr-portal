@@ -25,21 +25,21 @@
       </p>
       <div class="row">
         <div class="col">
-          <p *ngIf="studyType !== null && studyType !== undefined">
+          <p *ngIf="!!studyType">
             <strong>
               {{'SEARCH-PAGE.STUDY.STUDY-TYPE' | translate: {Default: 'Study type: '} }}
             </strong>{{studyType}}
           </p>
         </div>
         <div class="col">
-          <p *ngIf="studyStatus !== null && studyStatus !== undefined">
+          <p *ngIf="!!studyStatus">
             <strong>
               {{'SEARCH-PAGE.STUDY.STUDY-STATUS' | translate: {Default: 'Study status: '} }}
             </strong>{{studyStatus}}
           </p>
         </div>
       </div>
-      <p *ngIf="dataSharingStatement !== null && dataSharingStatement !== undefined">
+      <p *ngIf="!!dataSharingStatement">
         <strong>
           {{'SEARCH-PAGE.STUDY.DATA-SHARING' | translate: {Default: 'Data sharing statement'} }}
         </strong><br />
@@ -52,7 +52,7 @@
           {{dataSharingStatement}}
         </ng-container>
       </p>
-      <p *ngIf="provenance !== null && provenance !== undefined">
+      <p *ngIf="!!provenance">
         <strong>
           {{'SEARCH-PAGE.STUDY.PROVENANCE' | translate: {Default: 'Provenance: '} }}
         </strong>{{provenance}}
@@ -60,12 +60,12 @@
       <hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
       <ng-container *ngIf="dataObjects">
         <ng-container *ngFor="let dataObject of dataObjects">
-          <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
+          <ng-container *ngIf="!!dataObject">
             <app-data-object
               [dataObjectTitle]="dataObject.displayTitle"
               [dataObjectId]="dataObject.id"
               [dataObjectUrl]="dataObject.objectUrl"
-              [dataObjectAccessUrl]="(dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) ? dataObject.accessDetails.url : null"
+              [dataObjectAccessUrl]="(!!dataObject.accessDetails) ? dataObject.accessDetails.url : null"
               [dataObjectAccessType]="dataObject.accessType"
               [dataObjectType]="dataObject.objectType"
               [dataObjectYear]="dataObject.publicationYear"

@@ -39,11 +39,10 @@ export class DataObjectComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.dataObjectType === 'Journal article') {
-      if (this.objectInstances !== null && this.objectInstances !== undefined) {
+      if (!!this.objectInstances) {
         if (this.objectInstances.length > 1) {
           for (const objInstance of this.objectInstances){
-            if (objInstance.accessDetails !== null && objInstance.accessDetails !== undefined
-              && objInstance.resourceDetails !== null && objInstance.resourceDetails !== undefined) {
+            if (!!objInstance.accessDetails && !!objInstance.resourceDetails ) {
               if (objInstance.resourceDetails.typeName === 'Web text with download' &&
                 objInstance.accessDetails.directAccess === true) {
 

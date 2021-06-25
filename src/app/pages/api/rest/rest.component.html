@@ -95,20 +95,16 @@
                 <ng-container matColumnDef="studyTitle">
                   <mat-header-cell *matHeaderCellDef> {{'STUDY-CHARACTERISTICS-API.STUDY.TITLE' | translate: {Default: 'Study title'} }} </mat-header-cell>
                   <mat-cell *matCellDef="let study">
-                    <span *ngIf="study.display_title !== null && study.display_title !== undefined" style="margin-top: 10px; margin-bottom: 10px;">{{study.display_title}}</span>
-                    <span *ngIf="study.display_title === null || study.display_title === undefined" style="margin-top: 10px; margin-bottom: 10px;">None</span>
+                    <span *ngIf="study.displayTitle !== null && study.displayTitle !== undefined" style="margin-top: 10px; margin-bottom: 10px;">{{study.displayTitle}}</span>
+                    <span *ngIf="study.displayTitle === null || study.displayTitle === undefined" style="margin-top: 10px; margin-bottom: 10px;">None</span>
                   </mat-cell>
                 </ng-container>
                 <!-- Study type Column -->
                 <ng-container matColumnDef="studyType">
                   <mat-header-cell *matHeaderCellDef> {{'STUDY-CHARACTERISTICS-API.STUDY.TYPE' | translate: {Default: 'Study type'} }} </mat-header-cell>
                   <mat-cell *matCellDef="let study">
-                    <ng-container *ngIf="study.study_type !== null && study.study_type !== undefined">
-                      {{study.study_type}}
-                    </ng-container>
-
-                    <ng-container *ngIf="study.study_type === null || study.study_type === undefined">
-                      None
+                    <ng-container *ngIf="!!study.studyType; else noneTemplate">
+                      {{study.studyType}}
                     </ng-container>
                   </mat-cell>
                 </ng-container>
@@ -116,11 +112,8 @@
                 <ng-container matColumnDef="studyStatus">
                   <mat-header-cell *matHeaderCellDef> {{'STUDY-CHARACTERISTICS-API.STUDY.STATUS' | translate: {Default: 'Study status'} }} </mat-header-cell>
                   <mat-cell *matCellDef="let study">
-                    <ng-container *ngIf="study.study_status !== null && study.study_status !== undefined">
-                      {{study.study_status}}
-                    </ng-container>
-                    <ng-container *ngIf="study.study_status === null || study.study_status === undefined">
-                      None
+                    <ng-container *ngIf="!!study.studyStatus; else noneTemplate">
+                      {{study.studyStatus}}
                     </ng-container>
                   </mat-cell>
                 </ng-container>
@@ -147,3 +140,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #noneTemplate>
+  <span>None</span>
+</ng-template>

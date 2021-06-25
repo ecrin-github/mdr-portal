@@ -27,14 +27,14 @@ export class PdfService {
         const dataObjectType = dataObject.objectType;
 
         let accessUrl = 'None';
-        if (dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) {
-          if (dataObject.accessDetails.url !== null && dataObject.accessDetails.url !== undefined) {
+        if (!!dataObject.accessDetails) {
+          if (!!dataObject.accessDetails.url) {
             accessUrl = dataObject.accessDetails.url;
           }
         }
 
         let objectUrl = 'None';
-        if (dataObject.objectUrl !== null && dataObject.objectUrl !== undefined) {
+        if (!!dataObject.objectUrl) {
           objectUrl = dataObject.objectUrl;
         }
 
@@ -113,16 +113,16 @@ export class PdfService {
       // tslint:disable-next-line:max-line-length
       let accessUrl = 'None';
       // tslint:disable-next-line:max-line-length
-      if (dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) {
+      if (!!dataObject.accessDetails) {
         // tslint:disable-next-line:max-line-length
-        if (dataObject.accessDetails.url !== null && dataObject.accessDetails.url !== undefined) {
+        if (!!dataObject.accessDetails.url) {
           accessUrl = dataObject.accessDetails.url;
         }
       }
 
       let objectUrl = 'None';
       // tslint:disable-next-line:max-line-length
-      if (dataObject.objectUrl !== null && dataObject.objectUrl !== undefined) {
+      if (!!dataObject.objectUrl) {
         objectUrl = dataObject.objectUrl;
       }
 

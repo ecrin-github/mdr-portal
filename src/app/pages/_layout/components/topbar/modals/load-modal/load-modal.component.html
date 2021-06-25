@@ -8,7 +8,7 @@
 </div>
 <div class="modal-body">
   <div class="row mb-2">
-    <ng-container *ngIf="sessionsList !== null && sessionsList !== undefined">
+    <ng-container *ngIf="!!sessionsList">
       <ng-container *ngIf="sessionsList.length > 0">
         <div class="col">
           <h4>
@@ -22,7 +22,7 @@
         </div>
       </ng-container>
     </ng-container>
-    <ng-container *ngIf="sessionsList.length < 1 || sessionsList === null || sessionsList === undefined">
+    <ng-container *ngIf="sessionsList.length < 1 || !!sessionsList">
       <div class="col text-center">
         <h4>
           {{'MODALS.NO-SESSION' | translate: {Default: 'No saved sessions'} }}

@@ -30,8 +30,8 @@ export class StudyPageComponent implements OnInit {
       }
     );
     this.apiService.getByStudyId({studyId: this.studyId}).subscribe(data => {
-        this.study = data.data[0];
-        this.statesService.setSingleStudy(data.data[0]);
+        this.study = data[0];
+        this.statesService.setSingleStudy(data[0]);
       },
       error => {
         this.route.navigate(['error/not-found']);

@@ -68,9 +68,9 @@ export class SaveModalComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
 
-      if (this.sessionName !== undefined) {
+      if (!!this.sessionName) {
         const sessionName = this.sessionName.nativeElement.value;
-        if (sessionName === '') {
+        if (!!sessionName || sessionName === '') {
           this.errorMessage = 'Please fill this field up.';
         } else {
 

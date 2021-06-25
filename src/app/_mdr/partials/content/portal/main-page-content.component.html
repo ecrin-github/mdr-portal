@@ -18,7 +18,7 @@
       </ngb-alert>
     </p>
     <app-filters-list></app-filters-list>
-    <ng-container *ngIf="pageSlice && pageSlice !== undefined">
+    <ng-container *ngIf="pageSlice && !!pageSlice">
       <ng-container *ngFor="let study of pageSlice">
         <app-study-expanding
           [studyId]="study.id"

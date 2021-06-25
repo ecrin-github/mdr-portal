@@ -91,9 +91,9 @@ export class RestComponent implements OnInit {
       studyRecord = {
         id: study.id,
         // tslint:disable-next-line:max-line-length
-        displayTitle: (study.displayTitle !== null && study.displayTitle !== undefined) ? study.displayTitle : 'None',
-        studyType: (study.studyType !== null && study.studyType !== undefined) ? study.studyType : 'None',
-        studyStatus: (study.studyStatus !== null && study.studyStatus !== undefined) ? study.studyStatus : 'None'
+        displayTitle: (!!study.displayTitle) ? study.displayTitle : 'None',
+        studyType: (!!study.studyType) ? study.studyType : 'None',
+        studyStatus: (!!study.studyStatus) ? study.studyStatus : 'None'
       };
       this.results.push(studyRecord);
     }
@@ -308,9 +308,8 @@ export class RestComponent implements OnInit {
           this.message = 'Searching, please wait...';
 
           this.apiService.getByStudyId(searchQuery).subscribe(data => {
-
-            if (data.data.length > 0) {
-              this.onShowData(data.data);
+            if (data.length > 0) {
+              this.onShowData(data);
             } else {
               this.noResults();
             }
