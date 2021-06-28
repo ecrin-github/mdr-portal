@@ -13,28 +13,28 @@
         {{dataObjectTitle}}
       </ng-container>
     </p>
-    <p class="mt-2 mb-2" *ngIf="!!dataObjectAccessUrl">
+    <p class="mt-2 mb-2" *ngIf="dataObjectAccessUrl !== null && dataObjectAccessType !== undefined">
       <strong>
         {{'SEARCH-PAGE.STUDY.DATA-OBJECT.ACCESS-URL' | translate: {Default: 'Access URL: '} }}
       </strong>
       <a href="{{dataObjectAccessUrl}}" target="_blank">{{dataObjectAccessUrl}}</a>
     </p>
-    <p class="mt-2 mb-2" *ngIf="!!dataObjectUrl">
+    <p class="mt-2 mb-2" *ngIf="dataObjectUrl !== null && dataObjectUrl !== undefined">
       <strong>URL: </strong><a href="{{dataObjectUrl}}" target="_blank">{{dataObjectUrl}}</a>
     </p>
-    <p class="mt-2 mb-2" *ngIf="!!citationUrl">
+    <p class="mt-2 mb-2" *ngIf="citationUrl !== null && citationUrl !== undefined">
       <strong>
         {{'SEARCH-PAGE.STUDY.DATA-OBJECT.CITATION-URL' | translate: {Default: 'Citation URL: '} }}
       </strong><a href="{{citationUrl}}" target="_blank">{{citationUrl}}</a>
     </p>
-    <p class="mt-2 mb-2" *ngIf="!!provenance">
+    <p class="mt-2 mb-2" *ngIf="provenance !== null && provenance !== undefined">
       <strong>
         {{'SEARCH-PAGE.STUDY.DATA-OBJECT.PROVENANCE' | translate: {Default: 'Provenance: '} }}
       </strong>
       {{provenance}}
     </p>
   </div>
-  <div class="col-xl-2" *ngIf="!!dataObjectYear; else noneTemplate">
+  <div class="col-xl-2" *ngIf="dataObjectYear !== null && dataObjectYear !== undefined; else noneTemplate">
     <p class="text-center">{{dataObjectYear}}</p>
   </div>
   <div class="col-xl-2 text-center">

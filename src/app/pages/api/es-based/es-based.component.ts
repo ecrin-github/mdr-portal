@@ -68,10 +68,9 @@ export class EsBasedComponent implements OnInit {
       let studyRecord: StudyRecordInterface;
       studyRecord = {
         id: study.id,
-        // tslint:disable-next-line:max-line-length
-        displayTitle: (!!study.displayTitle) ? study.displayTitle : 'None',
-        studyType: (!!study.studyType) ? study.studyType : 'None',
-        studyStatus: (!!study.studyStatus) ? study.studyStatus : 'None'
+        displayTitle: study.displayTitle !== null && study.displayTitle !== undefined ? study.displayTitle : 'None',
+        studyType: study.studyType !== null && study.studyType !== undefined ? study.studyType : 'None',
+        studyStatus: study.studyStatus !== null && study.studyStatus !== undefined ? study.studyStatus : 'None'
       };
       this.results.push(studyRecord);
     }

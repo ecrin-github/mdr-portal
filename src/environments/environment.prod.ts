@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  appVersion: 'v.0.6.2',
+  appVersion: 'v.0.6.3',
 
   // HOSTNAME
   hostname: 'https://localhost:5001/',

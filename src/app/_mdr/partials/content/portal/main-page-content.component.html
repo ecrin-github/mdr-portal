@@ -18,7 +18,7 @@
       </ngb-alert>
     </p>
     <app-filters-list></app-filters-list>
-    <ng-container *ngIf="pageSlice && !!pageSlice">
+    <ng-container *ngIf="pageSlice && (pageSlice !== null && pageSlice !== undefined)">
       <ng-container *ngFor="let study of pageSlice">
         <app-study-expanding
           [studyId]="study.id"
@@ -39,11 +39,12 @@
       </ng-container>
     </ng-container>
     <ng-container *ngIf="total > 0 && !loading">
-      <mat-paginator [length]="total"
-                     [pageSize]="pageSize"
-                     [pageIndex]="pageIndex"
-                     [pageSizeOptions]="pageSizeOptions"
-                     (page)="onPageChange($event)"
+      <mat-paginator
+         [length]="total"
+         [pageSize]="pageSize"
+         [pageIndex]="pageIndex"
+         [pageSizeOptions]="pageSizeOptions"
+         (page)="onPageChange($event)"
       >
       </mat-paginator>
     </ng-container>

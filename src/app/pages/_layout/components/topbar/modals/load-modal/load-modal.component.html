@@ -8,7 +8,7 @@
 </div>
 <div class="modal-body">
   <div class="row mb-2">
-    <ng-container *ngIf="!!sessionsList">
+    <ng-container *ngIf="sessionsList !== null && sessionsList !== undefined">
       <ng-container *ngIf="sessionsList.length > 0">
         <div class="col">
           <h4>
@@ -22,7 +22,9 @@
         </div>
       </ng-container>
     </ng-container>
-    <ng-container *ngIf="sessionsList.length < 1 || !!sessionsList">
+    <ng-container
+      *ngIf="sessionsList.length < 1 || (sessionsList === null || sessionsList == undefined)"
+    >
       <div class="col text-center">
         <h4>
           {{'MODALS.NO-SESSION' | translate: {Default: 'No saved sessions'} }}
@@ -48,7 +50,7 @@
           id="uploadSessionFile"
           type="file"
           hidden
-          (change)="uploadSession($event.target.files)"
+          (change)="uploadSession($event.target['files'])"
         />
         <i class="fas fa-upload"></i> {{'MODALS.UPLOAD' | translate: {Default: 'Upload from your device'} }}
       </button>

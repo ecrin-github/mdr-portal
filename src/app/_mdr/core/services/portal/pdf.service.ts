@@ -27,14 +27,14 @@ export class PdfService {
         const dataObjectType = dataObject.objectType;
 
         let accessUrl = 'None';
-        if (!!dataObject.accessDetails) {
-          if (!!dataObject.accessDetails.url) {
+        if (dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) {
+          if (dataObject.accessDetails.url !== null && dataObject.accessDetails.url !== undefined) {
             accessUrl = dataObject.accessDetails.url;
           }
         }
 
         let objectUrl = 'None';
-        if (!!dataObject.objectUrl) {
+        if (dataObject.objectUrl !== null && dataObject.objectUrl !== undefined) {
           objectUrl = dataObject.objectUrl;
         }
 
@@ -106,23 +106,18 @@ export class PdfService {
       { content: 'Related data objects', colSpan: 4, rowSpan: 1, styles: { halign: 'left', fontStyle: 'bold', fontSize: 14 } },
     ]);
 
-    // tslint:disable-next-line:prefer-for-of
     for (const dataObject of studyData.linkedDataObjects) {
       const dataObjectType = dataObject.objectType;
 
-      // tslint:disable-next-line:max-line-length
       let accessUrl = 'None';
-      // tslint:disable-next-line:max-line-length
-      if (!!dataObject.accessDetails) {
-        // tslint:disable-next-line:max-line-length
-        if (!!dataObject.accessDetails.url) {
+      if (dataObject.accessDetails !== null && dataObject.accessDetails !== undefined) {
+        if (dataObject.accessDetails.url !== null && dataObject.accessDetails.url !== undefined) {
           accessUrl = dataObject.accessDetails.url;
         }
       }
 
       let objectUrl = 'None';
-      // tslint:disable-next-line:max-line-length
-      if (!!dataObject.objectUrl) {
+      if (dataObject.objectUrl !== null && dataObject.objectUrl !== undefined) {
         objectUrl = dataObject.objectUrl;
       }
 

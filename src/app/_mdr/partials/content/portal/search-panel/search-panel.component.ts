@@ -49,38 +49,38 @@ export class SearchPanelComponent implements OnInit {
     const formData = this.statesService.getActiveSession();
 
     if (formData.searchType === 'study_characteristics') {
-      if (!!this.titleContains) {
+      if (this.titleContains !== null && this.titleContains !== undefined) {
         this.titleContains.nativeElement.value = formData.searchBody['titleContains'];
       }
 
-      if (!!this.topicIncludes) {
+      if (this.topicIncludes !== null && this.topicIncludes !== undefined) {
         this.topicIncludes.nativeElement.value = formData.searchBody['topicsInclude'];
       }
     } else if (formData.searchType === 'specific_study') {
-      if (!!this.specificStudyValue) {
+      if (this.specificStudyValue !== null && this.specificStudyValue !== undefined) {
         this.specificStudyValue.nativeElement.value = formData.searchBody['searchValue'];
       }
     } else if (formData.searchType === 'via_published_paper') {
-      if (!!this.viaPublishedPaperValue) {
+      if (this.viaPublishedPaperValue !== null && this.viaPublishedPaperValue !== undefined) {
         this.viaPublishedPaperValue.nativeElement.value = formData.searchBody['searchValue'];
       }
     }
   }
 
   onClearSearchString() {
-    if (!!this.titleContains) {
+    if (this.titleContains !== null && this.titleContains !== undefined) {
       this.titleContains.nativeElement.value = '';
     }
 
-    if (!!this.topicIncludes) {
+    if (this.topicIncludes !== null && this.topicIncludes !== undefined) {
       this.topicIncludes.nativeElement.value = '';
     }
 
-    if (!!this.specificStudyValue) {
+    if (this.specificStudyValue !== null && this.specificStudyValue !== undefined) {
       this.specificStudyValue.nativeElement.value = '';
     }
 
-    if (!!this.viaPublishedPaperValue) {
+    if (this.viaPublishedPaperValue !== null && this.viaPublishedPaperValue !== undefined) {
       this.viaPublishedPaperValue.nativeElement.value = '';
     }
   }

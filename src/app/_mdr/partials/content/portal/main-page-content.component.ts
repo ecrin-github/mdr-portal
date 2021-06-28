@@ -85,7 +85,7 @@ export class MainPageContentComponent implements OnInit {
 
   showSearchResults(searchResults: Observable<any>){
     this.loading = true;
-    if (searchResults !== null) {
+    if (searchResults !== null && searchResults !== undefined) {
       searchResults.subscribe(
         (data: ResponseInterface) => {
           this.pageSlice = data.data;

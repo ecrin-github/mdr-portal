@@ -48,7 +48,6 @@ const selectedStudyQuery = `{
 })
 export class RestComponent implements OnInit {
 
-
   @ViewChild('searchType') searchTypeElement;
   @ViewChild('searchQuery') searchQueryElement;
 
@@ -91,9 +90,9 @@ export class RestComponent implements OnInit {
       studyRecord = {
         id: study.id,
         // tslint:disable-next-line:max-line-length
-        displayTitle: (!!study.displayTitle) ? study.displayTitle : 'None',
-        studyType: (!!study.studyType) ? study.studyType : 'None',
-        studyStatus: (!!study.studyStatus) ? study.studyStatus : 'None'
+        displayTitle: study.displayTitle !== null && study.displayTitle !== undefined ? study.displayTitle : 'None',
+        studyType: study.studyType !== null && study.studyType !== undefined ? study.studyType : 'None',
+        studyStatus: study.studyStatus !== null && study.studyStatus !== undefined ? study.studyStatus : 'None'
       };
       this.results.push(studyRecord);
     }
@@ -214,7 +213,8 @@ export class RestComponent implements OnInit {
 
       } else if (this.searchType === 'specific-study') {
 
-        const searchQuery: SpecificStudyRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
+        const searchQuery: SpecificStudyRequestInterface =
+            JSON.parse(this.searchQueryElement.nativeElement.value);
 
         if (!('searchType' in searchQuery)) {
           this.error = true;
@@ -255,7 +255,8 @@ export class RestComponent implements OnInit {
 
       } else if (this.searchType === 'via-published-paper') {
 
-        const searchQuery: ViaPublishedPaperRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
+        const searchQuery: ViaPublishedPaperRequestInterface =
+            JSON.parse(this.searchQueryElement.nativeElement.value);
 
         if (!('searchType' in searchQuery)) {
           this.error = true;
@@ -295,7 +296,8 @@ export class RestComponent implements OnInit {
         }
 
       } else if (this.searchType === 'by-study-id') {
-        const searchQuery: ByStudyIdRequestInterface = JSON.parse(this.searchQueryElement.nativeElement.value);
+        const searchQuery: ByStudyIdRequestInterface =
+            JSON.parse(this.searchQueryElement.nativeElement.value);
 
         if (!('studyId' in searchQuery)) {
           this.error = true;

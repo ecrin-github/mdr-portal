@@ -68,27 +68,22 @@ export class SaveModalComponent implements OnInit {
 
     if (!this.statesService.getIsCleared()) {
 
-      if (!!this.sessionName) {
+      if (this.sessionName !== null && this.sessionName !== undefined) {
         const sessionName = this.sessionName.nativeElement.value;
-        if (!!sessionName || sessionName === '') {
-          this.errorMessage = 'Please fill this field up.';
+        if ((sessionName !== null && sessionName !== undefined) && sessionName === '') {
+          this.errorMessage = 'Please fill up this field.';
         } else {
-
           this.statesService.appendToSessionsList(this.buildStateSessionObject(sessionName));
-
           this.subscriptionEvents.sendSessionListUpdateEvent();
-
           this.snackbarService.snackbarMessage('Session has been saved', 'Close');
-
           this.closeModal();
         }
       } else {
-        this.errorMessage = 'Field is undefined.';
+        this.errorMessage = 'Field is empty or undefined.';
       }
     } else {
       this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.EMPTY-SESSION', 'SNACKBAR.CLOSE');
     }
-
   }
 
   downloadSession(format: string) {

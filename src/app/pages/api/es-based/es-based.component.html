@@ -20,7 +20,6 @@
           </div>
         </div>
 
-
         <mat-divider  class="mt-5 mb-5"></mat-divider>
 
         <div class="row">
@@ -44,7 +43,6 @@
               <label for="requestURL">URL</label>
               <input
                 type="text"
-                #requestURL
                 id="requestURL"
                 class="form-control"
                 disabled
@@ -56,7 +54,6 @@
             <div class="form-group">
               <button
                 type="submit"
-                #searchBtn
                 id="searchBtn"
                 class="btn btn-primary"
                 (click)="onSearch()"
@@ -89,7 +86,7 @@
             </ng-container>
 
             <ng-container *ngIf="!error && !loading && !notFound && length > 0">
-              <mat-table #table [dataSource]="dataSource">
+              <mat-table [dataSource]="dataSource">
                 <!-- Study title Column -->
                 <ng-container matColumnDef="studyTitle">
                   <mat-header-cell *matHeaderCellDef> {{'STUDY-CHARACTERISTICS-API.STUDY.TITLE' | translate: {Default: 'Study title'} }} </mat-header-cell>
@@ -102,7 +99,10 @@
                 <ng-container matColumnDef="studyType">
                   <mat-header-cell *matHeaderCellDef> {{'STUDY-CHARACTERISTICS-API.STUDY.TYPE' | translate: {Default: 'Study type'} }} </mat-header-cell>
                   <mat-cell *matCellDef="let study">
-                    <ng-container *ngIf="!!study.studyType; else noneTemplate">
+                    <ng-container
+                      *ngIf="study.studyType !== null && study.studyType !== undefined;
+                        else noneTemplate"
+                    >
                       {{study.studyType}}
                     </ng-container>
                   </mat-cell>
@@ -111,7 +111,10 @@
                 <ng-container matColumnDef="studyStatus">
                   <mat-header-cell *matHeaderCellDef> {{'STUDY-CHARACTERISTICS-API.STUDY.STATUS' | translate: {Default: 'Study status'} }} </mat-header-cell>
                   <mat-cell *matCellDef="let study">
-                    <ng-container *ngIf="!!study.studyStatus; else noneTemplate">
+                    <ng-container
+                      *ngIf="study.studyStatus !== null && study.studyStatus !== undefined;
+                        else noneTemplate"
+                    >
                       {{study.studyStatus}}
                     </ng-container>
                   </mat-cell>
@@ -124,11 +127,11 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
               </mat-table>
-              <mat-paginator #paginator
-                             [pageSize]="5"
-                             [pageSizeOptions]="[5, 10, 20]"
-                             [showFirstLastButtons]="true"
-                             [length]="length"
+              <mat-paginator
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [showFirstLastButtons]="true"
+                 [length]="length"
               >
               </mat-paginator>
             </ng-container>

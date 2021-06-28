@@ -25,21 +25,21 @@
       </p>
       <div class="row">
         <div class="col">
-          <p *ngIf="!!studyType">
+          <p *ngIf="studyType !== null && studyType !== undefined">
             <strong>
               {{'SEARCH-PAGE.STUDY.STUDY-TYPE' | translate: {Default: 'Study type: '} }}
             </strong>{{studyType}}
           </p>
         </div>
         <div class="col">
-          <p *ngIf="!!studyStatus">
+          <p *ngIf="studyStatus !== null && studyStatus !== undefined">
             <strong>
               {{'SEARCH-PAGE.STUDY.STUDY-STATUS' | translate: {Default: 'Study status: '} }}
             </strong>{{studyStatus}}
           </p>
         </div>
       </div>
-      <p *ngIf="!!dataSharingStatement">
+      <p *ngIf="dataSharingStatement !== null && dataSharingStatement !== undefined">
         <strong>
           {{'SEARCH-PAGE.STUDY.DATA-SHARING' | translate: {Default: 'Data sharing statement'} }}
         </strong><br />
@@ -52,7 +52,7 @@
           {{dataSharingStatement}}
         </ng-container>
       </p>
-      <p *ngIf="!!provenance">
+      <p *ngIf="provenance !== null && provenance !== undefined">
         <strong>
           {{'SEARCH-PAGE.STUDY.PROVENANCE' | translate: {Default: 'Provenance: '} }}
         </strong>{{provenance}}
@@ -60,7 +60,7 @@
       <hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
       <ng-container *ngIf="dataObjects">
         <ng-container *ngFor="let dataObject of dataObjects">
-          <ng-container *ngIf="!!dataObject">
+          <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
             <app-data-object
               [dataObjectTitle]="dataObject.displayTitle"
               [dataObjectId]="dataObject.id"
@@ -87,4 +87,8 @@
     </mat-expansion-panel>
   </div>
 </div>
+
+<ng-template #noneTemplate>
+  <span>None</span>
+</ng-template>
 
