@@ -10,7 +10,7 @@ import {SearchParamsInterface} from '../interfaces/search-params/search-params.i
 export class States {
 
   constructor(
-    public defaultStates: DefaultStates
+    private defaultStates: DefaultStates
   ) {
   }
 

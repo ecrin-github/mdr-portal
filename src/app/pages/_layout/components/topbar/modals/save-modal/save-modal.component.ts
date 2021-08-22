@@ -44,18 +44,18 @@ export class SaveModalComponent implements OnInit {
 
   buildStateSessionObject(sessionName: string) {
     let id = 1;
-    const sessionsList = this.statesService.getSessionsList();
+    const sessionsList = this.statesService.sessionsList;
     if (sessionsList.length > 0) {
       const lastElement = sessionsList[sessionsList.length - 1];
       id = lastElement.id + 1;
     }
-    const currentSearchParams = this.statesService.getSearchParams();
+    const currentSearchParams = this.statesService.searchParams;
     this.searchType = currentSearchParams.searchType;
     this.searchBody = currentSearchParams.searchBody;
     this.sessionData = {
       searchType: this.searchType,
       searchBody: this.searchBody,
-      filters: this.statesService.getFiltersList()
+      filters: this.statesService.filtersList
     };
     return this.sessionDataObject = {
       id,
@@ -66,7 +66,7 @@ export class SaveModalComponent implements OnInit {
 
   saveSession() {
 
-    if (!this.statesService.getIsCleared()) {
+    if (!this.statesService.isCleared) {
 
       if (this.sessionName !== null && this.sessionName !== undefined) {
         const sessionName = this.sessionName.nativeElement.value;
@@ -88,7 +88,7 @@ export class SaveModalComponent implements OnInit {
 
   downloadSession(format: string) {
 
-    if (!this.statesService.getIsCleared()) {
+    if (!this.statesService.isCleared) {
 
       let filename: string;
 
@@ -111,8 +111,8 @@ export class SaveModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchType = this.statesService.getSearchParams().searchType;
-    this.searchBody = this.statesService.getSearchParams().searchBody;
+    this.searchType = this.statesService.searchParams.searchType;
+    this.searchBody = this.statesService.searchParams.searchBody;
     this.errorMessage = '';
     if (this.sessionName !== undefined) {
       this.sessionName.nativeElement.value = '';

@@ -46,7 +46,7 @@ export class SearchPanelComponent implements OnInit {
   }
 
   onSessionUpload() {
-    const formData = this.statesService.getActiveSession();
+    const formData = this.statesService.activeSession;
 
     if (formData.searchType === 'study_characteristics') {
       if (this.titleContains !== null && this.titleContains !== undefined) {

@@ -5,11 +5,13 @@ interface AccessDetails{
 }
 
 interface DataSetRecordKey{
+   keysTypeId: number;
    keysType: string;
    keysDetails: string;
 }
 
 interface DataSetDeidentLevel{
+   deidentTypeId: number;
    deidentType: string;
    deidentDirect: boolean;
    deidentHipaa: boolean;
@@ -20,6 +22,7 @@ interface DataSetDeidentLevel{
 }
 
 interface DataSetConsent{
+   consentTypeId: string;
    consentType: string;
    consentNoncommercial: boolean;
    consentGeogRestrict: boolean;
@@ -36,6 +39,7 @@ interface InstanceAccessDetails{
 }
 
 interface InstanceResourceDetails{
+   typeId: number;
    typeName: string;
    size: number;
    sizeUnit: string;
@@ -72,7 +76,7 @@ interface EndDate{
 interface ObjectDate{
    id: number;
    dateType: string;
-   isDateRange: boolean;
+   dateIsRange: boolean;
    dateAsString: string;
    startDate: StartDate;
    endDate: EndDate;
@@ -84,14 +88,23 @@ interface Person{
    givenName: string;
    fullName: string;
    orcid: string;
-   affiliation: string;
+   affiliationString: string;
+   affiliationOrgId: number;
+   affiliationOrgName: string;
+   affiliationOrgRorId: string;
+}
+
+interface ContribOrg {
+   id: number;
+   name: string;
+   rorId: string;
 }
 
 interface ObjectContributor{
    id: number;
    contributionType: string;
    isIndividual: boolean;
-   organisation: string;
+   organisation: ContribOrg;
    person: Person;
 }
 
@@ -99,19 +112,23 @@ interface ObjectTopic{
    id: number;
    topicType: string;
    meshCoded: boolean;
-   topicCode: string;
-   topicValue: string;
-   topicQualCode: string;
-   topicQualValue: string;
+   meshCode: string;
+   meshValue: string;
    originalValue: string;
+}
+
+interface IdentifierOrg {
+   id: number;
+   name: string;
+   rorId: string;
 }
 
 interface ObjectIdentifier{
    id: number;
    identifierValue: string;
    identifierType: string;
-   identifierDate: Date;
-   identifierOrg: string;
+   identifierDate: string;
+   identifierOrg: IdentifierOrg;
 }
 
 interface ObjectDescription{
@@ -132,7 +149,13 @@ interface ObjectRight{
 interface ObjectRelation{
    id: number;
    relationshipType: string;
-   targetObjectId: string;
+   targetObjectId: number;
+}
+
+interface ManagingOrg {
+   id: number;
+   name: string;
+   rorId: string;
 }
 
 export interface DataObject{
@@ -144,10 +167,10 @@ export interface DataObject{
    objectType: string;
    publicationYear: number;
    langCode: string;
-   managingOrganisation: string;
+   managingOrganisation: ManagingOrg;
    accessType: string;
    accessDetails: AccessDetails;
-   eoscCategory: number;
+   eoscCategory: number | null;
    datasetRecordKeys: DataSetRecordKey;
    datasetDeidentLevel: DataSetDeidentLevel;
    datasetConsent: DataSetConsent;

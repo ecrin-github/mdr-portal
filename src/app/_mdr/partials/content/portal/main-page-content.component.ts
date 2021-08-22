@@ -2,13 +2,14 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 import {Router} from '@angular/router';
 import {StatesService} from '../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../core/states/subscription-events';
-import {SearchService} from '../../../core/services/search/search.service';
 import {PageEvent} from '@angular/material/paginator';
 import {Observable, Subscription} from 'rxjs';
 import {FiltersListComponent} from './filters-list/filters-list.component';
 import {ResponseInterface} from '../../../core/interfaces/responses/server-response.interface';
 import {Study} from '../../../core/interfaces/entities/study.interface';
 import {SnackbarService} from '../../../core/services/snackbar/snackbar.service';
+import {QueryApiService} from '../../../core/services/query-api/query-api.service';
+import {PaginationService} from '../../../core/services/pagination/pagination.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class MainPageContentComponent implements OnInit {
 
   public pageSize: number;
   public pageIndex: number;
-  public pageSizeOptions = [10, 25, 50, 100];
+  public pageSizeOptions = [5, 10, 15, 20];
   public pageSlice: Array<Study> = [];
 
   public searchType: string;
@@ -45,8 +46,9 @@ export class MainPageContentComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
-    private searchService: SearchService,
+    private queryApiService: QueryApiService,
     private filtersListComponent: FiltersListComponent,
+    private paginationService: PaginationService,
   ) {
     ref.detach();
     this.clearEventSubscription = this.subscriptionEvents.getClearEventSubject().subscribe(() => {
@@ -56,7 +58,7 @@ export class MainPageContentComponent implements OnInit {
       this.getFilteredData();
     });
     this.clearFilterEventSubscription = this.subscriptionEvents.getClearFilterEvent().subscribe(() => {
-      if (!this.statesService.getIsCleared()) {
+      if (!this.statesService.isCleared) {
         this.onClearFiltersListener();
       }
     });
@@ -90,8 +92,8 @@ export class MainPageContentComponent implements OnInit {
         (data: ResponseInterface) => {
           this.pageSlice = data.data;
           this.total = data.total;
-          this.onPage = this.searchService.onPageChecker(this.total, this.pageIndex, this.pageSize);
-          this.startFrom = this.searchService.startFromChecker(this.onPage, this.pageSize);
+          this.onPage = this.paginationService.onPageChecker(this.total, this.pageIndex, this.pageSize);
+          this.startFrom = this.paginationService.startFromChecker(this.onPage, this.pageSize);
           this.loading = false;
         },
         error => {
@@ -102,9 +104,9 @@ export class MainPageContentComponent implements OnInit {
   }
 
   onUploadingSession() {
-    const searchStateData = this.statesService.getActiveSession();
+    const searchStateData = this.statesService.activeSession;
 
-    this.statesService.setIsCleared(false);
+    this.statesService.isCleared = false;
 
     this.searchType = searchStateData.searchType;
     this.searchBody = searchStateData.searchBody;
@@ -112,15 +114,15 @@ export class MainPageContentComponent implements OnInit {
     this.pageSize = searchStateData.searchBody['size'];
     this.pageIndex = searchStateData.searchBody['page'];
 
-    if (this.statesService.getFiltersList().length > 0) {
-      this.statesService.setIsFiltered(true);
+    if (this.statesService.filtersList.length > 0) {
+      this.statesService.isFiltered = true;
     } else {
-      this.statesService.setIsFiltered(false);
+      this.statesService.isFiltered  = false;
     }
 
-    this.statesService.setSearchParams({searchType: this.searchType, searchBody: this.searchBody});
+    this.statesService.searchParams = {searchType: this.searchType, searchBody: this.searchBody};
 
-    this.showSearchResults(this.searchService.pagination({
+    this.showSearchResults(this.paginationService.pagination({
       searchType: this.searchType,
       searchBody: this.searchBody
     }));
@@ -134,10 +136,10 @@ export class MainPageContentComponent implements OnInit {
 
     this.searchType = $event[0]['model'];
 
-    this.statesService.setIsCleared(false);
+    this.statesService.isCleared = false;
     this.loading = true;
 
-    if (!this.statesService.getIsCleared()) {
+    if (!this.statesService.isCleared) {
       if (this.searchType === 'study_characteristics') {
 
         this.searchBody = {
@@ -167,9 +169,9 @@ export class MainPageContentComponent implements OnInit {
         };
       }
 
-      this.statesService.setSearchParams({searchType: this.searchType, searchBody: this.searchBody});
+      this.statesService.searchParams = {searchType: this.searchType, searchBody: this.searchBody};
 
-      this.showSearchResults(this.searchService.pagination({
+      this.showSearchResults(this.paginationService.pagination({
         searchType: this.searchType,
         searchBody: this.searchBody
       }));
@@ -202,12 +204,12 @@ export class MainPageContentComponent implements OnInit {
     this.pageIndex = 0;
     this.pageSize = 10;
 
-    if (!this.statesService.getIsCleared()) {
+    if (!this.statesService.isCleared) {
 
       this.searchBody['page'] = this.pageIndex;
       this.searchBody['size'] = this.pageSize;
 
-      this.showSearchResults(this.searchService.pagination({
+      this.showSearchResults(this.paginationService.pagination({
         searchType: this.searchType,
         searchBody: this.searchBody
       }));
@@ -217,12 +219,12 @@ export class MainPageContentComponent implements OnInit {
 
   onClearFiltersListener(){
 
-    this.statesService.setIsFiltered(false);
+    this.statesService.isFiltered = false;
     this.pageIndex = 0;
     this.pageSize = 10;
 
-    if (!this.statesService.getIsCleared()) {
-      this.showSearchResults(this.searchService.pagination({
+    if (!this.statesService.isCleared) {
+      this.showSearchResults(this.paginationService.pagination({
         searchType: this.searchType,
         searchBody: this.searchBody
       }));
@@ -246,8 +248,8 @@ export class MainPageContentComponent implements OnInit {
 
     this.setInitialSearchParams();
 
-    this.statesService.setIsCleared(true);
-    this.statesService.setIsFiltered(false);
+    this.statesService.isCleared = true;
+    this.statesService.isFiltered = false;
 
     this.statesService.clearFilters();
     this.filtersListComponent.clearAll();
@@ -259,12 +261,12 @@ export class MainPageContentComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
 
-    if (!this.statesService.getIsCleared()) {
+    if (!this.statesService.isCleared) {
 
       this.searchBody['page'] = this.pageIndex;
       this.searchBody['size'] = this.pageSize;
 
-      this.showSearchResults(this.searchService.pagination({
+      this.showSearchResults(this.paginationService.pagination({
         searchType: this.searchType,
         searchBody: this.searchBody
       }));

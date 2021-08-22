@@ -51,7 +51,7 @@ export class StudyFiltersComponent implements OnInit {
         isNested,
         fieldName,
         name: translateFilter,
-        value: parameter,
+        value: paramId,
         path,
         type,
         subgroupName
@@ -80,7 +80,7 @@ export class StudyFiltersComponent implements OnInit {
 
       this.snackbarService.snackbarMessage(message + translateFilter, close);
 
-      const index = this.filtersList.findIndex(x => x.value === parameter && x.subgroupName === subgroupName);
+      const index = this.filtersList.findIndex(x => x.value === paramId && x.subgroupName === subgroupName);
       if (index > -1) {
         this.filtersList.splice(index, 1);
       }
@@ -178,11 +178,11 @@ export class StudyFiltersComponent implements OnInit {
         }
       );
 
-      if (!this.filtersList.some(x => x.value === element.name)) {
+      if (!this.filtersList.some(x => x.value === element.value)) {
         this.filtersList.push({
           isNested,
           fieldName,
-          value: element.name,
+          value: element.value,
           name: translateFilter,
           path,
           type,

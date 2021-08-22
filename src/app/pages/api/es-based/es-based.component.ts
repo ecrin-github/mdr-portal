@@ -1,16 +1,16 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {ApiService} from '../../../_mdr/core/services/api/api.service';
 import {environment} from '../../../../environments/environment.prod';
 import {Study, StudyRecordInterface} from '../../../_mdr/core/interfaces/entities/study.interface';
 import {RawQueryInterface} from '../../../_mdr/core/interfaces/requests/raw-query.interface';
+import {RawQueryService} from '../../../_mdr/core/services/raw-query-api/raw-query.service';
 
 
 const queryTemplate = `{
       "page": 0,
       "size": 100,
-      "elasticQuery": {
+      "query": {
           "term": {
               "id": "..."
           }
@@ -52,7 +52,7 @@ export class EsBasedComponent implements OnInit {
   selectedOption = 'study';
 
   constructor(
-    private apiService: ApiService,
+    private rawQueryService: RawQueryService,
     private ref: ChangeDetectorRef
   ) {
     ref.detach();
@@ -141,7 +141,7 @@ export class EsBasedComponent implements OnInit {
         this.loading = true;
         this.message = 'Searching, please wait...';
 
-        this.apiService.getRawQueryStudies(this.searchQuery).subscribe(data => {
+        this.rawQueryService.getRawQueryStudies(this.searchQuery).subscribe(data => {
 
           if (data.total > 0) {
             this.onShowData(data.data);
@@ -158,7 +158,7 @@ export class EsBasedComponent implements OnInit {
         this.loading = true;
         this.message = 'Searching, please wait...';
 
-        this.apiService.getRawQueryObjects(this.searchQuery).subscribe(data => {
+        this.rawQueryService.getRawQueryObjects(this.searchQuery).subscribe(data => {
 
           if (data.total > 0) {
             this.onShowData(data.data);

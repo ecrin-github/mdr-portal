@@ -210,9 +210,9 @@ const StudyFiltersGeneral: Array<StudyFiltersSubgroupsInterface> = [
     checkboxName: 'study_type',
     isSelected: true,
     translate: 'FILTERS.STUDIES.TYPES.TITLE',
-    fieldName: 'study_type',
+    fieldName: 'study_type.id',
     isNested: false,
-    path: '',
+    path: 'study_type',
     values: studyTypes,
     type: 'study'
   },
@@ -222,9 +222,9 @@ const StudyFiltersGeneral: Array<StudyFiltersSubgroupsInterface> = [
     checkboxName: 'study_status',
     isSelected: true,
     translate: 'FILTERS.STUDIES.STATUSES.TITLE',
-    fieldName: 'study_status',
+    fieldName: 'study_status.id',
     isNested: false,
-    path: '',
+    path: 'study_status',
     values: studyStatuses,
     type: 'study'
   },
@@ -234,9 +234,9 @@ const StudyFiltersGeneral: Array<StudyFiltersSubgroupsInterface> = [
     checkboxName: 'gender_elig',
     isSelected: true,
     translate: 'FILTERS.STUDIES.GENDER.TITLE',
-    fieldName: 'study_gender_elig',
+    fieldName: 'study_gender_elig.id',
     isNested: false,
-    path: '',
+    path: 'study_gender_elig',
     values: genderEligibility,
     type: 'study'
   }
@@ -532,7 +532,7 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     values: studyPhase,
     translate: 'FILTERS.STUDIES.PHASES.TITLE',
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -544,7 +544,7 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.INTERVENTIONAL-MODELS.TITLE',
     values: interventionalModel,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -556,7 +556,7 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.ALLOCATION-TYPES.TITLE',
     values: allocationType,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -568,7 +568,7 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.PRIMARY-PURPOSES.TITLE',
     values: primaryPurpose,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -580,7 +580,7 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.MASKING.TITLE',
     values: masking,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -752,7 +752,7 @@ const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.OBSERVATIONAL-MODELS.TITLE',
     values: observationalModel,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -764,7 +764,7 @@ const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.TIME-PERSPECTIVE.TITLE',
     values: timePerspective,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'
@@ -776,7 +776,7 @@ const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: true,
     translate: 'FILTERS.STUDIES.BIOSPECIMENS-RETAINED.TITLE',
     values: biospecimensRetained,
-    fieldName: 'study_features.feature_value',
+    fieldName: 'study_features.feature_value.id',
     path: 'study_features',
     isNested: true,
     type: 'study'

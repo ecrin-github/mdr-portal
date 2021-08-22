@@ -17,39 +17,39 @@ export class StatesService {
   }
 
   // IsCleared
-  getIsCleared() {
+  get isCleared() {
     return this.states.isCleared.getValue();
   }
 
-  setIsCleared(value: boolean) {
+  set isCleared(value: boolean) {
     this.states.isCleared.next(value);
   }
 
   setDefaultIsCleared() {
-    this.setIsCleared(this.defaultStates.defaultIsCleared);
+    this.isCleared = this.defaultStates.defaultIsCleared;
   }
 
 
   // IsFiltered
-  getIsFiltered() {
+  get isFiltered() {
     return this.states.isFiltered.getValue();
   }
 
-  setIsFiltered(value: boolean) {
+  set isFiltered(value: boolean) {
     this.states.isFiltered.next(value);
   }
 
   setDefaultIsFiltered() {
-    this.setIsFiltered(this.defaultStates.defaultIsFiltered);
+    this.isFiltered = this.defaultStates.defaultIsFiltered;
   }
 
 
   // SearchParams
-  getSearchParams() {
+  get searchParams() {
     return this.states.searchParams.getValue();
   }
 
-  setSearchParams(value: SearchParamsInterface) {
+  set searchParams(value: SearchParamsInterface) {
     this.states.searchParams.next({
       searchType: value.searchType,
       searchBody: value.searchBody
@@ -57,76 +57,76 @@ export class StatesService {
   }
 
   setDefaultSearchParams() {
-    this.setSearchParams(this.defaultStates.defaultSearchParams);
+    this.searchParams = this.defaultStates.defaultSearchParams;
   }
 
 
   // FiltersList
-  getFiltersList() {
+  get filtersList() {
     return this.states.filtersList.getValue();
   }
 
-  setFiltersList(filters: Array<FilterSampleInterface>) {
+  set filtersList(filters: Array<FilterSampleInterface>) {
     this.states.filtersList.next(filters);
   }
 
   setDefaultFiltersList() {
-    this.setFiltersList(this.defaultStates.defaultFiltersList);
+    this.filtersList = this.defaultStates.defaultFiltersList;
   }
 
 
   // Single Study
-  getSingleStudy() {
+  get singleStudy() {
     return this.states.singleStudy.getValue();
   }
 
-  setSingleStudy(study: Study) {
+  set singleStudy(study: Study) {
     this.states.singleStudy.next(study);
   }
 
   setDefaultSingleStudy() {
-    this.setSingleStudy(this.defaultStates.defaultSingleStudy);
+    this.singleStudy = this.defaultStates.defaultSingleStudy;
   }
 
 
   // SessionsList
-  getSessionsList() {
+  get sessionsList() {
     return this.states.sessionsList.getValue();
   }
 
-  setSessionsList(sessionsList: Array<SessionRecordInterface>) {
+  set sessionsList(sessionsList: Array<SessionRecordInterface>) {
     this.states.sessionsList.next(sessionsList);
   }
 
   appendToSessionsList(sessionRecord: SessionRecordInterface) {
-    const values = this.getSessionsList();
+    const values = this.sessionsList;
     values.push(sessionRecord);
     this.states.sessionsList.next(values);
   }
 
   getSessionDataFromSessionsList(id: number): SessionRecordInterface{
-    if (this.getSessionsList().length > 0) {
+    if (this.sessionsList.length > 0) {
       return this.states.sessionsList.getValue().find(x => x.id === id);
     }
     return null;
   }
 
   setDefaultSessionsList() {
-    this.setSessionsList(this.defaultStates.defaultSessionsList);
+    this.sessionsList = this.defaultStates.defaultSessionsList;
   }
 
 
   // Active search session
-  getActiveSession(): SessionDataInterface {
+  get activeSession(): SessionDataInterface {
     return this.states.activeSession.getValue();
   }
 
-  setActiveSession(value: SessionDataInterface) {
+  set activeSession(value: SessionDataInterface) {
     this.states.activeSession.next(value);
   }
 
   setDefaultActiveSession() {
-    this.setActiveSession(this.defaultStates.defaultActiveSession);
+    this.activeSession = this.defaultStates.defaultActiveSession;
   }
 
 

@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {environment} from '../../../../environments/environment.prod';
-import {ApiService} from '../../../_mdr/core/services/api/api.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Study, StudyRecordInterface} from '../../../_mdr/core/interfaces/entities/study.interface';
@@ -8,6 +7,7 @@ import {ByStudyIdRequestInterface} from '../../../_mdr/core/interfaces/requests/
 import {ByStudyCharacteristicsRequestInterface} from '../../../_mdr/core/interfaces/requests/by-study-characteristics-request.interface';
 import {SpecificStudyRequestInterface} from '../../../_mdr/core/interfaces/requests/specific-study-request.interface';
 import {ViaPublishedPaperRequestInterface} from '../../../_mdr/core/interfaces/requests/via-published-paper-request.interface';
+import {QueryApiService} from '../../../_mdr/core/services/query-api/query-api.service';
 
 
 const specificStudyQuery = `{
@@ -73,7 +73,7 @@ export class RestComponent implements OnInit {
   selectedOption = 'study-characteristics';
 
   constructor(
-    private apiService: ApiService,
+    private queryApiService: QueryApiService,
     private ref: ChangeDetectorRef
   ) {
     ref.detach();
@@ -199,7 +199,7 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getByStudyCharacteristics(searchQuery).subscribe(data => {
+          this.queryApiService.getByStudyCharacteristics(searchQuery).subscribe(data => {
 
             if (data.total > 0) {
               this.onShowData(data.data);
@@ -241,7 +241,7 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getSpecificStudy(searchQuery).subscribe(data => {
+          this.queryApiService.getSpecificStudy(searchQuery).subscribe(data => {
 
             if (data.total > 0) {
               this.onShowData(data.data);
@@ -283,7 +283,7 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getViaPublishedPaper(searchQuery).subscribe(data => {
+          this.queryApiService.getViaPublishedPaper(searchQuery).subscribe(data => {
 
             if (data.total > 0) {
               this.onShowData(data.data);
@@ -309,7 +309,7 @@ export class RestComponent implements OnInit {
           this.loading = true;
           this.message = 'Searching, please wait...';
 
-          this.apiService.getByStudyId(searchQuery).subscribe(data => {
+          this.queryApiService.getByStudyId(searchQuery).subscribe(data => {
             if (data.length > 0) {
               this.onShowData(data);
             } else {

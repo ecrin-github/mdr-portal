@@ -52,7 +52,7 @@ export class ObjectFiltersComponent implements OnInit {
         isNested,
         fieldName,
         name: translateFilter,
-        value: parameter,
+        value: paramId,
         type,
         path,
         subgroupName
@@ -81,7 +81,7 @@ export class ObjectFiltersComponent implements OnInit {
 
       this.snackbarService.snackbarMessage(message + translateFilter, close);
 
-      const index = this.filtersList.findIndex(x => x.value === parameter && x.subgroupName === subgroupName);
+      const index = this.filtersList.findIndex(x => x.value === paramId && x.subgroupName === subgroupName);
       if (index > -1) {
         this.filtersList.splice(index, 1);
       }
@@ -121,7 +121,7 @@ export class ObjectFiltersComponent implements OnInit {
     this.subgroups[index]['values'].forEach(element => {
       element.isSelected = true;
 
-      const indx = this.filtersList.findIndex(x => x.value === element.name && x.subgroupName === subgroupName);
+      const indx = this.filtersList.findIndex(x => x.value === element.value && x.subgroupName === subgroupName);
       if (indx > -1) {
         this.filtersList.splice(indx, 1);
       }
@@ -178,12 +178,12 @@ export class ObjectFiltersComponent implements OnInit {
         }
       );
 
-      if (!this.filtersList.some(x => x.value === element.name && x.subgroupName === subgroupName)) {
+      if (!this.filtersList.some(x => x.value === element.value && x.subgroupName === subgroupName)) {
         this.filtersList.push({
           isNested,
           fieldName,
           name: translateFilter,
-          value: element.name,
+          value: element.value,
           type,
           path,
           subgroupName

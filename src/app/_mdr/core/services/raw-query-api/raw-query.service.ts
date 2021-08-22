@@ -6,7 +6,7 @@ import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
 
 
 @Injectable({providedIn: 'root'})
-export class QueryService {
+export class RawQueryService {
 
   baseUrlSearch: string = environment.hostname + environment.rawQueryBaseUrl + environment.rawQueryVersion;
 

@@ -47,7 +47,7 @@ export class FiltersPanelComponent implements OnInit {
 
   onUploadingFilters() {
 
-    const filtersList = this.statesFunctions.getFiltersList();
+    const filtersList = this.statesFunctions.filtersList;
 
     if (filtersList.length > 0) {
 

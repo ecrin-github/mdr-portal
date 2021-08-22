@@ -59,21 +59,32 @@
       </p>
       <hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
       <ng-container *ngIf="dataObjects">
-        <ng-container *ngFor="let dataObject of dataObjects">
-          <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
-            <app-data-object
-              [dataObjectTitle]="dataObject.displayTitle"
-              [dataObjectId]="dataObject.id"
-              [dataObjectUrl]="dataObject.objectUrl"
-              [dataObjectAccessUrl]="(!!dataObject.accessDetails) ? dataObject.accessDetails.url : null"
-              [dataObjectAccessType]="dataObject.accessType"
-              [dataObjectType]="dataObject.objectType"
-              [dataObjectYear]="dataObject.publicationYear"
-              [provenance]="dataObject.provenanceString"
-              [objectInstances]="dataObject.objectInstances"
-            ></app-data-object>
+        <ng-container *ngIf="dataObjects.length > 0">
+          <ng-container *ngFor="let dataObject of dataObjects">
+            <ng-container *ngIf="dataObject !== null && dataObject !== undefined">
+              <app-data-object
+                      [dataObjectTitle]="dataObject.displayTitle"
+                      [dataObjectId]="dataObject.id"
+                      [dataObjectUrl]="dataObject.objectUrl"
+                      [dataObjectAccessUrl]="(!!dataObject.accessDetails) ? dataObject.accessDetails.url : null"
+                      [dataObjectAccessType]="dataObject.accessType"
+                      [dataObjectType]="dataObject.objectType"
+                      [dataObjectYear]="dataObject.publicationYear"
+                      [provenance]="dataObject.provenanceString"
+                      [objectInstances]="dataObject.objectInstances"
+              ></app-data-object>
+            </ng-container>
           </ng-container>
         </ng-container>
+      </ng-container>
+      <ng-container *ngIf="dataObjects === null || dataObjects === undefined || dataObjects.length <= 0">
+
+        <div class="row">
+          <div class="col-12 justify-content-center text-center mt-3">
+            <h6>No data objects to be displayed</h6>
+          </div>
+        </div>
+
       </ng-container>
       <mat-action-row>
         <a [routerLink]="['/study', studyId]"

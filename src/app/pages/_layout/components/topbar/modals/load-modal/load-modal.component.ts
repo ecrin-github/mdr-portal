@@ -38,7 +38,7 @@ export class LoadModalComponent implements OnInit {
   }
 
   onUpdateSessionList() {
-    this.sessionsList = this.statesService.getSessionsList();
+    this.sessionsList = this.statesService.sessionsList;
   }
 
   uploadSession(fileList: FileList): void {
@@ -53,8 +53,8 @@ export class LoadModalComponent implements OnInit {
 
       try {
 
-        this.statesService.setSessionsList(sessionData);
-        this.statesService.setFiltersList(sessionData.data.filters);
+        this.statesService.sessionsList = sessionData;
+        this.statesService.filtersList = sessionData.data.filters;
 
         this.subscriptionEvents.sendSessionUploadingEvent();
 
@@ -76,14 +76,14 @@ export class LoadModalComponent implements OnInit {
 
   onSelectionChange(event: any) {
     const sessionData: SessionRecordInterface = event.option.value;
-    this.statesService.setActiveSession(sessionData.data);
-    this.statesService.setFiltersList(sessionData.data.filters);
+    this.statesService.activeSession = sessionData.data;
+    this.statesService.filtersList = sessionData.data.filters;
     this.subscriptionEvents.sendSessionUploadingEvent();
     this.closeModal();
   }
 
   ngOnInit(): void {
-    this.sessionsList = this.statesService.getSessionsList();
+    this.sessionsList = this.statesService.sessionsList;
   }
 
 }

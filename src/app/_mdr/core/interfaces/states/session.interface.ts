@@ -1,7 +1,7 @@
 export interface SessionDataInterface {
   searchType: string;
   searchBody: object;
-  filters: Array<any>;
+  filters?: Array<any>;
 }
 
 export interface SessionRecordInterface {

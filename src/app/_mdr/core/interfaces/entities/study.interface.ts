@@ -11,13 +11,19 @@ interface MaxAge{
    unitName: string;
 }
 
+interface IdentifierOrg {
+    id: number;
+    name: string;
+    rorId: string;
+}
+
 interface StudyIdentifier {
    id: number;
    identifierValue: string;
    identifierType: string;
-   identifierDate: Date;
+   identifierDate: string;
    identifierLink: string;
-   identifierOrg: string;
+   identifierOrg: IdentifierOrg;
 }
 
 interface StudyTitle {
@@ -38,17 +44,15 @@ interface StudyTopic{
    id: number;
    topicType: string;
    meshCoded: boolean;
-   topicCode: string;
-   topicValue: string;
-   topicQualCode: string;
-   topicQualValue: string;
+   meshCode: string;
+   meshValue: string;
    originalValue: string;
 }
 
 interface StudyRelation{
   id: number;
   relationshipType: string;
-  targetStudyId: string;
+  targetStudyId: number;
 }
 
 export interface Study {
@@ -59,7 +63,7 @@ export interface Study {
   studyType: string;
   studyStatus: string;
   studyGenderElig: string;
-  studyEnrolment: number;
+  studyEnrolment: string;
   minAge: MinAge;
   maxAge: MaxAge;
   studyIdentifiers: Array<StudyIdentifier> | [];

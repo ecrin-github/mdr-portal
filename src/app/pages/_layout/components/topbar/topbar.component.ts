@@ -46,16 +46,16 @@ export class TopbarComponent implements OnInit, AfterViewInit {
 
   onClear(){
 
-    this.statesService.setIsCleared(true);
+    this.statesService.isCleared = true;
 
     const searchType = '';
     const searchBody: RawQueryInterface = {
       page: 0,
       size: 10,
-      elasticQuery: {}
+      query: {}
     };
 
-    this.statesService.setSearchParams({searchType, searchBody});
+    this.statesService.searchParams = {searchType, searchBody};
 
     this.subscriptionEvents.sendClearEvent();
 

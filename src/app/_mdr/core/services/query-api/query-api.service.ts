@@ -6,12 +6,11 @@ import {SpecificStudyRequestInterface} from '../../interfaces/requests/specific-
 import {ByStudyCharacteristicsRequestInterface} from '../../interfaces/requests/by-study-characteristics-request.interface';
 import {ViaPublishedPaperRequestInterface} from '../../interfaces/requests/via-published-paper-request.interface';
 import {ByStudyIdRequestInterface} from '../../interfaces/requests/by-study-id-request.interface';
-import {RawQueryInterface} from '../../interfaces/requests/raw-query.interface';
 import {Study} from '../../interfaces/entities/study.interface';
 
 
 @Injectable({providedIn: 'root'})
-export class ApiService {
+export class QueryApiService {
 
   baseUrlApi: string = environment.hostname + environment.apiBaseUrl + environment.apiVersion;
   baseUrlSearch: string = environment.hostname + environment.rawQueryBaseUrl + environment.rawQueryVersion;
@@ -20,9 +19,6 @@ export class ApiService {
   private studyCharacteristicsApiUrl = this.baseUrlApi + environment.studyCharacteristicsUrl;
   private viaPublishedPaperApiUrl = this.baseUrlApi + environment.viaPublishedPaperUrl;
   private selectedStudyApiUrl = this.baseUrlApi + environment.studyIdUrl;
-
-  private queryBasedStudyUrl = this.baseUrlSearch + environment.rawQueryStudyUrl;
-  private queryBasedObjectUrl = this.baseUrlSearch + environment.rawQueryObjectUrl;
 
   constructor(
     private http: HttpClient
@@ -43,14 +39,6 @@ export class ApiService {
 
   getByStudyId(searchParams: ByStudyIdRequestInterface){
     return this.http.post<Array<Study>>(this.selectedStudyApiUrl, searchParams);
-  }
-
-  getRawQueryStudies(searchParams: RawQueryInterface){
-    return this.http.post<ResponseInterface>(this.queryBasedStudyUrl, searchParams);
-  }
-
-  getRawQueryObjects(searchParams: RawQueryInterface){
-    return this.http.post<ResponseInterface>(this.queryBasedObjectUrl, searchParams);
   }
 
 }

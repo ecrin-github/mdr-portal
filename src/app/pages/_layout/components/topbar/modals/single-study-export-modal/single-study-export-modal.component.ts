@@ -23,9 +23,9 @@ export class SingleStudyExportModalComponent implements OnInit {
 
   generateJson() {
 
-    if (this.statesService.getSingleStudy()) {
+    if (this.statesService.singleStudy) {
 
-      const studyData = this.statesService.getSingleStudy();
+      const studyData = this.statesService.singleStudy;
 
       const filename = studyData.displayTitle + '.json';
 
@@ -42,8 +42,8 @@ export class SingleStudyExportModalComponent implements OnInit {
 
   generatePdf(){
 
-    if (this.statesService.getSingleStudy()) {
-      this.pdfService.singleStudyPDFGenerator(this.statesService.getSingleStudy());
+    if (this.statesService.singleStudy) {
+      this.pdfService.singleStudyPDFGenerator(this.statesService.singleStudy);
       this.closeModal();
     } else {
       this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.NO-STUDY', 'SNACKBAR.CLOSE');
