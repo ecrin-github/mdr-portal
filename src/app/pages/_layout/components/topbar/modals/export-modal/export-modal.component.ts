@@ -37,6 +37,7 @@ export class ExportModalComponent implements OnInit {
       const searchParams = this.statesService.searchParams;
       this.searchType = searchParams.searchType;
       this.searchBody = searchParams.searchBody;
+      searchParams.searchBody.size = 10000;
 
       let filename: string;
       filename = 'Session Storage - ' + Date.now() + '.json';
@@ -92,6 +93,7 @@ export class ExportModalComponent implements OnInit {
       const searchParams = this.statesService.searchParams;
       this.searchType = searchParams.searchType;
       this.searchBody = searchParams.searchBody;
+      searchParams.searchBody.size = 10000;
 
       if (this.searchType === 'specific_study') {
 
