@@ -3,24 +3,34 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <ng-container *ngIf="studyTitle.length >= 75">
-            <span style="font-size: 1.1em;">{{studyTitle | slice: 0: 75}} ...</span>
+          <ng-container *ngIf="studyTitle === null || studyTitle === undefined">
+            <span style="font-size: 1.1em;">No title</span>
           </ng-container>
-          <ng-container *ngIf="studyTitle.length < 75">
-            <span style="font-size: 1.1em;">{{studyTitle}}</span>
+          <ng-container *ngIf="studyTitle !== null && studyTitle !== undefined">
+            <ng-container *ngIf="studyTitle.length >= 75">
+              <span style="font-size: 1.1em;">{{studyTitle | slice: 0: 75}} ...</span>
+            </ng-container>
+            <ng-container *ngIf="studyTitle.length < 75">
+              <span style="font-size: 1.1em;">{{studyTitle}}</span>
+            </ng-container>
           </ng-container>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-divider></mat-divider>
       <p class="mt-3 mb-3" align="justify">
         <strong>{{'SEARCH-PAGE.STUDY.DESCRIPTION' | translate: {Default: 'Study description'} }}</strong><br />
-        <ng-container *ngIf="studyDescription.length > 150">
-          {{(showMore) ? studyDescription : studyDescription | slice:0:150}} <span *ngIf="!showMore"> ...</span>
-          <a href="javascript:;" *ngIf="!showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
-          <a href="javascript:;" *ngIf="showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
+        <ng-container *ngIf="studyDescription === null || studyDescription === undefined">
+          No description
         </ng-container>
-        <ng-container *ngIf="studyDescription.length <= 150">
-          {{studyDescription}}
+        <ng-container *ngIf="studyDescription !== null && studyDescription !== undefined">
+          <ng-container *ngIf="studyDescription.length > 150">
+            {{(showMore) ? studyDescription : studyDescription | slice:0:150}} <span *ngIf="!showMore"> ...</span>
+            <a href="javascript:;" *ngIf="!showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
+            <a href="javascript:;" *ngIf="showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
+          </ng-container>
+          <ng-container *ngIf="studyDescription.length <= 150">
+            {{studyDescription}}
+          </ng-container>
         </ng-container>
       </p>
       <div class="row">
@@ -87,13 +97,15 @@
 
       </ng-container>
       <mat-action-row>
-        <a [routerLink]="['/study', studyId]"
-           target="_blank"
-           class="btn btn-primary mr-5"
-           style="font-size: 1.05em;"
-        >
-          {{'SEARCH-PAGE.STUDY-DETAILS' | translate: {Default: 'Show study details'} }}
-        </a>
+        <ng-container *ngIf="studyId !== null || studyId !== undefined">
+          <a [routerLink]="['/study', studyId]"
+             target="_blank"
+             class="btn btn-primary mr-5"
+             style="font-size: 1.05em;"
+          >
+            {{'SEARCH-PAGE.STUDY-DETAILS' | translate: {Default: 'Show study details'} }}
+          </a>
+        </ng-container>
       </mat-action-row>
     </mat-expansion-panel>
   </div>

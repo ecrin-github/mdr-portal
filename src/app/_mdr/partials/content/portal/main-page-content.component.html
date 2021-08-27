@@ -21,14 +21,14 @@
     <ng-container *ngIf="pageSlice && (pageSlice !== null && pageSlice !== undefined)">
       <ng-container *ngFor="let study of pageSlice">
         <app-study-expanding
-          [studyId]="study.id"
-          [studyTitle]="study.displayTitle"
-          [studyDescription]="study.briefDescription"
-          [studyStatus]="study.studyStatus"
-          [studyType]="study.studyType"
-          [provenance]="study.provenanceString"
-          [dataSharingStatement]="study.dataSharingStatement"
-          [dataObjects]="study.linkedDataObjects"
+          [studyId]="study?.id"
+          [studyTitle]="study?.displayTitle"
+          [studyDescription]="study?.briefDescription"
+          [studyStatus]="study?.studyStatus"
+          [studyType]="study?.studyType"
+          [provenance]="study?.provenanceString"
+          [dataSharingStatement]="study?.dataSharingStatement"
+          [dataObjects]="study?.linkedDataObjects"
         ></app-study-expanding>
         <!--<app-study-card
           [studyId]="study.id"
