@@ -15,7 +15,9 @@ import {DataObjectFiltersGroupsInterface} from '../../../../core/interfaces/filt
 })
 @Injectable({providedIn: 'root'})
 export class FiltersListComponent implements OnInit {
+
   filtersList: Array<FilterSampleInterface>;
+
   studyFilters: Array<StudyFiltersGroupsInterface> = StudyFilters;
   dataObjectFilters: Array<DataObjectFiltersGroupsInterface> = DataObjectFilters;
 
@@ -33,7 +35,7 @@ export class FiltersListComponent implements OnInit {
     this.studyFilters.forEach((filter) => {
       filter.subgroups.forEach((subgroup: any) => {
         subgroup.values.forEach((param: any) => {
-          param.isSelected = true;
+          param.isSelected = false;
         });
       });
     });
@@ -41,14 +43,14 @@ export class FiltersListComponent implements OnInit {
     this.dataObjectFilters.forEach((filter) => {
       filter.subgroups.forEach((subgroup: any) => {
         subgroup.values.forEach((param: any) => {
-          param.isSelected = true;
+          param.isSelected = false;
         });
       });
     });
 
     this.filtersList = [];
-    this.states.filtersList.next(this.filtersList);
-    this.states.isFiltered.next(false);
+    this.statesService.filtersList = this.filtersList;
+    this.statesService.isFiltered = false;
 
     this.subscriptionEvents.sendClearFilterEvent();
   }

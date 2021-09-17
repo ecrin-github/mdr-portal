@@ -1,5 +1,6 @@
 <h5 class="font-weight-bold mb-5">{{groupName}}</h5>
 <ng-container *ngFor="let filterGroup of subgroups">
+  <div style="width: 99%;" class="pl-1 mt-1">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -36,6 +37,7 @@
       </button>
     </mat-action-row>
   </mat-expansion-panel>
+  </div>
   <br />
 </ng-container>
 <mat-divider></mat-divider>

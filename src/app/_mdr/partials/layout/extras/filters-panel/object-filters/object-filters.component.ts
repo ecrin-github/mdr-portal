@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {States} from '../../../../../core/states/states';
 import {SubscriptionEvents} from '../../../../../core/states/subscription-events';
-import {FilterSampleInterface} from '../../../../../core/interfaces/filters/filter-sample.interface';
 import {SnackbarService} from '../../../../../core/services/snackbar/snackbar.service';
+import {StatesService} from '../../../../../core/services/state/states.service';
 
 
 @Component({
@@ -15,12 +14,10 @@ export class ObjectFiltersComponent implements OnInit {
   @Input() groupName: string;
   @Input() subgroups: any;
 
-  public filtersList: Array<FilterSampleInterface>;
-
   constructor(
     private snackbarService: SnackbarService,
     private translate: TranslateService,
-    private states: States,
+    private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
   ) {
   }
@@ -31,8 +28,6 @@ export class ObjectFiltersComponent implements OnInit {
     let message = '';
     let close = '';
     let translateFilter = '';
-
-    this.filtersList = this.states.filtersList.getValue();
 
     if (event.checked === false) {
       this.translate.get([
@@ -48,23 +43,14 @@ export class ObjectFiltersComponent implements OnInit {
 
       this.snackbarService.snackbarMessage(message + translateFilter, close);
 
-      this.filtersList.push({
-        isNested,
-        fieldName,
-        name: translateFilter,
-        value: paramId,
-        type,
-        path,
-        subgroupName
-      });
+      this.statesService.filtersList.splice(
+          this.statesService.filtersList.findIndex(
+              x => x.name === translateFilter && x.value === paramId
+          ), 1
+      );
 
-      if (this.filtersList.length > 0) {
-        this.states.isFiltered.next(true);
-      } else {
-        this.states.isFiltered.next(false);
-      }
+      this.statesService.isFiltered = this.statesService.filtersList.length > 0;
 
-      this.states.filtersList.next(this.filtersList);
       this.subscriptionEvents.sendFilterEvent();
 
     } else {
@@ -81,18 +67,22 @@ export class ObjectFiltersComponent implements OnInit {
 
       this.snackbarService.snackbarMessage(message + translateFilter, close);
 
-      const index = this.filtersList.findIndex(x => x.value === paramId && x.subgroupName === subgroupName);
-      if (index > -1) {
-        this.filtersList.splice(index, 1);
+      const indx = this.statesService.filtersList.findIndex(x => x.value === paramId && x.name === translateFilter);
+
+      if (indx <= -1) {
+        this.statesService.filtersList.push({
+          isNested,
+          fieldName,
+          name: translateFilter,
+          value: paramId,
+          type,
+          path,
+          subgroupName
+        });
       }
 
-      if (this.filtersList.length > 0) {
-        this.states.isFiltered.next(true);
-      } else {
-        this.states.isFiltered.next(false);
-      }
+      this.statesService.isFiltered = this.statesService.filtersList.length > 0;
 
-      this.states.filtersList.next(this.filtersList);
       this.subscriptionEvents.sendFilterEvent();
     }
   }
@@ -100,13 +90,17 @@ export class ObjectFiltersComponent implements OnInit {
   selectAll(id: number, subgroupName: string){
     const index = id - 1;
 
+    const fieldName = this.subgroups[index]['fieldName'];
+    const isNested = this.subgroups[index]['isNested'];
+
+    const type = this.subgroups[index]['type'];
+    const path = this.subgroups[index]['path'];
+
     const groupTranslate = this.subgroups[index]['translate'];
 
     let groupTranslateName = '';
     let message = '';
     let close = '';
-
-    this.filtersList = this.states.filtersList.getValue();
 
     this.translate.get([
       groupTranslate,
@@ -121,19 +115,30 @@ export class ObjectFiltersComponent implements OnInit {
     this.subgroups[index]['values'].forEach(element => {
       element.isSelected = true;
 
-      const indx = this.filtersList.findIndex(x => x.value === element.value && x.subgroupName === subgroupName);
-      if (indx > -1) {
-        this.filtersList.splice(indx, 1);
+      let translateFilter = '';
+
+      this.translate.get([
+        element.translate
+      ]).subscribe((translation) => {
+            translateFilter = translation[element.translate];
+          }
+      );
+
+      if (!this.statesService.filtersList.some(x => x.value === element.id
+          && x.subgroupName === subgroupName)) {
+        this.statesService.filtersList.push({
+          isNested,
+          fieldName,
+          name: translateFilter,
+          value: element.id,
+          type,
+          path,
+          subgroupName
+        });
       }
     });
 
-    if (this.filtersList.length > 0) {
-      this.states.isFiltered.next(true);
-    } else {
-      this.states.isFiltered.next(false);
-    }
-
-    this.states.filtersList.next(this.filtersList);
+    this.statesService.isFiltered = this.statesService.filtersList.length > 0;
     this.subscriptionEvents.sendFilterEvent();
 
     this.snackbarService.snackbarMessage(message + groupTranslateName, close);
@@ -144,17 +149,10 @@ export class ObjectFiltersComponent implements OnInit {
     const index = id - 1;
 
     const groupTranslate = this.subgroups[index]['translate'];
-    const fieldName = this.subgroups[index]['fieldName'];
-    const isNested = this.subgroups[index]['isNested'];
-
-    const type = this.subgroups[index]['type'];
-    const path = this.subgroups[index]['path'];
 
     let groupTranslateName = '';
     let message = '';
     let close = '';
-
-    this.filtersList = this.states.filtersList.getValue();
 
     this.translate.get([
       groupTranslate,
@@ -169,35 +167,13 @@ export class ObjectFiltersComponent implements OnInit {
     this.subgroups[index]['values'].forEach(element => {
       element.isSelected = false;
 
-      let translateFilter = '';
-
-      this.translate.get([
-        element.translate
-      ]).subscribe((translation) => {
-          translateFilter = translation[element.translate];
-        }
-      );
-
-      if (!this.filtersList.some(x => x.value === element.value && x.subgroupName === subgroupName)) {
-        this.filtersList.push({
-          isNested,
-          fieldName,
-          name: translateFilter,
-          value: element.value,
-          type,
-          path,
-          subgroupName
-        });
+      const indx = this.statesService.filtersList.findIndex(x => x.value === element.id && x.subgroupName === subgroupName);
+      if (indx > -1) {
+        this.statesService.filtersList.splice(indx, 1);
       }
     });
 
-    if (this.filtersList.length > 0) {
-      this.states.isFiltered.next(true);
-    } else {
-      this.states.isFiltered.next(false);
-    }
-
-    this.states.filtersList.next(this.filtersList);
+    this.statesService.isFiltered = this.statesService.filtersList.length > 0;
     this.subscriptionEvents.sendFilterEvent();
 
     this.snackbarService.snackbarMessage(message + groupTranslateName, close);
@@ -205,7 +181,6 @@ export class ObjectFiltersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.states.filtersList.subscribe(value => this.filtersList = value);
   }
 
 }

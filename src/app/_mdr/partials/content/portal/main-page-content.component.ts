@@ -24,8 +24,8 @@ export class MainPageContentComponent implements OnInit {
   public loading: boolean;
 
   public total: number;
-  public onPage: number;
-  public startFrom: number;
+  public startOnPage: number;
+  public endOnPage: number;
 
   public pageSize: number;
   public pageIndex: number;
@@ -92,8 +92,8 @@ export class MainPageContentComponent implements OnInit {
         (data: ResponseInterface) => {
           this.pageSlice = data.data;
           this.total = data.total;
-          this.onPage = this.paginationService.onPageChecker(this.total, this.pageIndex, this.pageSize);
-          this.startFrom = this.paginationService.startFromChecker(this.onPage, this.pageSize);
+          this.endOnPage = this.paginationService.endOnPageChecker(this.total, this.pageIndex, this.pageSize);
+          this.startOnPage = this.paginationService.startOnPageChecker(this.total, this.pageIndex, this.pageSize);
           this.loading = false;
         },
         error => {
@@ -104,15 +104,13 @@ export class MainPageContentComponent implements OnInit {
   }
 
   onUploadingSession() {
-    const searchStateData = this.statesService.activeSession;
-
     this.statesService.isCleared = false;
 
-    this.searchType = searchStateData.searchType;
-    this.searchBody = searchStateData.searchBody;
+    this.searchType = this.statesService.activeSession.searchType;
+    this.searchBody = this.statesService.activeSession.searchBody;
 
-    this.pageSize = searchStateData.searchBody['size'];
-    this.pageIndex = searchStateData.searchBody['page'];
+    this.pageSize = this.statesService.activeSession.searchBody['size'];
+    this.pageIndex = this.statesService.activeSession.searchBody['page'];
 
     if (this.statesService.filtersList.length > 0) {
       this.statesService.isFiltered = true;

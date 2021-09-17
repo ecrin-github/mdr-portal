@@ -9,7 +9,7 @@
   <ng-container *ngIf="!loading; else loadingBlock">
     <p *ngIf="total > 0 && !loading">
       <ngb-alert [dismissible]="false" [type]="'success'">
-        <strong [translate]="'SEARCH-PAGE.RESULTS'">Results: </strong> {{startFrom}} - {{onPage}} <span [translate]="">of</span> {{total}}.
+        <strong [translate]="'SEARCH-PAGE.RESULTS'">Results: </strong> {{startOnPage}} - {{endOnPage}} <span [translate]="">of</span> {{total}}.
       </ngb-alert>
     </p>
     <p *ngIf="(total <= 0 || total === null) && !loading">

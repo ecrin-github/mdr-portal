@@ -23,8 +23,6 @@ export class FiltersPanelComponent implements OnInit {
   studyFilters = StudyFilters;
   objectFilers = DataObjectFilters;
 
-  filtersList: Array<FilterSampleInterface>;
-
   uploadingSessionEvent: Subscription;
 
   constructor(
@@ -47,16 +45,14 @@ export class FiltersPanelComponent implements OnInit {
 
   onUploadingFilters() {
 
-    const filtersList = this.statesFunctions.filtersList;
+    if (this.statesFunctions.filtersList.length > 0) {
 
-    if (filtersList.length > 0) {
-
-      for (const filterVal of filtersList) {
+      for (const filterVal of this.statesFunctions.filtersList) {
         this.studyFilters.forEach((filter) => {
           filter.subgroups.forEach((subgroup) => {
             subgroup.values.forEach((param) => {
               if (param.name === filterVal.name) {
-                param.isSelected = false;
+                param.isSelected = true;
               }
             });
           });
@@ -66,7 +62,7 @@ export class FiltersPanelComponent implements OnInit {
           filter.subgroups.forEach((subgroup) => {
             subgroup.values.forEach((param) => {
               if (param.name === filterVal.name) {
-                param.isSelected = false;
+                param.isSelected = true;
               }
             });
           });
@@ -76,7 +72,7 @@ export class FiltersPanelComponent implements OnInit {
       this.studyFilters.forEach((filter) => {
         filter.subgroups.forEach((subgroup) => {
           subgroup.values.forEach((param) => {
-            param.isSelected = true;
+            param.isSelected = false;
           });
         });
       });
@@ -84,7 +80,7 @@ export class FiltersPanelComponent implements OnInit {
       this.objectFilers.forEach((filter) => {
         filter.subgroups.forEach((subgroup) => {
           subgroup.values.forEach((param) => {
-            param.isSelected = true;
+            param.isSelected = false;
           });
         });
       });
@@ -96,7 +92,6 @@ export class FiltersPanelComponent implements OnInit {
     this.extrasFiltersPanelDirectionCSSClass = `offcanvas-${this.layout.getProp(
       'extras.filtersPanel.offcanvas.direction'
     )}`;
-    this.states.filtersList.subscribe(value => this.filtersList = value);
   }
 
   setActiveTabId(tabId) {

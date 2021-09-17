@@ -58,10 +58,9 @@
         <!--begin::Section-->
         <div
           [perfectScrollbar]="{ wheelPropagation: false }"
-          class="scroll mb-15"
+          class="scroll mb-15 pr-4"
           [ngStyle]="{ height: '800px', position: 'relative' }"
         >
-
           <ng-container *ngFor="let studyFilter of studyFilters">
             <app-study-filters
               [groupName]="studyFilter.translate | translate: {Default: studyFilter.groupName}"
