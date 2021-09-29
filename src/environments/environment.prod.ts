@@ -3,8 +3,8 @@ export const environment = {
   appVersion: 'v.0.6.5',
 
   // HOSTNAME
-  hostname: 'https://localhost:5001/',
-  // hostname: 'https://api.crmdr.org/',
+  // hostname: 'https://localhost:5001/',
+  hostname: 'https://api.crmdr.org/',
 
   // Back-end configs
   apiBaseUrl: 'api/',

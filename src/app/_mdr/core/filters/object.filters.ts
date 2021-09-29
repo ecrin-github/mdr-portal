@@ -77,14 +77,14 @@ const dataObjectTypes: Array<DataObjectFiltersParamsInterface> = [
     translate: 'FILTERS.DATA-OBJECT.TYPES.CLINICAL-STUDY-REPORT',
   },
   {
-    id: 11,
+    id: 32,
     value: 'DataService description',
     name: 'DataService description',
     isSelected: false,
     translate: 'FILTERS.DATA-OBJECT.TYPES.DATASERVICE-DESCRIPTION',
   },
   {
-    id: 12,
+    id: 80,
     value: 'Individual participant data',
     name: 'Individual participant data',
     isSelected: false,

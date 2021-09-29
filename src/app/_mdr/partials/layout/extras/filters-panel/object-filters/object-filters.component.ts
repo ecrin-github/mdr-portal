@@ -81,6 +81,8 @@ export class ObjectFiltersComponent implements OnInit {
         });
       }
 
+      console.log(this.statesService.filtersList);
+
       this.statesService.isFiltered = this.statesService.filtersList.length > 0;
 
       this.subscriptionEvents.sendFilterEvent();
