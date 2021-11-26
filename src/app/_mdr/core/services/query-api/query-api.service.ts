@@ -12,8 +12,7 @@ import {Study} from '../../interfaces/entities/study.interface';
 @Injectable({providedIn: 'root'})
 export class QueryApiService {
 
-  baseUrlApi: string = environment.hostname + environment.apiBaseUrl + environment.apiVersion;
-  baseUrlSearch: string = environment.hostname + environment.rawQueryBaseUrl + environment.rawQueryVersion;
+  baseUrlApi: string = environment.hostname + environment.queryBaseUrl;
 
   private specificStudyApiUrl = this.baseUrlApi + environment.specificStudyUrl;
   private studyCharacteristicsApiUrl = this.baseUrlApi + environment.studyCharacteristicsUrl;

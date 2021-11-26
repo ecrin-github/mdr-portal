@@ -39,7 +39,7 @@ export class CustomPaginator extends MatPaginatorIntl {
       : startIndex + pageSize;
 
     return `${startIndex + 1} - ${endIndex} ${rangeLabel} ${length}`;
-  };
+  }
 
   public getAndInitTranslations(): void {
     this.translate.get([

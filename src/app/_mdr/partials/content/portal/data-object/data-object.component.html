@@ -34,7 +34,7 @@
       {{provenance}}
     </p>
   </div>
-  <div class="col-xl-2" *ngIf="dataObjectYear !== null && dataObjectYear !== undefined; else noneTemplate">
+  <div class="col-xl-2" *ngIf="dataObjectYear !== null && dataObjectYear !== undefined && dataObjectYear !== 0; else noneTemplate">
     <p class="text-center">{{dataObjectYear}}</p>
   </div>
   <div class="col-xl-2 text-center">

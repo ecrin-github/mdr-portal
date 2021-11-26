@@ -1,11 +1,7 @@
-import {
-  DataObjectFiltersGroupsInterface,
-  DataObjectFiltersParamsInterface,
-  DataObjectFiltersSubgroupsInterface
-} from '../interfaces/filters/object-filters.interface';
+import {FiltersGroupsInterface, FiltersParamsInterface, FiltersSubgroupsInterface} from '../interfaces/filters/filters.interface';
 
 
-const dataObjectTypes: Array<DataObjectFiltersParamsInterface> = [
+const dataObjectTypes: Array<FiltersParamsInterface> = [
   {
     id: 13,
     value: 'Trial registry entry',
@@ -155,7 +151,7 @@ const dataObjectTypes: Array<DataObjectFiltersParamsInterface> = [
   }
 ];
 
-const dataObjectAccessType: Array<DataObjectFiltersParamsInterface> = [
+const dataObjectAccessType: Array<FiltersParamsInterface> = [
   {
     id: 12,
     value: 'Public on-screen access',
@@ -243,17 +239,14 @@ const dataObjectAccessType: Array<DataObjectFiltersParamsInterface> = [
 ];
 
 
-const DataObjectFiltersGeneral: Array<DataObjectFiltersSubgroupsInterface> = [
+const DataObjectFiltersGeneral: Array<FiltersSubgroupsInterface> = [
   {
     id: 1,
-    subgroupName: 'Type',
+    subgroupName: 'Object Type',
     checkboxName: 'object_type',
     isSelected: false,
     translate: 'FILTERS.DATA-OBJECT.TYPES.TITLE',
     values: dataObjectTypes,
-    fieldName: 'object_type.id',
-    isNested: false,
-    path: 'object_type',
     type: 'data-object'
   },
   {
@@ -263,15 +256,12 @@ const DataObjectFiltersGeneral: Array<DataObjectFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.DATA-OBJECT.ACCESS-TYPES.TITLE',
     values: dataObjectAccessType,
-    fieldName: 'access_type.id',
-    isNested: false,
-    path: 'access_type',
     type: 'data-object'
   }
 ];
 
 
-export const DataObjectFilters: Array<DataObjectFiltersGroupsInterface> = [
+export const DataObjectFilters: Array<FiltersGroupsInterface> = [
   {
     id: 1,
     groupName: 'General data objects filters',

@@ -46,6 +46,8 @@ interface StudyTopic{
    meshCoded: boolean;
    meshCode: string;
    meshValue: string;
+   originalCtId: number;
+   originalCtCode: string;
    originalValue: string;
 }
 

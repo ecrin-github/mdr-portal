@@ -70,12 +70,9 @@ export class StudyFiltersComponent implements OnInit {
 
       if (indx <= -1) {
         this.statesService.filtersList.push({
-          isNested,
-          fieldName,
           name: translateFilter,
           value: paramId,
           type,
-          path,
           subgroupName
         });
       }
@@ -89,10 +86,7 @@ export class StudyFiltersComponent implements OnInit {
   selectAll(id: number, subgroupName: string){
     const index = id - 1;
 
-    const fieldName = this.subgroups[index]['fieldName'];
-    const isNested = this.subgroups[index]['isNested'];
     const type = this.subgroups[index]['type'];
-    const path = this.subgroups[index]['path'];
 
     const groupTranslate = this.subgroups[index]['translate'];
 
@@ -125,12 +119,9 @@ export class StudyFiltersComponent implements OnInit {
 
       if (!this.statesService.filtersList.some(x => x.value === element.id && x.subgroupName === subgroupName)) {
         this.statesService.filtersList.push({
-          isNested,
-          fieldName,
           name: translateFilter,
           value: element.id,
           type,
-          path,
           subgroupName
         });
       }

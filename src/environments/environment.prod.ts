@@ -1,24 +1,17 @@
 export const environment = {
   production: true,
-  appVersion: 'v.0.6.5',
+  appVersion: 'v.0.7.1',
 
   // HOSTNAME
-  // hostname: 'https://localhost:5001/',
-  hostname: 'https://api.crmdr.org/',
+  // hostname: 'http://localhost:5100/',
+  hostname: 'https://api.ecrin-rms.org/',
 
   // Back-end configs
-  apiBaseUrl: 'api/',
-  apiVersion: 'v1',
-  rawQueryBaseUrl: 'raw-query-api/',
-  rawQueryVersion: 'v1',
+  queryBaseUrl: 'mdr/api/v1/search',
 
   // API Query URLs
   specificStudyUrl: '/specific-study',
   studyCharacteristicsUrl: '/study-characteristics',
   viaPublishedPaperUrl: '/via-published-paper',
   studyIdUrl: '/study-id',
-
-  // Search Raw Query URLs
-  rawQueryStudyUrl: '/study',
-  rawQueryObjectUrl: '/object',
 };

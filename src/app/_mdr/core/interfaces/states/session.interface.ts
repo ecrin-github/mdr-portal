@@ -1,7 +1,9 @@
+import {FilterSampleInterface} from '../filters/filter-sample.interface';
+
 export interface SessionDataInterface {
   searchType: string;
   searchBody: object;
-  filters?: Array<any>;
+  filters?: FilterSampleInterface[];
 }
 
 export interface SessionRecordInterface {

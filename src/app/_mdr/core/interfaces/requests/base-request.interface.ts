@@ -1,11 +1,7 @@
-export interface FiltersList {
-    studyFilters: Array<any>;
-    objectFilters: Array<any>;
-}
-
+import {FiltersRequestInterface} from '../filters/filters.interface';
 
 export interface BaseRequestInterface {
     page?: number;
     size?: number;
-    filters?: FiltersList;
+    filters?: FiltersRequestInterface;
 }

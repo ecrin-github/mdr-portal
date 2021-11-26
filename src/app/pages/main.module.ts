@@ -26,8 +26,6 @@ import {MainPageComponent} from './main-page/main-page.component';
 import {MainPageContentModule} from '../_mdr/partials/content/portal/main-page-content.module';
 import {DataObjectsHelpComponent} from './data-objects-help/data-objects-help.component';
 import {RestComponent} from './api/rest/rest.component';
-import {GraphqlComponent} from './api/graphql/graphql.component';
-import {EsBasedComponent} from './api/es-based/es-based.component';
 import {ApiPageComponent} from './api/api-page.component';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -62,8 +60,6 @@ import {SingleStudyExportModalComponent} from './_layout/components/topbar/modal
 
     ApiPageComponent,
     RestComponent,
-    GraphqlComponent,
-    EsBasedComponent,
   ],
   imports: [
     CommonModule,
@@ -101,14 +97,6 @@ import {SingleStudyExportModalComponent} from './_layout/components/topbar/modal
       {
         path: 'api/rest',
         component: RestComponent
-      },
-      {
-        path: 'api/graphql',
-        component: GraphqlComponent
-      },
-      {
-        path: 'api/es-based',
-        component: EsBasedComponent
       },
     ]),
     FormsModule,

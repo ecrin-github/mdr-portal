@@ -140,16 +140,16 @@ export class RestComponent implements OnInit {
 
     if (this.selectedOption === 'study-characteristics') {
       this.query = studyCharacteristicsQuery;
-      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.studyCharacteristicsUrl;
+      this.apiUrl = environment.hostname + environment.queryBaseUrl + environment.studyCharacteristicsUrl;
     } else if (this.selectedOption === 'specific-study') {
       this.query = specificStudyQuery;
-      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.specificStudyUrl;
+      this.apiUrl = environment.hostname + environment.queryBaseUrl + environment.specificStudyUrl;
     } else if (this.selectedOption === 'via-published-paper') {
       this.query = viaPublishedPaperQuery;
-      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.viaPublishedPaperUrl;
+      this.apiUrl = environment.hostname + environment.queryBaseUrl + environment.viaPublishedPaperUrl;
     } else if (this.selectedOption === 'by-study-id') {
       this.query = selectedStudyQuery;
-      this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.studyIdUrl;
+      this.apiUrl = environment.hostname + environment.queryBaseUrl + environment.studyIdUrl;
     } else {
       this.error = true;
       this.message = 'No search option has been selected';
@@ -340,7 +340,7 @@ export class RestComponent implements OnInit {
     this.notFound = false;
     this.length = 0;
     this.results = [];
-    this.apiUrl = environment.hostname + environment.apiBaseUrl + environment.apiVersion + environment.studyCharacteristicsUrl;
+    this.apiUrl = environment.hostname + environment.queryBaseUrl + environment.studyCharacteristicsUrl;
     this.query = studyCharacteristicsQuery;
   }
 

@@ -1,11 +1,7 @@
-import {
-  StudyFiltersSubgroupsInterface,
-  StudyFiltersGroupsInterface,
-  StudyFiltersParamsInterface
-} from '../interfaces/filters/study-filters.interface';
+import {FiltersGroupsInterface, FiltersParamsInterface, FiltersSubgroupsInterface} from '../interfaces/filters/filters.interface';
 
 
-const studyTypes: Array<StudyFiltersParamsInterface> = [
+const studyTypes: Array<FiltersParamsInterface> = [
   {
     id: 11,
     value: 'Interventional',
@@ -165,7 +161,7 @@ const studyStatuses: Array<any> = [
   }
 ];
 
-const genderEligibility: Array<StudyFiltersParamsInterface> = [
+const genderEligibility: Array<FiltersParamsInterface> = [
   {
     id: 900,
     value: 'All',
@@ -203,28 +199,22 @@ const genderEligibility: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const StudyFiltersGeneral: Array<StudyFiltersSubgroupsInterface> = [
+const StudyFiltersGeneral: Array<FiltersSubgroupsInterface> = [
   {
     id: 1,
-    subgroupName: 'Type',
+    subgroupName: 'Study Type',
     checkboxName: 'study_type',
     isSelected: false,
     translate: 'FILTERS.STUDIES.TYPES.TITLE',
-    fieldName: 'study_type.id',
-    isNested: false,
-    path: 'study_type',
     values: studyTypes,
     type: 'study'
   },
   {
     id: 2,
-    subgroupName: 'Status',
+    subgroupName: 'Study Status',
     checkboxName: 'study_status',
     isSelected: false,
     translate: 'FILTERS.STUDIES.STATUSES.TITLE',
-    fieldName: 'study_status.id',
-    isNested: false,
-    path: 'study_status',
     values: studyStatuses,
     type: 'study'
   },
@@ -234,16 +224,13 @@ const StudyFiltersGeneral: Array<StudyFiltersSubgroupsInterface> = [
     checkboxName: 'gender_elig',
     isSelected: false,
     translate: 'FILTERS.STUDIES.GENDER.TITLE',
-    fieldName: 'study_gender_elig.id',
-    isNested: false,
-    path: 'study_gender_elig',
     values: genderEligibility,
     type: 'study'
   }
 ];
 
 
-const studyPhase: Array<StudyFiltersParamsInterface> = [
+const studyPhase: Array<FiltersParamsInterface> = [
   {
     id: 100,
     name: 'Not applicable',
@@ -309,7 +296,7 @@ const studyPhase: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const interventionalModel: Array<StudyFiltersParamsInterface> = [
+const interventionalModel: Array<FiltersParamsInterface> = [
   {
     id: 300,
     name: 'Single group assignment',
@@ -354,7 +341,7 @@ const interventionalModel: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const allocationType: Array<StudyFiltersParamsInterface> = [
+const allocationType: Array<FiltersParamsInterface> = [
   {
     id: 200,
     name: 'Not applicable',
@@ -385,7 +372,7 @@ const allocationType: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const primaryPurpose: Array<StudyFiltersParamsInterface> = [
+const primaryPurpose: Array<FiltersParamsInterface> = [
   {
     id: 400,
     name: 'Treatment',
@@ -465,7 +452,7 @@ const primaryPurpose: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const masking: Array<StudyFiltersParamsInterface> = [
+const masking: Array<FiltersParamsInterface> = [
   {
     id: 500,
     name: 'None (Open Label)',
@@ -524,7 +511,7 @@ const masking: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
+const StudyFiltersInterventional: Array<FiltersSubgroupsInterface> = [
   {
     id: 1,
     subgroupName: 'Phase',
@@ -532,9 +519,6 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     values: studyPhase,
     translate: 'FILTERS.STUDIES.PHASES.TITLE',
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
   {
@@ -544,9 +528,6 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.INTERVENTIONAL-MODELS.TITLE',
     values: interventionalModel,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
   {
@@ -556,9 +537,6 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.ALLOCATION-TYPES.TITLE',
     values: allocationType,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
   {
@@ -568,9 +546,6 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.PRIMARY-PURPOSES.TITLE',
     values: primaryPurpose,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
   {
@@ -580,15 +555,12 @@ const StudyFiltersInterventional: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.MASKING.TITLE',
     values: masking,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
 ];
 
 
-const observationalModel: Array<StudyFiltersParamsInterface> = [
+const observationalModel: Array<FiltersParamsInterface> = [
   {
     id: 600,
     name: 'Cohort',
@@ -661,7 +633,7 @@ const observationalModel: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const timePerspective: Array<StudyFiltersParamsInterface> = [
+const timePerspective: Array<FiltersParamsInterface> = [
   {
     id: 700,
     name: 'Retrospective',
@@ -713,7 +685,7 @@ const timePerspective: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const biospecimensRetained: Array<StudyFiltersParamsInterface> = [
+const biospecimensRetained: Array<FiltersParamsInterface> = [
   {
     id: 800,
     name: 'None retained',
@@ -744,7 +716,7 @@ const biospecimensRetained: Array<StudyFiltersParamsInterface> = [
   }
 ];
 
-const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
+const StudyFiltersObservational: Array<FiltersSubgroupsInterface> = [
   {
     id: 1,
     subgroupName: 'Observational model',
@@ -752,9 +724,6 @@ const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.OBSERVATIONAL-MODELS.TITLE',
     values: observationalModel,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
   {
@@ -764,9 +733,6 @@ const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.TIME-PERSPECTIVE.TITLE',
     values: timePerspective,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
   {
@@ -776,15 +742,12 @@ const StudyFiltersObservational: Array<StudyFiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.BIOSPECIMENS-RETAINED.TITLE',
     values: biospecimensRetained,
-    fieldName: 'study_features.feature_value.id',
-    path: 'study_features',
-    isNested: true,
     type: 'study'
   },
 ];
 
 
-export const StudyFilters: Array<StudyFiltersGroupsInterface> = [
+export const StudyFilters: Array<FiltersGroupsInterface> = [
   {
     id: 1,
     groupName: 'General studies filter',

@@ -5,8 +5,7 @@ import {DataObjectFilters} from '../../../../core/filters/object.filters';
 import {StatesService} from '../../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
 import {FilterSampleInterface} from '../../../../core/interfaces/filters/filter-sample.interface';
-import {StudyFiltersGroupsInterface} from '../../../../core/interfaces/filters/study-filters.interface';
-import {DataObjectFiltersGroupsInterface} from '../../../../core/interfaces/filters/object-filters.interface';
+import {FiltersGroupsInterface} from '../../../../core/interfaces/filters/filters.interface';
 
 
 @Component({
@@ -18,8 +17,8 @@ export class FiltersListComponent implements OnInit {
 
   filtersList: Array<FilterSampleInterface>;
 
-  studyFilters: Array<StudyFiltersGroupsInterface> = StudyFilters;
-  dataObjectFilters: Array<DataObjectFiltersGroupsInterface> = DataObjectFilters;
+  studyFilters: Array<FiltersGroupsInterface> = StudyFilters;
+  objectFilters: Array<FiltersGroupsInterface> = DataObjectFilters;
 
   constructor(
     private states: States,
@@ -40,7 +39,7 @@ export class FiltersListComponent implements OnInit {
       });
     });
 
-    this.dataObjectFilters.forEach((filter) => {
+    this.objectFilters.forEach((filter) => {
       filter.subgroups.forEach((subgroup: any) => {
         subgroup.values.forEach((param: any) => {
           param.isSelected = false;

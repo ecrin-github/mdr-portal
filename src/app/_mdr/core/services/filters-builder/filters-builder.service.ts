@@ -1,82 +1,66 @@
-import {States} from '../../states/states';
 import {Injectable} from '@angular/core';
-import {FilterSampleInterface} from '../../interfaces/filters/filter-sample.interface';
-import {FiltersList} from '../../interfaces/requests/base-request.interface';
+import {FiltersRequestInterface} from '../../interfaces/filters/filters.interface';
+import {StatesService} from '../state/states.service';
 
 
 @Injectable({providedIn: 'root'})
 export class FiltersBuilderService {
 
-  filtersList: Array<FilterSampleInterface>;
+  exceptionFiltersArray: FiltersRequestInterface;
+
+  STUDY_FEATURE_PARAMS: string[] = ['Phase', 'Intervention model',
+    'Allocation type', 'Primary purpose', 'Masking', 'Observational model',
+  'Time perspective', 'Biospecimens retained'];
 
   constructor(
-    private states: States
+    private statesService: StatesService
   ) {
-    this.states.filtersList.subscribe(value => this.filtersList = value);
   }
 
 
-  buildStudyFilters(): Array<any> {
-    this.filtersList = this.states.filtersList.getValue();
-    const studyFilters = [];
-
-    for (const filter of this.filtersList) {
-      if (!filter.isNested && filter.type === 'study') {
-        const filterOption = {
-          term: {}
-        };
-        filterOption.term[filter.fieldName] = filter.value;
-        studyFilters.push(filterOption);
-      } else if (filter.isNested && filter.type === 'study') {
-        const fieldName = filter.fieldName;
-        const filterOption = {
-          nested: {
-            path: filter.path,
-            query: {}
-          }
-        };
-        const termFilter = {};
-        termFilter[fieldName] = filter.value;
-        filterOption.nested.query['term'] = termFilter;
-        studyFilters.push(filterOption);
-      }
-    }
-    return studyFilters;
-  }
-
-  buildObjectFilters(): Array<any> {
-    this.filtersList = this.states.filtersList.getValue();
-    const objectFilters = [];
-
-    for (const filter of this.filtersList) {
-      if (!filter.isNested && filter.type === 'data-object'){
-        const filterOption = {
-          term: {}
-        };
-        filterOption.term[filter.fieldName] = filter.value;
-        objectFilters.push(filterOption);
-      } else if (filter.isNested && filter.type === 'data-object') {
-        const fieldName = filter.fieldName;
-        const filterOption = {
-          nested: {
-            path: filter.path,
-            query: {}
-          }
-        };
-        const termFilter = {};
-        termFilter[fieldName] = filter.value;
-        filterOption.nested.query['term'] = termFilter;
-        objectFilters.push(filterOption);
-      }
-    }
-    return objectFilters;
-  }
-
-  filtersBuilder(): FiltersList {
-    return {
-      studyFilters: this.buildStudyFilters(),
-      objectFilters: this.buildObjectFilters()
+  filtersBuilder(): FiltersRequestInterface {
+    this.exceptionFiltersArray = {
+      studyTypes: [],
+      studyStatuses: [],
+      studyGenderEligibility: [],
+      studyFeatureValues: [],
+      objectTypes: [],
+      objectAccessTypes: [],
     };
+
+    if (this.statesService.filtersList !== null && this.statesService.filtersList !== undefined) {
+      if (this.statesService.filtersList.length > 0) {
+        for (const filter of this.statesService.filtersList) {
+
+          if (this.STUDY_FEATURE_PARAMS.includes(filter.subgroupName)){
+            this.exceptionFiltersArray.studyFeatureValues.push(filter.value);
+          }
+
+          if (filter.subgroupName === 'Study Type'){
+            this.exceptionFiltersArray.studyTypes.push(filter.value);
+          }
+
+          if (filter.subgroupName === 'Study Status'){
+            this.exceptionFiltersArray.studyStatuses.push(filter.value);
+          }
+
+          if (filter.subgroupName === 'Gender eligibility'){
+            this.exceptionFiltersArray.studyGenderEligibility.push(filter.value);
+          }
+
+          if (filter.subgroupName === 'Object Type'){
+            this.exceptionFiltersArray.objectTypes.push(filter.value);
+          }
+
+          if (filter.subgroupName === 'Access type'){
+            this.exceptionFiltersArray.objectAccessTypes.push(filter.value);
+          }
+
+        }
+      }
+    }
+
+    return this.exceptionFiltersArray;
   }
 
 }
