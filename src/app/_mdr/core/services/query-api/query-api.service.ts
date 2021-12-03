@@ -15,9 +15,6 @@ export class QueryApiService {
   baseUrlApi: string = environment.hostname + environment.queryBaseUrl;
   baseRawSQlApiUrl: string = environment.hostname + environment.rawQueryBaseUrl;
 
-  private specificStudyApiUrl = this.baseUrlApi + environment.specificStudyUrl;
-  private studyCharacteristicsApiUrl = this.baseUrlApi + environment.studyCharacteristicsUrl;
-  private viaPublishedPaperApiUrl = this.baseUrlApi + environment.viaPublishedPaperUrl;
   private selectedStudyApiUrl = this.baseUrlApi + environment.studyIdUrl;
 
   private rawSqlSpecificStudyApiUrl = this.baseRawSQlApiUrl + environment.specificStudyUrl;
