@@ -73,7 +73,10 @@ export class StudyFiltersComponent implements OnInit {
           name: translateFilter,
           value: paramId,
           type,
-          subgroupName
+          subgroupName,
+          fieldName,
+          isNested,
+          path
         });
       }
 
@@ -86,7 +89,10 @@ export class StudyFiltersComponent implements OnInit {
   selectAll(id: number, subgroupName: string){
     const index = id - 1;
 
+    const fieldName = this.subgroups[index]['fieldName'];
+    const isNested = this.subgroups[index]['isNested'];
     const type = this.subgroups[index]['type'];
+    const path = this.subgroups[index]['path'];
 
     const groupTranslate = this.subgroups[index]['translate'];
 
@@ -122,7 +128,10 @@ export class StudyFiltersComponent implements OnInit {
           name: translateFilter,
           value: element.id,
           type,
-          subgroupName
+          subgroupName,
+          fieldName,
+          isNested,
+          path
         });
       }
     });

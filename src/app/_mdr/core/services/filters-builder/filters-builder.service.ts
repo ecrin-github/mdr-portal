@@ -6,7 +6,8 @@ import {StatesService} from '../state/states.service';
 @Injectable({providedIn: 'root'})
 export class FiltersBuilderService {
 
-  exceptionFiltersArray: FiltersRequestInterface;
+  exceptionDbFiltersArray: FiltersRequestInterface;
+  exceptionEsFiltersArray: any[];
 
   STUDY_FEATURE_PARAMS: string[] = ['Phase', 'Intervention model',
     'Allocation type', 'Primary purpose', 'Masking', 'Observational model',
@@ -18,8 +19,8 @@ export class FiltersBuilderService {
   }
 
 
-  filtersBuilder(): FiltersRequestInterface {
-    this.exceptionFiltersArray = {
+  databaseFiltersBuilder(): FiltersRequestInterface {
+    this.exceptionDbFiltersArray = {
       studyTypes: [],
       studyStatuses: [],
       studyGenderEligibility: [],
@@ -33,35 +34,67 @@ export class FiltersBuilderService {
         for (const filter of this.statesService.filtersList) {
 
           if (this.STUDY_FEATURE_PARAMS.includes(filter.subgroupName)){
-            this.exceptionFiltersArray.studyFeatureValues.push(filter.value);
+            this.exceptionDbFiltersArray.studyFeatureValues.push(filter.value);
           }
 
           if (filter.subgroupName === 'Study Type'){
-            this.exceptionFiltersArray.studyTypes.push(filter.value);
+            this.exceptionDbFiltersArray.studyTypes.push(filter.value);
           }
 
           if (filter.subgroupName === 'Study Status'){
-            this.exceptionFiltersArray.studyStatuses.push(filter.value);
+            this.exceptionDbFiltersArray.studyStatuses.push(filter.value);
           }
 
           if (filter.subgroupName === 'Gender eligibility'){
-            this.exceptionFiltersArray.studyGenderEligibility.push(filter.value);
+            this.exceptionDbFiltersArray.studyGenderEligibility.push(filter.value);
           }
 
           if (filter.subgroupName === 'Object Type'){
-            this.exceptionFiltersArray.objectTypes.push(filter.value);
+            this.exceptionDbFiltersArray.objectTypes.push(filter.value);
           }
 
           if (filter.subgroupName === 'Access type'){
-            this.exceptionFiltersArray.objectAccessTypes.push(filter.value);
+            this.exceptionDbFiltersArray.objectAccessTypes.push(filter.value);
           }
 
         }
       }
     }
 
-    return this.exceptionFiltersArray;
+    return this.exceptionDbFiltersArray;
   }
 
+
+  elasticsearchFiltersBuilder(): any[] {
+
+    this.exceptionEsFiltersArray = [];
+
+    if (this.statesService.filtersList !== null && this.statesService.filtersList !== undefined) {
+      if (this.statesService.filtersList.length > 0) {
+        for (const filter of this.statesService.filtersList) {
+          if (filter.isNested) {
+            const fieldName = filter.fieldName;
+            const filterOption = {
+              nested: {
+                path: filter.path,
+                query: {}
+              }
+            };
+            const termFilter = {};
+            termFilter[fieldName] = filter.value;
+            filterOption.nested.query['term'] = termFilter;
+            this.exceptionEsFiltersArray.push(filterOption);
+          } else {
+            const filterOption = {
+              term: {}
+            };
+            filterOption.term[filter.fieldName] = filter.value;
+            this.exceptionEsFiltersArray.push(filterOption);
+          }
+        }
+      }
+      return this.exceptionEsFiltersArray;
+    }
+  }
 }
 

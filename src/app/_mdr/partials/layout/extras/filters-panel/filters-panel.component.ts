@@ -6,7 +6,6 @@ import { States } from '../../../../core/states/states';
 import {Subscription} from 'rxjs';
 import {StatesService} from '../../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
-import {FilterSampleInterface} from '../../../../core/interfaces/filters/filter-sample.interface';
 
 
 @Component({

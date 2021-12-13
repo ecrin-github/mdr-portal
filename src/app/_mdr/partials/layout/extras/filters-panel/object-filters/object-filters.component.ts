@@ -74,11 +74,12 @@ export class ObjectFiltersComponent implements OnInit {
           name: translateFilter,
           value: paramId,
           type,
-          subgroupName
+          subgroupName,
+          path,
+          fieldName,
+          isNested
         });
       }
-
-      console.log(this.statesService.filtersList);
 
       this.statesService.isFiltered = this.statesService.filtersList.length > 0;
 
@@ -89,7 +90,11 @@ export class ObjectFiltersComponent implements OnInit {
   selectAll(id: number, subgroupName: string){
     const index = id - 1;
 
+    const fieldName = this.subgroups[index]['fieldName'];
+    const isNested = this.subgroups[index]['isNested'];
     const type = this.subgroups[index]['type'];
+    const path = this.subgroups[index]['path'];
+
     const groupTranslate = this.subgroups[index]['translate'];
 
     let groupTranslateName = '';
@@ -124,7 +129,10 @@ export class ObjectFiltersComponent implements OnInit {
           name: translateFilter,
           value: element.id,
           type,
-          subgroupName
+          subgroupName,
+          path,
+          fieldName,
+          isNested
         });
       }
     });

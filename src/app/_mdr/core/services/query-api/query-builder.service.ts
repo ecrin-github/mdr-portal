@@ -16,9 +16,9 @@ export class QueryBuilderService {
 
     studyCharacteristicsBuilder(searchParams: SearchParamsInterface): ByStudyCharacteristicsRequestInterface {
         return {
-            page: searchParams.searchBody.page + 1,
+            page: searchParams.searchBody.page,
             size: searchParams.searchBody.size,
-            filters: this.filtersBuilderService.filtersBuilder(),
+            filters: this.filtersBuilderService.elasticsearchFiltersBuilder(),
             topicsInclude: searchParams.searchBody.topicsInclude,
             logicalOperator: searchParams.searchBody.logicalOperator,
             titleContains: searchParams.searchBody.titleContains
@@ -28,9 +28,9 @@ export class QueryBuilderService {
 
     specificStudyBuilder(searchParams: SearchParamsInterface): SpecificStudyRequestInterface {
         return {
-            page: searchParams.searchBody.page + 1,
+            page: searchParams.searchBody.page,
             size: searchParams.searchBody.size,
-            filters: this.filtersBuilderService.filtersBuilder(),
+            filters: this.filtersBuilderService.elasticsearchFiltersBuilder(),
             searchType: searchParams.searchBody.searchType,
             searchValue: searchParams.searchBody.searchValue,
         };
@@ -39,9 +39,9 @@ export class QueryBuilderService {
 
     viaPublishedPaperBuilder(searchParams: SearchParamsInterface): ViaPublishedPaperRequestInterface {
         return {
-            page: searchParams.searchBody.page + 1,
+            page: searchParams.searchBody.page,
             size: searchParams.searchBody.size,
-            filters: this.filtersBuilderService.filtersBuilder(),
+            filters: this.filtersBuilderService.elasticsearchFiltersBuilder(),
             searchType: searchParams.searchBody.searchType,
             searchValue: searchParams.searchBody.searchValue,
         };

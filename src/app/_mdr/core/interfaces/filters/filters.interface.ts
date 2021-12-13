@@ -13,6 +13,9 @@ export interface FiltersSubgroupsInterface {
   isSelected: boolean;
   translate: string;
   type: string;
+  fieldName: string;
+  isNested: boolean;
+  path: string;
   values: Array<FiltersParamsInterface>;
 }
 

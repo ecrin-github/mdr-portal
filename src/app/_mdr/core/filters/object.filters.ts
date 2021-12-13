@@ -247,7 +247,10 @@ const DataObjectFiltersGeneral: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.DATA-OBJECT.TYPES.TITLE',
     values: dataObjectTypes,
-    type: 'data-object'
+    type: 'data-object',
+    fieldName: 'linked_data_objects.object_type.id',
+    isNested: true,
+    path: 'linked_data_objects'
   },
   {
     id: 2,
@@ -256,7 +259,10 @@ const DataObjectFiltersGeneral: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.DATA-OBJECT.ACCESS-TYPES.TITLE',
     values: dataObjectAccessType,
-    type: 'data-object'
+    type: 'data-object',
+    fieldName: 'linked_data_objects.access_type.id',
+    isNested: true,
+    path: 'linked_data_objects'
   }
 ];
 

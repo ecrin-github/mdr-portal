@@ -207,7 +207,10 @@ const StudyFiltersGeneral: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.TYPES.TITLE',
     values: studyTypes,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_type.id',
+    isNested: false,
+    path: 'study_type'
   },
   {
     id: 2,
@@ -216,7 +219,10 @@ const StudyFiltersGeneral: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.STATUSES.TITLE',
     values: studyStatuses,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_status.id',
+    isNested: false,
+    path: 'study_type'
   },
   {
     id: 3,
@@ -225,7 +231,10 @@ const StudyFiltersGeneral: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.GENDER.TITLE',
     values: genderEligibility,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_gender_elig.id',
+    isNested: false,
+    path: 'study_gender_elig'
   }
 ];
 
@@ -519,7 +528,10 @@ const StudyFiltersInterventional: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     values: studyPhase,
     translate: 'FILTERS.STUDIES.PHASES.TITLE',
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
   {
     id: 2,
@@ -528,7 +540,10 @@ const StudyFiltersInterventional: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.INTERVENTIONAL-MODELS.TITLE',
     values: interventionalModel,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
   {
     id: 3,
@@ -537,7 +552,10 @@ const StudyFiltersInterventional: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.ALLOCATION-TYPES.TITLE',
     values: allocationType,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
   {
     id: 4,
@@ -546,7 +564,10 @@ const StudyFiltersInterventional: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.PRIMARY-PURPOSES.TITLE',
     values: primaryPurpose,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
   {
     id: 5,
@@ -555,7 +576,10 @@ const StudyFiltersInterventional: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.MASKING.TITLE',
     values: masking,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
 ];
 
@@ -724,7 +748,10 @@ const StudyFiltersObservational: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.OBSERVATIONAL-MODELS.TITLE',
     values: observationalModel,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
   {
     id: 2,
@@ -733,7 +760,10 @@ const StudyFiltersObservational: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.TIME-PERSPECTIVE.TITLE',
     values: timePerspective,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
   {
     id: 3,
@@ -742,7 +772,10 @@ const StudyFiltersObservational: Array<FiltersSubgroupsInterface> = [
     isSelected: false,
     translate: 'FILTERS.STUDIES.BIOSPECIMENS-RETAINED.TITLE',
     values: biospecimensRetained,
-    type: 'study'
+    type: 'study',
+    fieldName: 'study_features.feature_value.id',
+    isNested: true,
+    path: 'study_features.feature_value'
   },
 ];
 

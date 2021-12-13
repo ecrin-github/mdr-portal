@@ -14,12 +14,12 @@ export class QueryApiService {
 
   baseUrlApi: string = environment.hostname + environment.queryBaseUrl;
   baseRawSQlApiUrl: string = environment.hostname + environment.rawQueryBaseUrl;
+  baseEsApiUrl: string = environment.hostname + environment.esQueryBaseUrl;
 
-  private selectedStudyApiUrl = this.baseUrlApi + environment.studyIdUrl;
-
-  private rawSqlSpecificStudyApiUrl = this.baseRawSQlApiUrl + environment.specificStudyUrl;
-  private rawSqlStudyCharacteristicsApiUrl = this.baseRawSQlApiUrl + environment.studyCharacteristicsUrl;
-  private rawSqlViaPublishedPaperApiUrl = this.baseRawSQlApiUrl + environment.viaPublishedPaperUrl;
+  private specificStudyApiUrl = this.baseEsApiUrl + environment.specificStudyUrl;
+  private studyCharacteristicsApiUrl = this.baseEsApiUrl + environment.studyCharacteristicsUrl;
+  private viaPublishedPaperApiUrl = this.baseEsApiUrl + environment.viaPublishedPaperUrl;
+  private selectedStudyApiUrl = this.baseEsApiUrl + environment.studyIdUrl;
 
   constructor(
     private http: HttpClient
@@ -27,15 +27,15 @@ export class QueryApiService {
   }
 
   getSpecificStudy(searchParams: SpecificStudyRequestInterface){
-    return this.http.post<ResponseInterface>(this.rawSqlSpecificStudyApiUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.specificStudyApiUrl, searchParams);
   }
 
   getByStudyCharacteristics(searchParams: ByStudyCharacteristicsRequestInterface){
-    return this.http.post<ResponseInterface>(this.rawSqlStudyCharacteristicsApiUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.studyCharacteristicsApiUrl, searchParams);
   }
 
   getViaPublishedPaper(searchParams: ViaPublishedPaperRequestInterface){
-    return this.http.post<ResponseInterface>(this.rawSqlViaPublishedPaperApiUrl, searchParams);
+    return this.http.post<ResponseInterface>(this.viaPublishedPaperApiUrl, searchParams);
   }
 
   getByStudyId(searchParams: ByStudyIdRequestInterface){

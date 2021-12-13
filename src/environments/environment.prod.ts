@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  appVersion: 'v.0.7.1',
+  appVersion: 'v.0.7.2',
 
   // HOSTNAME
   hostname: 'http://localhost:5100/',
@@ -9,6 +9,7 @@ export const environment = {
   // Back-end configs
   queryBaseUrl: 'api/v1/search',
   rawQueryBaseUrl: 'api/v1/raw-sql-search',
+  esQueryBaseUrl: 'api/v1/es',
   // queryBaseUrl: 'mdr/api/v1/search',
   // rawQueryBaseUrl: 'mdr/api/v1/raw-sql-search',
 
