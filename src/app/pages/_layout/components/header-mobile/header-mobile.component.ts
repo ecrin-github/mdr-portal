@@ -44,14 +44,14 @@ export class HeaderMobileComponent implements OnInit, AfterViewInit {
   private getLogoUrl() {
     const headerSelfTheme = this.layout.getProp('header.self.theme') || '';
     const brandSelfTheme = this.layout.getProp('brand.self.theme') || '';
-    let result = 'ecrin-logo.png';
+    let result = 'ecrin_logo.png';
     if (!this.asideSelfDisplay) {
       if (headerSelfTheme === 'light') {
-        result = 'ecrin-logo.png';
+        result = 'ecrin_logo.png';
       }
     } else {
       if (brandSelfTheme === 'light') {
-        result = 'ecrin-logo.png';
+        result = 'ecrin_logo.png';
       }
     }
     return `./assets/media/logos/${result}`;

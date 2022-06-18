@@ -90,14 +90,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLogoURL(): string {
-    let result = 'ecrin-logo.png';
+    let result = 'ecrin_logo.png';
 
     if (this.headerSelfTheme && this.headerSelfTheme === 'light') {
-      result = 'ecrin-logo.png';
+      result = 'ecrin_logo.png';
     }
 
     if (this.headerSelfTheme && this.headerSelfTheme === 'dark') {
-      result = 'ecrin-logo.png';
+      result = 'ecrin_logo.png';
     }
 
     return `./assets/media/logos/${result}`;

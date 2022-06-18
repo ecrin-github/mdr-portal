@@ -14,6 +14,7 @@ import {PaginationService} from '../../../core/services/pagination/pagination.se
 
 @Component({
   selector: 'app-main-page-content',
+  styleUrls: ['./main-page-content.component.scss'],
   templateUrl: './main-page-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

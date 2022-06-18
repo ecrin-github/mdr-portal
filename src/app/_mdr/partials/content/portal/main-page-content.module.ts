@@ -43,7 +43,7 @@ import {FormsModule} from '@angular/forms';
     MatExpansionModule,
     MatChipsModule,
     MatPaginatorModule,
-    FormsModule,
+    FormsModule
   ],
   exports: [
     DataObjectComponent,

@@ -141,25 +141,28 @@ export class FiltersBuilderService {
 
     if (this.exceptionEsFilters.studyTypes.length > 0){
       const filterOption = {
-        terms: {}
+        terms: {
+          'study_type.id': this.exceptionEsFilters.studyTypes
+        }
       };
-      filterOption.terms['study_type.id'] = this.exceptionEsFilters.studyTypes;
       this.exceptionEsFiltersArray.push(filterOption);
     }
 
     if (this.exceptionEsFilters.studyStatuses.length > 0){
       const filterOption = {
-        terms: {}
+        terms: {
+          'study_status.id': this.exceptionEsFilters.studyStatuses
+        }
       };
-      filterOption.terms['study_status.id'] = this.exceptionEsFilters.studyStatuses;
       this.exceptionEsFiltersArray.push(filterOption);
     }
 
     if (this.exceptionEsFilters.studyGenderEligs.length > 0){
       const filterOption = {
-        terms: {}
+        terms: {
+          'study_gender_elig.id': this.exceptionEsFilters.studyGenderEligs
+        }
       };
-      filterOption.terms['study_gender_elig.id'] = this.exceptionEsFilters.studyGenderEligs;
       this.exceptionEsFiltersArray.push(filterOption);
     }
 
@@ -167,69 +170,79 @@ export class FiltersBuilderService {
       const filterOption = {
         nested: {
           path: 'study_features',
-          query: {}
+          query: {
+            terms: {
+              'study_features.feature_value.id': this.exceptionEsFilters.studyFeatures
+            }
+          }
         }
       };
-      filterOption.nested.query['terms']['study_features.feature_value.id'] = this.exceptionEsFilters.studyGenderEligs;
       this.exceptionEsFiltersArray.push(filterOption);
     }
 
     if (this.exceptionEsFilters.objectTypes.length > 0 || this.exceptionEsFilters.objectAccessTypes.length > 0){
       if (this.exceptionEsFilters.objectTypes.length > 0 && !(this.exceptionEsFilters.objectAccessTypes.length > 0)){
+        const termFilter = {
+          'linked_data_objects.object_type.id': this.exceptionEsFilters.objectTypes
+        };
         const filterOption = {
           nested: {
             path: 'linked_data_objects',
-            inner_hits: {
+            /*inner_hits: {
               size: 100,
               from: 0
-            },
-            query: {}
+            },*/
+            query: {
+              terms: termFilter
+            }
           }
         };
-        const termFilter = {};
-        termFilter['linked_data_objects.object_type.id'] = this.exceptionEsFilters.objectTypes;
-        filterOption.nested.query['terms'] = termFilter;
         this.exceptionEsFiltersArray.push(filterOption);
       } else if (!(this.exceptionEsFilters.objectTypes.length > 0) && this.exceptionEsFilters.objectAccessTypes.length > 0){
+        const termFilter = {
+          'linked_data_objects.access_type.id': this.exceptionEsFilters.objectAccessTypes
+        };
         const filterOption = {
           nested: {
             path: 'linked_data_objects',
-            inner_hits: {
+            /*inner_hits: {
               size: 100,
               from: 0
-            },
-            query: {}
+            },*/
+            query: {
+              terms: termFilter
+            }
           }
         };
-        const termFilter = {};
-        termFilter['linked_data_objects.access_type.id'] = this.exceptionEsFilters.objectAccessTypes;
-        filterOption.nested.query['terms'] = termFilter;
         this.exceptionEsFiltersArray.push(filterOption);
       } else {
+        const otTermFilter = {
+          'linked_data_objects.object_type.id': this.exceptionEsFilters.objectTypes
+        };
         const otFilterOption = {
           nested: {
             path: 'linked_data_objects',
-            inner_hits: {
+            /*inner_hits: {
               size: 100,
               from: 0
-            },
-            query: {}
+            },*/
+            query: {
+              terms: otTermFilter
+            }
           }
         };
-        const otTermFilter = {};
-        otTermFilter['linked_data_objects.object_type.id'] = this.exceptionEsFilters.objectTypes;
-        otFilterOption.nested.query['terms'] = otTermFilter;
         this.exceptionEsFiltersArray.push(otFilterOption);
-
+        const termFilter = {
+          'linked_data_objects.access_type.id': this.exceptionEsFilters.objectAccessTypes
+        };
         const filterOption = {
           nested: {
             path: 'linked_data_objects',
-            query: {}
+            query: {
+              terms: termFilter
+            }
           }
         };
-        const termFilter = {};
-        termFilter['linked_data_objects.access_type.id'] = this.exceptionEsFilters.objectAccessTypes;
-        filterOption.nested.query['terms'] = termFilter;
         this.exceptionEsFiltersArray.push(filterOption);
       }
     }

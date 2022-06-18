@@ -1,10 +1,10 @@
 export const environment = {
   production: true,
-  appVersion: 'v.0.7.2',
+  appVersion: 'v.0.7.5',
 
   // HOSTNAME
   // hostname: 'http://localhost:5100/',
-  hostname: 'https://api.ecrin-rms.org/',
+  hostname: 'https://mdr.ecrin-rms.org/',
 
   // Back-end configs
   queryBaseUrl: 'api/v1/search',
@@ -12,7 +12,7 @@ export const environment = {
   // esQueryBaseUrl: 'api/v1/es',
   // queryBaseUrl: 'mdr/api/v1/search',
   // rawQueryBaseUrl: 'mdr/api/v1/raw-sql-search',
-  esQueryBaseUrl: 'mdr/api/v1/es',
+  esQueryBaseUrl: 'mdr/v1',
 
   // API Query URLs
   specificStudyUrl: '/specific-study',
