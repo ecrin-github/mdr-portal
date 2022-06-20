@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  appVersion: 'v.0.7.5',
+  appVersion: 'v.0.7.6',
 
   // HOSTNAME
   // hostname: 'http://localhost:5100/',
@@ -18,5 +18,5 @@ export const environment = {
   specificStudyUrl: '/specific-study',
   studyCharacteristicsUrl: '/study-characteristics',
   viaPublishedPaperUrl: '/via-published-paper',
-  studyIdUrl: '/study-id',
+  studyIdUrl: '/study',
 };
