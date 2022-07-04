@@ -59,7 +59,7 @@
         <div
           [perfectScrollbar]="{ wheelPropagation: false }"
           class="scroll mb-15 pr-4"
-          [ngStyle]="{ height: '800px', position: 'relative' }"
+          [ngStyle]="{ height: '100%', position: 'absolute' }"
         >
           <ng-container *ngFor="let studyFilter of studyFilters">
             <app-study-filters
@@ -87,7 +87,7 @@
         <div
           [perfectScrollbar]="{ wheelPropagation: false }"
           class="scroll mb-15"
-          [ngStyle]="{ height: '800px', position: 'relative' }"
+          [ngStyle]="{ height: '100%', position: 'absolute' }"
         >
 
           <ng-container *ngFor="let objectFilter of objectFilers">
@@ -96,8 +96,6 @@
               [subgroups]="objectFilter.subgroups"
             ></app-object-filters>
           </ng-container>
-
-          <div style="height: 350px; width: 100%;"></div>
 
         </div>
 
